@@ -11,7 +11,7 @@ export default function Testimonial() {
       name: "Ben Peak",
       position: "Director of Technical Support",
       company: "Robin",
-      image: "/samb.jpg",
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=faces",
     },
     {
       quote:
@@ -19,22 +19,22 @@ export default function Testimonial() {
       name: "Alice Johnson",
       position: "CTO",
       company: "TechCorp",
-      image: "/alice.jpg",
+      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&crop=faces",
     },
     {
       quote: "Outstanding support and reliability. Our team loves using Fin.",
       name: "John Doe",
       position: "Manager",
       company: "Innovate Ltd",
-      image: "/john.jpg",
+      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&crop=faces",
     },
     {
       quote:
         "Fin is a game-changer for our operations. Increased productivity significantly.",
       name: "Sarah Lee",
-      position: "VP",
+      position: "VP of Operations",
       company: "Global Solutions",
-      image: "/sarah.jpg",
+      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=faces",
     },
   ];
 

@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { Loader2, ChevronRight } from 'lucide-react';
+import {  ChevronRight } from 'lucide-react';
 import ProductDetailClient from './ProductDetailClient';
 
 interface Product {
@@ -27,7 +27,7 @@ async function fetchProduct(slug: string): Promise<Product | null> {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
     const response = await fetch(`${baseUrl}/api/products?slug=${slug}`, {
-      next: { revalidate: 3600 } // Cache for 1 hour
+      next: { revalidate: 3600 } 
     });
     
     if (response.ok) {
