@@ -7,7 +7,6 @@ export default function Banner() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [direction, setDirection] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -24,19 +23,19 @@ export default function Banner() {
       number: '01',
       title: 'EXHIBITION CENTER IN BOSTON',
       description: 'Exhibition Center is the architectural of a new generation, a building that exists not only in the dimension of space, but also in the dimension of time and communication.',
-      image: 'https://plus.unsplash.com/premium_photo-1669999708136-f0e17295a1e2?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+      image: '/banner/1.jpg'
     },
     {
       number: '02',
       title: 'MODERN ARCHITECTURE REDEFINED',
       description: 'A synthesis of cutting-edge design principles and sustainable innovation, creating spaces that inspire and transform the urban landscape.',
-      image: 'https://plus.unsplash.com/premium_photo-1763651732449-38a1ccd2f0ae?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+      image: '/banner/2.jpg'
     },
     {
       number: '03',
       title: 'SUSTAINABLE INNOVATION HUB',
       description: 'Where environmental consciousness meets architectural excellence, pioneering the future of green building design and community integration.',
-      image: 'https://images.unsplash.com/photo-1707095581605-047c5560d164?q=80&w=388&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+      image: '/banner/3.jpg'
     }
   ];
 
@@ -46,11 +45,6 @@ export default function Banner() {
     }, 6000);
     return () => clearInterval(timer);
   }, [slides.length]);
-
-  const paginate = (newDirection: number) => {
-    setDirection(newDirection);
-    setCurrentSlide((prev) => (prev + newDirection + slides.length) % slides.length);
-  };
 
   return (
     <div className="relative w-full h-96 md:h-screen overflow-hidden text-white font-sans">
@@ -88,10 +82,7 @@ export default function Banner() {
           {slides.map((_, idx) => (
             <button
               key={idx}
-              onClick={() => {
-                setDirection(idx > currentSlide ? 1 : -1);
-                setCurrentSlide(idx);
-              }}
+              onClick={() => setCurrentSlide(idx)}
               className={`w-0.5 transition-all duration-500 hover:scale-110 ${
                 idx === currentSlide ? 'h-16 bg-blue-400' : 'h-3 bg-white/40 hover:bg-white/60'
               }`}
@@ -106,33 +97,38 @@ export default function Banner() {
       {/* Main Content Slider */}
       <div className="relative w-full h-full">
         <div className="absolute inset-0">
-          {/* Background Image */}
-          <div 
-            className="absolute inset-0 bg-cover bg-center transition-all duration-1000"
-            style={{
-              backgroundImage: `url(${slides[currentSlide].image})`,
-            }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-          </div>
+          {/* Background Images with transition */}
+          {slides.map((slide, idx) => (
+            <div 
+              key={idx}
+              className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out ${
+                idx === currentSlide ? 'opacity-100' : 'opacity-0'
+              }`}
+              style={{
+                backgroundImage: `url(${slide.image})`,
+              }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+            </div>
+          ))}
 
           {/* Content */}
           <div className="relative z-10 h-full flex items-center w-full">
             <div className="max-w-7xl mx-auto px-4 sm:px-8 md:px-16 lg:px-24 w-full">
               <div className="max-w-2xl md:ml-16">
-                <div className="animate-fadeIn">
-                  <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-light tracking-wide mb-3 sm:mb-6 leading-tight">
-                    {slides[currentSlide].title}
-                  </h1>
-                  <p className="text-xs sm:text-sm md:text-base leading-relaxed mb-6 sm:mb-10 text-gray-300 max-w-xl">
-                    {slides[currentSlide].description}
-                  </p>
-                  <button className="group flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-2.5 sm:py-3.5 bg-blue-500 hover:bg-blue-600 text-white font-medium tracking-widest text-xs transition-all duration-300 hover:gap-3 sm:hover:gap-4">
-                    LOOK MORE
-                    <ChevronRight size={16} className="w-4 sm:w-[18px] transition-transform group-hover:translate-x-1" />
-                  </button>
-                </div>
+                <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-light tracking-wide mb-3 sm:mb-6 leading-tight transition-opacity duration-500">
+                  {slides[currentSlide].title}
+                </h1>
+                
+                <p className="text-xs sm:text-sm md:text-base leading-relaxed mb-6 sm:mb-10 text-gray-300 max-w-xl transition-opacity duration-500">
+                  {slides[currentSlide].description}
+                </p>
+                
+                <button className="group flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-2.5 sm:py-3.5 bg-blue-500 hover:bg-blue-600 text-white font-medium tracking-widest text-xs transition-all duration-300 hover:gap-3 sm:hover:gap-4">
+                  LOOK MORE
+                  <ChevronRight size={16} className="w-4 sm:w-[18px] transition-transform group-hover:translate-x-1" />
+                </button>
               </div>
             </div>
           </div>
