@@ -17,7 +17,7 @@ export default function Link() {
   const images = [
     {
       id: 1,
-      src: "/images/elv-tech-10.jpg",
+      src: "/images/link.png",
       alt: "ELV Technology Solutions",
     },
   ];
@@ -66,7 +66,7 @@ export default function Link() {
                 delay: 0.4, // Staggered animation
               }}
               viewport={{ once: true }}
-              className="relative overflow-hidden  shadow-lg"
+              className="relative overflow-hidden object-contain  shadow-lg"
             >
               <Image
                 src={images[0].src}

@@ -45,7 +45,7 @@ const CUSTOM_SOLUTIONS = [
   { name: "Pop-up Box", href: "/customised-solution/custom-pop-up-box" },
   { name: "Projector Stand", href: "/customised-solution/custom-projector-stand" },
   { name: "Kiosk Stand", href: "/customised-solution/kiosk-stand-maker" },
-  { name: "View All Customized Solutions", href: "/customized-solution", isViewAll: true },
+  { name: "View All Customized Solutions", href: "/customised-solution", isViewAll: true },
 ];
 
 const ELV_SOLUTIONS = [
