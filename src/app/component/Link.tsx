@@ -14,17 +14,11 @@ interface ImageCard {
 }
 
 export default function Link() {
-  // Sample image data - replace with your actual local images
   const images = [
     {
       id: 1,
-      src: "/images/elv-tech-1.jpg", // Replace with your local image path
+      src: "/images/elv-tech-10.jpg",
       alt: "ELV Technology Solutions",
-    },
-    {
-      id: 2,
-      src: "/images/elv-tech-2.jpg", // Replace with your local image path
-      alt: "CCTV Solutions",
     },
   ];
 

@@ -23,19 +23,19 @@ export default function Banner() {
       number: '01',
       title: 'EXHIBITION CENTER IN BOSTON',
       description: 'Exhibition Center is the architectural of a new generation, a building that exists not only in the dimension of space, but also in the dimension of time and communication.',
-      image: '/banner/1.jpg'
+      image: '/banner/1.png'
     },
     {
       number: '02',
       title: 'MODERN ARCHITECTURE REDEFINED',
       description: 'A synthesis of cutting-edge design principles and sustainable innovation, creating spaces that inspire and transform the urban landscape.',
-      image: '/banner/2.jpg'
+      image: '/banner/2.png'
     },
     {
       number: '03',
       title: 'SUSTAINABLE INNOVATION HUB',
       description: 'Where environmental consciousness meets architectural excellence, pioneering the future of green building design and community integration.',
-      image: '/banner/3.jpg'
+      image: '/banner/3.png'
     }
   ];
 
