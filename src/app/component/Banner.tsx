@@ -1,6 +1,15 @@
 "use client";
-import React, { useState, useEffect } from 'react';
-import { ChevronRight, Menu, X, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import {
+  ChevronRight,
+  Menu,
+  X,
+  Facebook,
+  Twitter,
+  Instagram,
+  Linkedin,
+} from "lucide-react";
+import Link from "next/link"; // Import Link from next/link
 
 export default function Banner() {
   const [scrolled, setScrolled] = useState(false);
@@ -10,8 +19,8 @@ export default function Banner() {
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
@@ -20,23 +29,28 @@ export default function Banner() {
 
   const slides = [
     {
-      number: '01',
-      title: 'EXHIBITION CENTER IN BOSTON',
-      description: 'Exhibition Center is the architectural of a new generation, a building that exists not only in the dimension of space, but also in the dimension of time and communication.',
-      image: '/banner/1.png'
+      number: "01",
+      title: "ELV & SMART SOLUTIONS FOR DUBAI",
+      description:
+        "Complete Extra Low Voltage solutions including security systems, home automation, audio visual, and network infrastructure for residential and commercial projects.",
+      image: "/banner/1.png",
+      link: "/elv-solution",
     },
     {
-      number: '02',
-      title: 'MODERN ARCHITECTURE REDEFINED',
-      description: 'A synthesis of cutting-edge design principles and sustainable innovation, creating spaces that inspire and transform the urban landscape.',
-      image: '/banner/2.png'
+      number: "02",
+      title: "GET EXPERT CONSULTATION",
+      description:
+        "Contact our specialist team for customized ELV solutions tailored to your specific requirements in Dubai and across UAE.",
+      image: "/banner/2.png",
+      link: "/contact",
     },
-    {
-      number: '03',
-      title: 'SUSTAINABLE INNOVATION HUB',
-      description: 'Where environmental consciousness meets architectural excellence, pioneering the future of green building design and community integration.',
-      image: '/banner/3.png'
-    }
+   {
+  number: '03',
+  title: 'ABOUT BRIGHT ELV TECHNOLOGY',
+  description: 'Leading ELV solutions provider in Dubai specializing in security systems, home automation, audio visual integration, and smart building technology solutions.',
+  image: '/banner/3.png',
+  link: '/about'
+},
   ];
 
   useEffect(() => {
@@ -51,19 +65,19 @@ export default function Banner() {
       {/* Mobile Menu */}
       <div
         className={`fixed inset-0 bg-black z-40 md:hidden transition-transform duration-500 ${
-          menuOpen ? 'translate-x-0' : 'translate-x-full'
+          menuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <div className="flex flex-col items-center justify-center h-full gap-8 text-2xl">
-          {['HOME', 'PROJECTS', 'ABOUT', 'CONTACT'].map((item) => (
-            <a
+          {["HOME", "PROJECTS", "ABOUT", "CONTACT"].map((item) => (
+            <Link
               key={item}
               href="#"
               className="hover:text-blue-400 transition-colors"
               onClick={() => setMenuOpen(false)}
             >
               {item}
-            </a>
+            </Link>
           ))}
         </div>
       </div>
@@ -84,14 +98,16 @@ export default function Banner() {
               key={idx}
               onClick={() => setCurrentSlide(idx)}
               className={`w-0.5 transition-all duration-500 hover:scale-110 ${
-                idx === currentSlide ? 'h-16 bg-blue-400' : 'h-3 bg-white/40 hover:bg-white/60'
+                idx === currentSlide
+                  ? "h-16 bg-blue-400"
+                  : "h-3 bg-white/40 hover:bg-white/60"
               }`}
             />
           ))}
         </div>
 
         {/* Social Links */}
-        
+        {/* Add social links here if needed */}
       </div>
 
       {/* Main Content Slider */}
@@ -99,10 +115,10 @@ export default function Banner() {
         <div className="absolute inset-0">
           {/* Background Images with transition */}
           {slides.map((slide, idx) => (
-            <div 
+            <div
               key={idx}
               className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out ${
-                idx === currentSlide ? 'opacity-100' : 'opacity-0'
+                idx === currentSlide ? "opacity-100" : "opacity-0"
               }`}
               style={{
                 backgroundImage: `url(${slide.image})`,
@@ -120,15 +136,21 @@ export default function Banner() {
                 <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-light tracking-wide mb-3 sm:mb-6 leading-tight transition-opacity duration-500">
                   {slides[currentSlide].title}
                 </h1>
-                
+
                 <p className="text-xs sm:text-sm md:text-base leading-relaxed mb-6 sm:mb-10 text-gray-300 max-w-xl transition-opacity duration-500">
                   {slides[currentSlide].description}
                 </p>
-                
-                <button className="group flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-2.5 sm:py-3.5 bg-blue-500 hover:bg-blue-600 text-white font-medium tracking-widest text-xs transition-all duration-300 hover:gap-3 sm:hover:gap-4">
-                  LOOK MORE
-                  <ChevronRight size={16} className="w-4 sm:w-[18px] transition-transform group-hover:translate-x-1" />
-                </button>
+
+                {/* UPDATED BUTTON WITH LINK */}
+                <Link href={slides[currentSlide].link}>
+                  <button className="group flex items-center cursor-pointer gap-2 sm:gap-3 px-6 sm:px-8 py-2.5 sm:py-3.5 bg-blue-500 hover:bg-blue-600 text-white font-medium tracking-widest text-xs transition-all duration-300 hover:gap-3 sm:hover:gap-4">
+                    LOOK MORE
+                    <ChevronRight
+                      size={16}
+                      className="w-4 sm:w-[18px] transition-transform group-hover:translate-x-1"
+                    />
+                  </button>
+                </Link>
               </div>
             </div>
           </div>

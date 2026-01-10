@@ -6,7 +6,7 @@ import Link from "next/link";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import {
   ChevronRight,
-  Check,
+  Dot,
   Phone,
   Mail,
   MessageCircle,
@@ -18,6 +18,7 @@ import {
   Instagram,
   ChevronLeft,
 } from "lucide-react";
+
 
 interface Product {
   _id: string;
@@ -283,7 +284,7 @@ export default function ProductDetailClient({
                 <div className="space-y-2">
                   {product.keyFeatures.map((feature, index) => (
                     <div key={index} className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
+                      <Dot className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
                       <span className="text-sm text-gray-700">{feature}</span>
                     </div>
                   ))}
@@ -361,7 +362,7 @@ export default function ProductDetailClient({
                 {submitSuccess ? (
                   <div className="text-center py-8">
                     <div className="w-12 h-12 mx-auto mb-4 bg-green-100 rounded-full flex items-center justify-center">
-                      <Check className="w-6 h-6 text-green-600" />
+                      <Dot className="w-6 h-6 text-green-600" />
                     </div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">
                       Thank You!
@@ -382,7 +383,7 @@ export default function ProductDetailClient({
                         onChange={(e) =>
                           setFormData({ ...formData, name: e.target.value })
                         }
-                        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent text-sm"
                         placeholder="Enter your name"
                         required
                       />

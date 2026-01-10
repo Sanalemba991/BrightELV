@@ -10,7 +10,7 @@ export default function LinkSec() {
     {
       id: 1,
       image:
-        "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
+        "/location/1.png",
       alt: "Traditional office",
       title: "Corporate Headquarters",
       location: "Dubai, UAE",
@@ -18,7 +18,7 @@ export default function LinkSec() {
     {
       id: 2,
       image:
-        "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&q=80",
+        "/location/2.png",
       alt: "Modern office",
       title: "Technology Hub",
       location: "Abu Dhabi, UAE",
@@ -26,7 +26,7 @@ export default function LinkSec() {
     {
       id: 3,
       image:
-        "https://images.unsplash.com/photo-1497215842964-222b430dc094?w=800&q=80",
+        "/location/3.png",
       alt: "Collaborative space",
       title: "Innovation Center",
       location: "Riyadh, KSA",
@@ -34,7 +34,7 @@ export default function LinkSec() {
     {
       id: 4,
       image:
-        "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&q=80",
+        "/location/4.png",
       alt: "Meeting room",
       title: "Client Solutions",
       location: "Doha, Qatar",
@@ -42,7 +42,7 @@ export default function LinkSec() {
     {
       id: 5,
       image:
-        "https://images.unsplash.com/photo-1497366412874-3415097a27e7?w=800&q=80",
+        "/location/5.png",
       alt: "Workstation",
       title: "Global Operations",
       location: "International",

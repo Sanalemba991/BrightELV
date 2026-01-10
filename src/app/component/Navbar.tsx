@@ -59,8 +59,13 @@ const ELV_SOLUTIONS = [
 
 const CONTACT_INFO = [
   { icon: Phone, href: "tel:+971565022960", text: "+971 565022960", color: "text-blue-900" },
-  { icon: MessageCircle, href: "https://wa.me/971508813801", text: "+971 508813801", color: "text-green-600" },
-  { icon: Mail, href: "mailto:sales@brightelv.com", text: "sales@brightelv.com", color: "text-blue-900" },
+  {
+  icon: MessageCircle,
+  href: "https://wa.me/971508813601",
+  text: "+971 50 881 3601",
+  color: "text-green-600",
+}
+,{ icon: Mail, href: "mailto:sales@brightelv.com", text: "sales@brightelv.com", color: "text-blue-900" },
 ];
 
 interface DropdownProps {
@@ -162,7 +167,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-6">
-              <Image src="/bright.png" alt="Bright ELV" width={100} height={100} className="rounded-lg" />
+              <Image src="/logo.png" alt="Bright ELV" width={100} height={100} className="" />
             </Link>
 
             {/* Desktop Menu */}
