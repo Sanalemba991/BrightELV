@@ -278,7 +278,7 @@ export default function AboutUs() {
               transition={{ delay: 0.1 }}
             >
               <img
-                src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=800&fit=crop"
+                src="/abou3.png"
                 alt="Team meeting"
                 className="w-full h-full object-cover "
               />
@@ -291,7 +291,7 @@ export default function AboutUs() {
               transition={{ delay: 0.2 }}
             >
               <img
-                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&h=400&fit=crop"
+                src="/sam.png"
                 alt="Team member at work"
                 className="w-full h-full object-cover"
               />
@@ -304,7 +304,7 @@ export default function AboutUs() {
               transition={{ delay: 0.3 }}
             >
               <img
-                src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=800&h=400&fit=crop"
+                src="/sam2.png"
                 alt="Team gathering"
                 className="w-full h-full object-cover "
               />

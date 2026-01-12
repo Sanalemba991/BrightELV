@@ -84,14 +84,14 @@ export default function Link() {
     <div
       className="w-full py-16 px-6 md:px-12 lg:px-16 relative overflow-hidden"
       style={{
-        backgroundImage: "url('/images/OurCompanies.png')",
+        backgroundImage: "url('/sad12.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
       }}
     >
       {/* Optional overlay for better text readability */}
-      <div className="absolute inset-0 bg-white/70 z-0"></div>
+   
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Two Column Layout */}
