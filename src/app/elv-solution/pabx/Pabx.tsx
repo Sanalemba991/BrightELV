@@ -167,7 +167,7 @@ export default function Pabx() {
             className="absolute inset-0 bg-cover bg-center md:bg-fixed"
             style={{
               backgroundImage: `url('${bannerBackground}')`,
- 
+      filter: "brightness(0.4)",
             }}
           />
          </motion.div>

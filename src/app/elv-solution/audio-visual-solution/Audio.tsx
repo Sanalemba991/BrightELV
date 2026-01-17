@@ -178,7 +178,7 @@ export default function Audio() {
             className="absolute inset-0 bg-cover bg-center md:bg-fixed"
             style={{
               backgroundImage: `url('${bannerBackground}')`,
-            
+                 filter: "brightness(0.6)",
             }}
           />
           {/* Dark overlay for better text visibility */}

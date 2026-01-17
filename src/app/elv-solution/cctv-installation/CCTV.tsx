@@ -150,7 +150,7 @@ export default function CCTV() {
   };
 
   const bannerBackground =
-    "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&h=800&fit=crop";
+    "/cctvintallation/cctvinstallation.png";
 
   const bannerContainerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -216,12 +216,11 @@ export default function CCTV() {
             className="absolute inset-0 bg-cover bg-center md:bg-fixed"
             style={{
               backgroundImage: `url('${bannerBackground}')`,
-              filter: "brightness(0.4)",
+              filter: "brightness(0.6)",
             }}
           />
           {/* Dark overlay for better text visibility */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80" />
-        </motion.div>
+           </motion.div>
 
         {/* Content Container */}
         <motion.div
@@ -362,7 +361,7 @@ export default function CCTV() {
                 className="relative aspect-[16/10] bg-gray-900 overflow-hidden shadow-2xl"
               >
                 <Image
-                  src="/images/OurCompanies.png"
+                  src="/cctvintallation/cctvinstallation1.png"
                   alt="Professional presenting solutions"
                   fill
                   className="object-cover hover:scale-105 transition-all duration-700 ease-out"
@@ -478,7 +477,7 @@ export default function CCTV() {
                 className="relative w-full bg-gray-900 overflow-hidden shadow-2xl h-[220px] sm:h-[260px]  md:h-[320px]  lg:aspect-[16/11]  lg:min-h-[400px] lg:h-auto lg:order-2"
               >
                 <Image
-                  src="/images/audio/audio.jpg"
+                  src="/cctvintallation/cctvinstallation2.png"
                   alt="Professional audio visual solutions"
                   fill
                   className="object-cover hover:scale-105 transition-all duration-700 ease-out"

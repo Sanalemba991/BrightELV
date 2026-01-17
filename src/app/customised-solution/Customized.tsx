@@ -118,6 +118,7 @@ const Customized = () => {
             className="absolute inset-0 bg-cover bg-center bg-fixed"
             style={{
               backgroundImage: `url('${background}')`,
+                   filter: "brightness(0.9)",
     
             }}
           />

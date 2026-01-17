@@ -278,7 +278,7 @@ const Kiosk = () => {
             className="absolute inset-0 bg-cover bg-center bg-fixed"
             style={{
               backgroundImage: `url('${background}')`,
-              filter: "brightness(0.4)",
+              filter: "brightness(0.6)",
             }}
           />
           {/* Dark overlay for better text visibility */}

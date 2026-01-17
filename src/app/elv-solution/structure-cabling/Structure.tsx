@@ -150,7 +150,7 @@ export default function Structure() {
   };
 
   const bannerBackground =
-    "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&h=800&fit=crop";
+    "/strucutrurecabling/structurecabling.png";
 
   const bannerContainerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -204,12 +204,11 @@ export default function Structure() {
             className="absolute inset-0 bg-cover bg-center bg-fixed"
             style={{
               backgroundImage: `url('${bannerBackground}')`,
-              filter: "brightness(0.4)",
+             
             }}
           />
           {/* Dark overlay for better text visibility */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80" />
-        </motion.div>
+           </motion.div>
 
         {/* Content Container */}
         <motion.div
@@ -348,7 +347,7 @@ export default function Structure() {
                 className="relative aspect-[16/10] bg-gray-900 overflow-hidden shadow-2xl"
               >
                 <Image
-                  src="/images/OurCompanies.png"
+                  src="/strucutrurecabling/structurecabling1.png"
                   alt="Professional presenting solutions"
                   fill
                   className="object-cover hover:scale-105 transition-all duration-700 ease-out"

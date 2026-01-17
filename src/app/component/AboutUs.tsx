@@ -142,7 +142,7 @@ export default function AboutUs() {
             className="absolute inset-0 bg-cover bg-center bg-fixed"
             style={{
               backgroundImage: `url('${background}')`,
-              filter: "brightness(0.6)",
+         filter: "brightness(0.6)",
             }}
           />
           {/* Dark overlay for better text visibility */}
