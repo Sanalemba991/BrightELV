@@ -14,7 +14,7 @@ const Customized = () => {
 
   // --- Banner-specific vars ---
   const background =
-    "/banner/customizedsolution.png";
+    "/banner/customised.png";
 
   const bannerContainerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -118,12 +118,11 @@ const Customized = () => {
             className="absolute inset-0 bg-cover bg-center bg-fixed"
             style={{
               backgroundImage: `url('${background}')`,
-              filter: "brightness(0.4)",
+    
             }}
           />
           {/* Dark overlay for better text visibility */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80" />
-        </motion.div>
+            </motion.div>
 
         {/* Content Container */}
         <motion.div

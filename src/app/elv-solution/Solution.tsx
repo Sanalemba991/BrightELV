@@ -160,7 +160,7 @@ export default function ELVSolutions() {
             className="absolute inset-0 bg-cover bg-center bg-fixed"
             style={{
               backgroundImage: `url('${bannerBackground}')`,
-              filter: "brightness(0.4)",
+            
             }}
           />
           {/* Dark overlay for better text visibility */}
