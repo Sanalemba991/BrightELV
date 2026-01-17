@@ -14,7 +14,7 @@ const Customized = () => {
 
   // --- Banner-specific vars ---
   const background =
-    "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1200&h=800&fit=crop";
+    "/banner/customizedsolution.png";
 
   const bannerContainerVariants: Variants = {
     hidden: { opacity: 0 },

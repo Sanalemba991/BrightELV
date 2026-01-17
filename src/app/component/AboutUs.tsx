@@ -6,7 +6,7 @@ import { Variants } from "framer-motion";
 export default function AboutUs() {
   // --- Banner-specific vars ---
   const background =
-    "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1200&h=800&fit=crop";
+    "/about.png";
 
   const bannerContainerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -142,12 +142,11 @@ export default function AboutUs() {
             className="absolute inset-0 bg-cover bg-center bg-fixed"
             style={{
               backgroundImage: `url('${background}')`,
-              filter: "brightness(0.4)",
+              filter: "brightness(0.6)",
             }}
           />
           {/* Dark overlay for better text visibility */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80" />
-        </motion.div>
+           </motion.div>
 
         {/* Content Container */}
         <motion.div

@@ -101,7 +101,7 @@ export default function Pabx() {
   };
 
   const bannerBackground =
-    "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&h=800&fit=crop";
+    "/banner/pabx.png";
 
   const bannerContainerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -170,9 +170,7 @@ export default function Pabx() {
               filter: "brightness(0.4)",
             }}
           />
-          {/* Dark overlay for better text visibility */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80" />
-        </motion.div>
+         </motion.div>
 
         {/* Content Container */}
         <motion.div

@@ -111,7 +111,7 @@ export default function Audio() {
   };
 
   const bannerBackground =
-    "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&h=800&fit=crop";
+    "/banner/audiovisual.png";
 
   // Banner animation variants (same as ELV Solutions)
   const bannerContainerVariants: Variants = {

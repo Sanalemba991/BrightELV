@@ -18,7 +18,7 @@ export default function ELVSolutions() {
 
   // Banner background image
   const bannerBackground =
-    "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&h=800&fit=crop";
+    "/banner/elvsolution.png";
 
   // Banner animation variants
   const bannerContainerVariants: Variants = {
@@ -164,8 +164,7 @@ export default function ELVSolutions() {
             }}
           />
           {/* Dark overlay for better text visibility */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80" />
-        </motion.div>
+         </motion.div>
 
         {/* Content Container */}
         <motion.div
