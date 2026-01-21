@@ -84,8 +84,8 @@ export default function Link() {
     <div
       className="w-full py-16 px-6 md:px-12 lg:px-16 relative overflow-hidden"
       style={{
-        backgroundImage: "url('/sad12.png')",
-        backgroundSize: "cover",
+        backgroundImage: "url('/sadd11.png')",
+        backgroundSize: "object-contain",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
       }}

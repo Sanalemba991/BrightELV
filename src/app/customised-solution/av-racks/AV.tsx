@@ -97,7 +97,7 @@ const AV = () => {
   });
   // --- Banner-specific vars ---
   const background =
-    "/banner/av.png";
+    "/banner/avv.png";
 
   const bannerContainerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -277,7 +277,7 @@ const AV = () => {
             className="absolute inset-0 bg-cover bg-center bg-fixed"
             style={{
               backgroundImage: `url('${background}')`,
-               filter: "brightness(0.6)",
+               filter: "brightness(0.8)",
             }}
           />
           {/* Dark overlay for better text visibility */}
@@ -390,7 +390,7 @@ const AV = () => {
                 variants={fadeInLeft}
               >
                 <Image
-                  src="/customised/customised.png"
+                  src="/banner/customised.png"
                   alt="Modern kiosk and interactive display"
                   fill
                   className="object-contain object-center"
@@ -453,7 +453,7 @@ const AV = () => {
               variants={scrollImageVariants}
             >
               <Image
-                src="https://images.unsplash.com/photo-1765211003001-b9eb5cbfe1f3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyMXx8fGVufDB8fHx8fA%3D%3D"
+                src="/banner/avracks1.png"
                 alt="Modern white architecture"
                 fill
                 className="object-cover"
@@ -466,7 +466,7 @@ const AV = () => {
               variants={scrollImageVariants}
             >
               <Image
-                src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800&q=80"
+                src="/banner/avracks2.png"
                 alt="Modern white architecture"
                 fill
                 className="object-cover"
@@ -479,10 +479,10 @@ const AV = () => {
               variants={scrollImageVariants}
             >
               <Image
-                src="/sad.jpg"
+                src="/banner/avracks4.png"
                 alt="Portrait photography"
                 fill
-                className="object-cover grayscale"
+                className="object-cover"
               />
             </motion.div>
 
@@ -492,7 +492,7 @@ const AV = () => {
               variants={scrollImageVariants}
             >
               <Image
-                src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80"
+                src="/banner/avracks3.png"
                 alt="Modern architecture building with lines"
                 fill
                 className="object-cover"
@@ -549,7 +549,7 @@ const AV = () => {
                       <motion.div
                         key={idx}
                         variants={cardAnim}
-                        transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
+                      
                         className={`p-6  bg-white border border-gray-200 ${
                           idx === features.length - 1 && features.length % 3 === 1
                             ? "lg:col-start-2"

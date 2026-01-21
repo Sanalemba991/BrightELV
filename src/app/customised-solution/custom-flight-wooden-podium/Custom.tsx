@@ -104,7 +104,7 @@ const Custom = () => {
   });
   // --- Banner-specific vars ---
   const background =
-    "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1200&h=800&fit=crop";
+    "/banner/flightcase.png";
 
   const bannerContainerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -284,7 +284,7 @@ const Custom = () => {
             className="absolute inset-0 bg-cover bg-center bg-fixed"
             style={{
               backgroundImage: `url('${background}')`,
-                  filter: "brightness(0.6)",
+                  filter: "brightness(0.8)",
             }}
           />
           {/* Dark overlay for better text visibility */}

@@ -109,7 +109,7 @@ const Pop = () => {
   });
   // --- Banner-specific vars ---
   const background =
-    "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1200&h=800&fit=crop";
+    "/banner/popup.png";
 
   const bannerContainerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -412,7 +412,7 @@ const Pop = () => {
             className="absolute inset-0 bg-cover bg-center bg-fixed"
             style={{
               backgroundImage: `url('${background}')`,
-                   filter: "brightness(0.6)",
+                   filter: "brightness(0.8)",
             }}
           />
           {/* Dark overlay for better text visibility */}
@@ -683,7 +683,7 @@ const Pop = () => {
                       <motion.div
                         key={idx}
                         variants={cardAnim}
-                        transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
+                    
                         className={`p-6  bg-white border border-gray-200 ${
                           idx === features.length - 1 && features.length % 3 === 1
                             ? "lg:col-start-2"

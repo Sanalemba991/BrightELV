@@ -198,7 +198,7 @@ export default function Structure() {
           className="absolute inset-0 w-full h-full"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.7 }}
         >
           <div
             className="absolute inset-0 bg-cover bg-center bg-fixed"
@@ -677,7 +677,7 @@ export default function Structure() {
                   <motion.div
                     key={idx}
                     variants={cardAnim}
-                    transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
+           
                     className={`p-5 md:p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 ${
                       idx === features.length - 1 && features.length % 3 === 1
                         ? "lg:col-start-2"

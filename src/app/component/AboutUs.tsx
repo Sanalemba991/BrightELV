@@ -670,7 +670,7 @@ export default function AboutUs() {
                     variants={commitmentItemVariants}
                     initial="hidden"
                     animate={commitmentsInView ? "visible" : "hidden"}
-                    transition={{ delay: 1.0 }}
+              
                     whileHover={{ x: 5, transition: { duration: 0.3 } }}
                   >
                     <motion.div
