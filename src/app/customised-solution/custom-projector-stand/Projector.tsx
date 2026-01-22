@@ -62,7 +62,7 @@ const features = [
 const Projector = () => {
   // Refs for tracking when sections are in view
   const section1Ref = useRef(null);
-  const section2Ref = useRef(null); 
+  const section2Ref = useRef(null);
   const section1InView = useInView(section1Ref, { once: true, amount: 0.2 });
   const section2InView = useInView(section2Ref, { once: true, amount: 0.2 });
   const headerRef = useRef(null);
@@ -103,8 +103,7 @@ const Projector = () => {
     amount: 0.5,
   });
   // --- Banner-specific vars ---
-  const background =
-    "/banner/custompro.png";
+  const background = "/banner/custompro.png";
 
   const bannerContainerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -284,11 +283,11 @@ const Projector = () => {
             className="absolute inset-0 bg-cover bg-center bg-fixed"
             style={{
               backgroundImage: `url('${background}')`,
-                filter: "brightness(0.9)",
+              filter: "brightness(0.9)",
             }}
           />
           {/* Dark overlay for better text visibility */}
-           </motion.div>
+        </motion.div>
 
         {/* Content Container */}
         <motion.div
@@ -468,7 +467,7 @@ const Projector = () => {
               variants={scrollImageVariants}
             >
               <Image
-                src="https://images.unsplash.com/photo-1765211003001-b9eb5cbfe1f3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyMXx8fGVufDB8fHx8fA%3D%3D"
+                src="/banner/standa/stand (2).png"
                 alt="Modern white architecture"
                 fill
                 className="object-cover"
@@ -481,7 +480,7 @@ const Projector = () => {
               variants={scrollImageVariants}
             >
               <Image
-                src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800&q=80"
+                src="/banner/standa/stand (4).png"
                 alt="Modern white architecture"
                 fill
                 className="object-cover"
@@ -494,10 +493,10 @@ const Projector = () => {
               variants={scrollImageVariants}
             >
               <Image
-                src="/projector.png"
+                src="/banner/standa/stand (1).png"
                 alt="Portrait photography"
                 fill
-                className="object-cover grayscale"
+                className="object-cover "
               />
             </motion.div>
 
@@ -507,7 +506,7 @@ const Projector = () => {
               variants={scrollImageVariants}
             >
               <Image
-                src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80"
+                src="/banner/standa/stand (3).png"
                 alt="Modern architecture building with lines"
                 fill
                 className="object-cover"
@@ -536,7 +535,8 @@ const Projector = () => {
             }}
             className="text-xl md:text-2xl lg:text-3xl font-semibold text-gray-900 mb-2"
           >
-              Why choose Bright<span className="text-blue-900">elv</span> Custom Projector Stand
+            Why choose Bright<span className="text-blue-900">elv</span> Custom
+            Projector Stand
           </motion.h2>
           <motion.div
             initial={{ width: 0, opacity: 0 }}
@@ -564,7 +564,6 @@ const Projector = () => {
                 <motion.div
                   key={idx}
                   variants={cardAnim}
-           
                   className={`p-5 md:p-6 bg-white border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300 ${
                     idx === features.length - 1 && features.length % 3 === 1
                       ? "lg:col-start-2"
@@ -577,7 +576,7 @@ const Projector = () => {
                           feature.icon as React.ReactElement<any>,
                           {
                             className: "w-6 h-6 md:w-8 md:h-8",
-                          }
+                          },
                         )
                       : feature.icon}
                   </div>
@@ -598,4 +597,3 @@ const Projector = () => {
 };
 
 export default Projector;
- 

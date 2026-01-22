@@ -761,7 +761,7 @@ export default function Maintenance() {
                   <motion.div
                     key={idx}
                     variants={cardAnim}
-                
+                    transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
                     className={`p-6  bg-white border border-gray-200 ${
                       idx === features.length - 1 && features.length % 3 === 1
                         ? "lg:col-start-2"

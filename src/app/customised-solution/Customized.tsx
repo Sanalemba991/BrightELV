@@ -14,7 +14,7 @@ const Customized = () => {
 
   // --- Banner-specific vars ---
   const background =
-    "/banner/customised.png";
+    "/banner/customisedw.png";
 
   const bannerContainerVariants: Variants = {
     hidden: { opacity: 0 },

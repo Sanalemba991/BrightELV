@@ -101,7 +101,7 @@ export default function Pabx() {
   };
 
   const bannerBackground =
-    "/banner/pabx.png";
+    "/pabx/pabxban.png";
 
   const bannerContainerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -310,7 +310,7 @@ export default function Pabx() {
                 className="relative aspect-[16/10] bg-gray-900 overflow-hidden shadow-2xl"
               >
                 <Image
-                  src="/images/OurCompanies.png"
+                  src="/pabx/pabx.png"
                   alt="Professional presenting PABX solutions"
                   fill
                   className="object-cover hover:scale-105 transition-all duration-700 ease-out"
@@ -419,7 +419,7 @@ export default function Pabx() {
                 className=" relative w-full bg-gray-900 overflow-hidden shadow-2xl h-[220px] sm:h-[260px]  md:h-[320px]  lg:aspect-[16/11]  lg:min-h-[400px] lg:h-auto lg:order-2"
               >
                 <Image
-                  src="/images/audio/audio.jpg"
+                  src="/pabx/pabx2.png"
                   alt="Professional PABX solutions"
                   fill
                   className="object-cover hover:scale-105 transition-all duration-700 ease-out"

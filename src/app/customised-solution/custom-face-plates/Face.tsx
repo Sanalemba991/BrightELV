@@ -444,7 +444,7 @@ const Face = () => {
               variants={scrollImageVariants}
             >
               <Image
-                src="https://images.unsplash.com/photo-1765211003001-b9eb5cbfe1f3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyMXx8fGVufDB8fHx8fA%3D%3D"
+                src="/banner/custom/custom.png"
                 alt="Modern white architecture"
                 fill
                 className="object-cover"
@@ -457,7 +457,7 @@ const Face = () => {
               variants={scrollImageVariants}
             >
               <Image
-                src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800&q=80"
+                src="/banner/custom/custom1.png"
                 alt="Modern white architecture"
                 fill
                 className="object-cover"
@@ -470,10 +470,10 @@ const Face = () => {
               variants={scrollImageVariants}
             >
               <Image
-                src="/sad.jpg"
+                src="/banner/custom/custom3.png"
                 alt="Portrait photography"
                 fill
-                className="object-cover grayscale"
+                className="object-cover "
               />
             </motion.div>
 
@@ -483,7 +483,7 @@ const Face = () => {
               variants={scrollImageVariants}
             >
               <Image
-                src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80"
+                src="/banner/custom/custom2.png"
                 alt="Modern architecture building with lines"
                 fill
                 className="object-cover"

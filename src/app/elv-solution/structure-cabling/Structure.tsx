@@ -149,8 +149,7 @@ export default function Structure() {
     ease: [0.25, 0.1, 0.25, 1],
   };
 
-  const bannerBackground =
-    "/strucutrurecabling/structurecabling.png";
+  const bannerBackground = "/strucutrurecabling/structurecabling.png";
 
   const bannerContainerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -204,11 +203,10 @@ export default function Structure() {
             className="absolute inset-0 bg-cover bg-center bg-fixed"
             style={{
               backgroundImage: `url('${bannerBackground}')`,
-             
             }}
           />
           {/* Dark overlay for better text visibility */}
-           </motion.div>
+        </motion.div>
 
         {/* Content Container */}
         <motion.div
@@ -239,7 +237,7 @@ export default function Structure() {
                 Cabling
               </motion.span>
             </motion.h1>
-            
+
             {/* Mobile-only description */}
             <motion.div
               className="md:hidden mt-8 px-6 flex flex-col items-center gap-3 w-full"
@@ -248,7 +246,8 @@ export default function Structure() {
               transition={{ duration: 0.8, delay: 1.8 }}
             >
               <motion.p className="text-white/70 text-sm text-center leading-relaxed max-w-xs">
-                Reliable structured cabling solutions in Dubai for seamless connectivity and scalable network performance.
+                Reliable structured cabling solutions in Dubai for seamless
+                connectivity and scalable network performance.
               </motion.p>
               <motion.div
                 className="h-0.5 bg-white/30"
@@ -396,7 +395,6 @@ export default function Structure() {
             </div>
           </div>
         </motion.section>
-        
       </div>
 
       {/* IMPROVED SECTIONS 01-04 */}
@@ -430,11 +428,12 @@ export default function Structure() {
                     className="text-gray-700 text-xs leading-relaxed"
                     variants={fadeInUp}
                   >
-                    Installed to industry standards for secure and efficient networking.
+                    Installed to industry standards for secure and efficient
+                    networking.
                   </motion.p>
                 </motion.div>
               </motion.div>
-              
+
               <motion.div
                 className="h-80 overflow-hidden"
                 variants={scaleIn}
@@ -443,7 +442,7 @@ export default function Structure() {
                 transition={{ ...transitionProps, delay: 0.2 }}
               >
                 <img
-                  src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=800&h=600&fit=crop"
+                  src="/sdsa.jpg"
                   alt="Expertise and Experience"
                   className="w-full h-full object-cover"
                 />
@@ -499,7 +498,7 @@ export default function Structure() {
               transition={{ ...transitionProps, delay: 0.2 }}
             >
               <img
-                src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=800&h=600&fit=crop"
+                src="/rdg.jpg"
                 alt="Expertise and Experience"
                 className="w-full h-75 object-cover"
               />
@@ -622,7 +621,7 @@ export default function Structure() {
               transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
             >
               <img
-                src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=800&h=600&fit=crop"
+                src="/rwer.jpg"
                 alt="Comprehensive Support"
                 className="w-full h-80.5 object-cover"
               />
@@ -677,7 +676,6 @@ export default function Structure() {
                   <motion.div
                     key={idx}
                     variants={cardAnim}
-           
                     className={`p-5 md:p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 ${
                       idx === features.length - 1 && features.length % 3 === 1
                         ? "lg:col-start-2"
@@ -690,7 +688,7 @@ export default function Structure() {
                             feature.icon as React.ReactElement<any>,
                             {
                               className: "w-6 h-6 md:w-8 md:h-8",
-                            }
+                            },
                           )
                         : feature.icon}
                     </div>
