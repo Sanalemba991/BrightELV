@@ -20,7 +20,7 @@ interface Link {
   href: string;
 }
 
-export function Footer() {
+export default function Footer() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isVisible, setIsVisible] = useState<boolean>(false);
