@@ -303,7 +303,7 @@ export default function ProductDetailClient({
               </button>
 
               <a
-                href="https://wa.me/971508813801"
+                href="https://wa.me/971508813601"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 px-3 py-1 bg-green-600 text-white font-medium text-xs rounded-lg hover:bg-green-700 shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-1"
