@@ -1,5 +1,7 @@
+"use client";
 import Logo from "././../../../public/logo.png";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 interface Subcategory {
   _id: string;
@@ -176,7 +178,7 @@ export default function Footer() {
                   key={i}
                   className="transform transition-all duration-300 hover:translate-x-1"
                 >
-                  <a
+                  <Link
                     href={link.href}
                     className="text-sm text-gray-600 hover:text-blue-600 transition-colors duration-200 flex items-center"
                     onMouseEnter={() => setActiveSection(`quick-${i}`)}
@@ -192,7 +194,7 @@ export default function Footer() {
                       →
                     </span>
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -209,7 +211,7 @@ export default function Footer() {
                   key={i}
                   className="transform transition-all duration-300 hover:translate-x-1"
                 >
-                  <a
+                  <Link
                     href={link.href}
                     className="text-sm text-gray-600 hover:text-blue-600 transition-colors duration-200 flex items-center"
                     onMouseEnter={() => setActiveSection(`product-${i}`)}
@@ -225,7 +227,7 @@ export default function Footer() {
                       →
                     </span>
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

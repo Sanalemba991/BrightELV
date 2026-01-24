@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown, Phone, MessageCircle, Mail } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+
 interface SubCategory {
   _id: string;
   name: string;
@@ -60,16 +61,16 @@ const ELV_SOLUTIONS = [
 const CONTACT_INFO = [
   { icon: Phone, href: "tel:+971565022960", text: "+971 565022960", color: "text-blue-900" },
   {
-  icon: MessageCircle,
-  href: "https://wa.me/971508813601",
-  text: "+971 50 881 3601",
-  color: "text-green-600",
-}
-,{ icon: Mail, href: "mailto:sales@brightelv.com", text: "sales@brightelv.com", color: "text-blue-900" },
+    icon: MessageCircle,
+    href: "https://wa.me/971508813601",
+    text: "+971 50 881 3601",
+    color: "text-green-600",
+  },
+  { icon: Mail, href: "mailto:sales@brightelv.com", text: "sales@brightelv.com", color: "text-blue-900" },
 ];
 
 interface DropdownProps {
-  items: { name: string; href: string }[];
+  items: { name: string; href: string; isViewAll?: boolean }[];
   isOpen: boolean;
   closeMenu?: () => void;
 }
@@ -77,18 +78,24 @@ interface DropdownProps {
 const DropdownMenu = ({ items, isOpen, closeMenu }: DropdownProps) => {
   if (!isOpen) return null;
   return (
-    <div className="ml-4 mt-1 border-l-2 border-blue-100 pl-4 space-y-1">
+    <motion.div 
+      initial={{ opacity: 0, height: 0 }}
+      animate={{ opacity: 1, height: "auto" }}
+      exit={{ opacity: 0, height: 0 }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
+      className="ml-4 mt-1 border-l-2 border-blue-100 pl-4 space-y-1 overflow-hidden"
+    >
       {items.map((item) => (
-        <a
+        <Link
           key={item.name}
           href={item.href}
-          className="block py-2 text-gray-600 hover:text-blue-900 text-sm"
+          className="block py-2 text-gray-600 hover:text-blue-900 text-sm transition-colors duration-200"
           onClick={closeMenu}
         >
           {item.name}
-        </a>
+        </Link>
       ))}
-    </div>
+    </motion.div>
   );
 };
 
@@ -130,6 +137,13 @@ export default function Navbar() {
     
     fetchCategories();
   }, []);
+
+  // Close dropdowns when pathname changes
+  useEffect(() => {
+    setOpenDropdown(null);
+    setOpenMobileSubmenu(null);
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === href;
@@ -188,9 +202,9 @@ export default function Navbar() {
 
             {/* CTA Button */}
             <div className="hidden lg:flex items-center gap-4">
-              <a href="/contact" className="px-5 py-2 bg-blue-900 text-white text-xs rounded-full hover:bg-blue-700 transition-all shadow-lg shadow-blue-900/25 hover:shadow-blue-900/40">
+              <Link href="/contact" className="px-5 py-2 bg-blue-900 text-white text-xs rounded-full hover:bg-blue-700 transition-all shadow-lg shadow-blue-900/25 hover:shadow-blue-900/40">
                 Get Quote
-              </a>
+              </Link>
             </div>
 
             {/* Mobile Menu Button */}
@@ -201,18 +215,20 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <MobileMenu 
-            navLinks={NAV_LINKS} 
-            categories={categories} 
-            openMobileSubmenu={openMobileSubmenu} 
-            setOpenMobileSubmenu={setOpenMobileSubmenu} 
-            setIsMobileMenuOpen={setIsMobileMenuOpen}
-            pathname={pathname}
-            isActive={isActive}
-            isDropdownActive={isDropdownActive}
-          />
-        )}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <MobileMenu 
+              navLinks={NAV_LINKS} 
+              categories={categories} 
+              openMobileSubmenu={openMobileSubmenu} 
+              setOpenMobileSubmenu={setOpenMobileSubmenu} 
+              setIsMobileMenuOpen={setIsMobileMenuOpen}
+              pathname={pathname}
+              isActive={isActive}
+              isDropdownActive={isDropdownActive}
+            />
+          )}
+        </AnimatePresence>
       </nav>
     </>
   );
@@ -240,23 +256,23 @@ const DesktopNavItem = ({ link, openDropdown, setOpenDropdown, categories, isScr
   const isCurrentlyActive = link.dropdown ? isDropdownActive : isActive;
 
   return (
-    <div className="static" onMouseEnter={() => link.hasDropdown && setOpenDropdown(link.dropdown || null)} onMouseLeave={() => setOpenDropdown(null)}>
-      <a 
+    <div 
+      className="static" 
+      onMouseEnter={() => link.hasDropdown && setOpenDropdown(link.dropdown || null)} 
+      onMouseLeave={() => setOpenDropdown(null)}
+    >
+      <Link 
         href={link.href} 
-        className={`px-3 py-2 font-medium transition-all flex items-center gap-2 text-xs relative group ${
-          isScrolled 
-            ? (isCurrentlyActive 
-              ? "text-blue-900" 
-              : "text-black hover:text-blue-900") 
-            : (isCurrentlyActive 
-              ? "text-blue-900" 
-              : "text-black hover:text-blue-900")
+        className={`px-3 py-2 font-medium transition-all duration-200 flex items-center gap-2 text-xs relative group ${
+          isCurrentlyActive 
+            ? "text-blue-900" 
+            : "text-black hover:text-blue-900"
         }`}
       >
         {link.name}
-        {link.hasDropdown && <ChevronDown className={`w-3 h-3 transition-transform ${openDropdown === link.dropdown ? 'rotate-180' : ''}`} />}
+        {link.hasDropdown && <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${openDropdown === link.dropdown ? 'rotate-180' : ''}`} />}
         <span className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 h-px bg-blue-900 transition-all duration-300 ${isCurrentlyActive ? 'w-1/2' : 'w-0 group-hover:w-1/2'}`}></span>
-      </a>
+      </Link>
       <AnimatePresence>
         {Dropdown && isOpen && <Dropdown {...dropdownConfig[link.dropdown!].props} />}
       </AnimatePresence>
@@ -284,22 +300,22 @@ const ProductsTextDropdown = ({ categories }: { categories: Category[] }) => {
           <div className="flex flex-col">
             <div className="flex flex-wrap gap-x-6 gap-y-3 mb-4">
               {categories.map((category) => (
-                <a
+                <Link
                   key={category._id}
                   href={`/products/${category.slug}`}
                   className="py-2 px-3 text-gray-700 hover:text-blue-900 hover:bg-blue-50 text-sm transition-all duration-200 rounded-md whitespace-nowrap"
                 >
                   {category.name}
-                </a>
+                </Link>
               ))}
             </div>
             <div className="border-t pt-3">
-              <a
+              <Link
                 href="/products"
                 className="text-blue-900 font-semibold text-sm hover:text-blue-700 transition-all inline-flex items-center gap-1 group"
               >
                 All Products <span className="transition-transform group-hover:translate-x-1">→</span>
-              </a>
+              </Link>
             </div>
           </div>
         )}
@@ -324,23 +340,23 @@ const SimpleTextDropdown = ({ items }: { items: { name: string; href: string; is
         <div className="flex flex-col">
           <div className="flex flex-wrap gap-x-6 gap-y-3 mb-4">
             {regularItems.map((item) => (
-              <a
+              <Link
                 key={item.name}
                 href={item.href}
                 className="py-2 px-3 text-gray-700 hover:text-blue-900 hover:bg-blue-50 text-sm transition-all duration-200 rounded-md whitespace-nowrap"
               >
                 {item.name}
-              </a>
+              </Link>
             ))}
           </div>
           {viewAllItem && (
             <div className="border-t pt-3">
-              <a
+              <Link
                 href={viewAllItem.href}
                 className="text-blue-900 font-semibold text-sm hover:text-blue-700 transition-all inline-flex items-center gap-1 group"
               >
                 {viewAllItem.name.replace('View All ', 'All ')} <span className="transition-transform group-hover:translate-x-1">→</span>
-              </a>
+              </Link>
             </div>
           )}
         </div>
@@ -361,7 +377,13 @@ interface MobileMenuProps {
 }
 
 const MobileMenu = ({ navLinks, categories, openMobileSubmenu, setOpenMobileSubmenu, setIsMobileMenuOpen, pathname, isActive, isDropdownActive }: MobileMenuProps) => (
-  <div className="lg:hidden bg-white border-t border-gray-100 max-h-[80vh] overflow-y-auto">
+  <motion.div 
+    initial={{ opacity: 0, height: 0 }}
+    animate={{ opacity: 1, height: "auto" }}
+    exit={{ opacity: 0, height: 0 }}
+    transition={{ duration: 0.3, ease: "easeInOut" }}
+    className="lg:hidden bg-white border-t border-gray-100 overflow-hidden"
+  >
     <div className="py-4 px-4 space-y-1">
       {navLinks.map((link) => {
         const isCurrentlyActive = link.dropdown ? isDropdownActive(link.dropdown!) : isActive(link.href);
@@ -369,9 +391,9 @@ const MobileMenu = ({ navLinks, categories, openMobileSubmenu, setOpenMobileSubm
         return (
           <div key={link.name}>
             <div className="flex items-center justify-between">
-              <a 
+              <Link 
                 href={link.href} 
-                className={`flex-1 px-4 py-3 font-medium rounded-lg text-sm relative ${
+                className={`flex-1 px-4 py-3 font-medium rounded-lg text-sm relative transition-all duration-200 ${
                   isCurrentlyActive 
                     ? "text-blue-900 bg-blue-50" 
                     : "text-gray-700 hover:bg-blue-50"
@@ -380,23 +402,25 @@ const MobileMenu = ({ navLinks, categories, openMobileSubmenu, setOpenMobileSubm
               >
                 {link.name}
                 <span className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 h-px bg-blue-900 transition-all duration-300 ${isCurrentlyActive ? 'w-1/2' : 'w-0'}`}></span>
-              </a>
+              </Link>
               {link.hasDropdown && (
                 <button onClick={() => setOpenMobileSubmenu(openMobileSubmenu === link.dropdown ? null : link.dropdown || null)} className="p-3 text-gray-500">
-                  <ChevronDown className={`w-5 h-5 transition-transform ${openMobileSubmenu === link.dropdown ? 'rotate-180' : ''}`} />
+                  <ChevronDown className={`w-5 h-5 transition-transform duration-200 ${openMobileSubmenu === link.dropdown ? 'rotate-180' : ''}`} />
                 </button>
               )}
             </div>
             
-            {link.dropdown === 'products' && openMobileSubmenu === 'products' && (
-              <DropdownMenu items={categories.map(c => ({ name: c.name, href: `/products/${c.slug}` }))} isOpen closeMenu={() => setIsMobileMenuOpen(false)} />
-            )}
-            {link.dropdown === 'custom' && openMobileSubmenu === 'custom' && (
-              <DropdownMenu items={CUSTOM_SOLUTIONS} isOpen closeMenu={() => setIsMobileMenuOpen(false)} />
-            )}
-            {link.dropdown === 'elv' && openMobileSubmenu === 'elv' && (
-              <DropdownMenu items={ELV_SOLUTIONS} isOpen closeMenu={() => setIsMobileMenuOpen(false)} />
-            )}
+            <AnimatePresence>
+              {link.dropdown === 'products' && openMobileSubmenu === 'products' && (
+                <DropdownMenu items={categories.map(c => ({ name: c.name, href: `/products/${c.slug}` }))} isOpen closeMenu={() => setIsMobileMenuOpen(false)} />
+              )}
+              {link.dropdown === 'custom' && openMobileSubmenu === 'custom' && (
+                <DropdownMenu items={CUSTOM_SOLUTIONS} isOpen closeMenu={() => setIsMobileMenuOpen(false)} />
+              )}
+              {link.dropdown === 'elv' && openMobileSubmenu === 'elv' && (
+                <DropdownMenu items={ELV_SOLUTIONS} isOpen closeMenu={() => setIsMobileMenuOpen(false)} />
+              )}
+            </AnimatePresence>
           </div>
         );
       })}
@@ -404,19 +428,19 @@ const MobileMenu = ({ navLinks, categories, openMobileSubmenu, setOpenMobileSubm
       {/* Mobile Contact Info */}
       <div className="border-t border-gray-100 pt-4 mt-4 space-y-3">
         {CONTACT_INFO.map(({ icon: Icon, href, text, color }) => (
-          <a key={href} href={href} className="flex items-center gap-3 px-4 py-2 text-gray-600 hover:text-blue-900 text-sm">
+          <a key={href} href={href} className="flex items-center gap-3 px-4 py-2 text-gray-600 hover:text-blue-900 text-sm transition-colors duration-200">
             <Icon className={`w-5 h-5 ${color}`} />
             <span>{text}</span>
           </a>
         ))}
-        <a href="/contact" className={`block mx-4 mt-4 px-6 py-3 font-medium rounded-full text-center text-sm ${
+        <Link href="/contact" className={`block mx-4 mt-4 px-6 py-3 font-medium rounded-full text-center text-sm transition-all duration-200 ${
           pathname === "/contact" 
             ? "bg-blue-900 text-white" 
             : "bg-blue-900 text-white hover:bg-blue-700"
         }`} onClick={() => setIsMobileMenuOpen(false)}>
           Get Quote
-        </a>
+        </Link>
       </div>
     </div>
-  </div>
+  </motion.div>
 );
