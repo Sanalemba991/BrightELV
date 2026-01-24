@@ -17,8 +17,7 @@ export default function ELVSolutions() {
   const solutionsInView = useInView(solutionsRef, { once: true, amount: 0.3 });
 
   // Banner background image
-  const bannerBackground =
-    "/banner/elvsolution.png";
+  const bannerBackground = "/banner/elvsolution.png";
 
   // Banner animation variants
   const bannerContainerVariants: Variants = {
@@ -148,7 +147,7 @@ export default function ELVSolutions() {
   return (
     <div className="bg-white overflow-x-hidden">
       {/* Fixed Background Banner - Responsive Design */}
-      <div className="relative mb-16 w-full h-96 md:h-screen bg-black overflow-hidden">
+      <div className="relative mb-8 w-full h-96 md:h-screen bg-black overflow-hidden">
         {/* Background Image with Fixed Positioning */}
         <motion.div
           className="absolute inset-0 w-full h-full"
@@ -160,12 +159,11 @@ export default function ELVSolutions() {
             className="absolute inset-0 bg-cover bg-center bg-fixed"
             style={{
               backgroundImage: `url('${bannerBackground}')`,
-                   filter: "brightness(0.9)",
-            
+              filter: "brightness(0.9)",
             }}
           />
           {/* Dark overlay for better text visibility */}
-         </motion.div>
+        </motion.div>
 
         {/* Content Container */}
         <motion.div
@@ -196,7 +194,7 @@ export default function ELVSolutions() {
                 Solutions
               </motion.span>
             </motion.h1>
-            
+
             {/* Mobile-only description */}
             <motion.div
               className="md:hidden mt-8 px-6 flex flex-col items-center gap-3 w-full"
@@ -205,7 +203,8 @@ export default function ELVSolutions() {
               transition={{ duration: 0.8, delay: 1.8 }}
             >
               <motion.p className="text-white/70 text-sm text-center leading-relaxed max-w-xs">
-                Comprehensive Extra Low Voltage systems for modern infrastructure, security, and communication needs.
+                Comprehensive Extra Low Voltage systems for modern
+                infrastructure, security, and communication needs.
               </motion.p>
               <motion.div
                 className="h-0.5 bg-white/30"
@@ -252,7 +251,7 @@ export default function ELVSolutions() {
       </div>
 
       {/* Main Content */}
-      <main className="w-full py-16 px-4 md:px-8 lg:px-8 max-w-7xl mx-auto">
+      <main className="w-full py-8 px-4 md:px-8 lg:px-8 max-w-7xl mx-auto">
         {/* Hero Section */}
         <section ref={heroRef} className="w-full text-center">
           <motion.h1
@@ -289,7 +288,7 @@ export default function ELVSolutions() {
         </section>
 
         {/* Features Section */}
-        <section ref={featuresRef} className="mt-20">
+        <section ref={featuresRef} className="mt-12">
           <motion.div
             variants={teamContainerVariants}
             initial="hidden"
@@ -350,12 +349,12 @@ export default function ELVSolutions() {
         </section>
 
         {/* Solutions Section */}
-        <section ref={solutionsRef} className="mt-20">
+        <section ref={solutionsRef} className="mt-12">
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate={solutionsInView ? "visible" : "hidden"}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-5"
           >
             {/* ROW 1: 2 IMAGES (Left-Top + Left-Bottom) + TEXT DATA (Right) */}
 
@@ -366,7 +365,7 @@ export default function ELVSolutions() {
             >
               <div className="relative h-[120px] md:h-[180px] bg-gray-100">
                 <Image
-                  src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&h=250&fit=crop&auto=format"
+                  src="/elv/first.png"
                   alt="CCTV System"
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -381,7 +380,7 @@ export default function ELVSolutions() {
             >
               <div className="relative h-[120px] md:h-[180px] bg-gray-100">
                 <Image
-                  src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=500&h=250&fit=crop&auto=format"
+                  src="/elv/second.png"
                   alt="Network Cabling"
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -446,7 +445,7 @@ export default function ELVSolutions() {
             >
               <div className="relative h-[120px] md:h-[180px] bg-gray-100">
                 <Image
-                  src="https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=500&h=250&fit=crop&auto=format"
+                  src="/elv/third.png"
                   alt="PABX System"
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -461,7 +460,7 @@ export default function ELVSolutions() {
             >
               <div className="relative h-[120px] md:h-[180px] bg-gray-100">
                 <Image
-                  src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=500&h=250&fit=crop&auto=format"
+                  src="/elv/four.png"
                   alt="Audio Visual Setup"
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -476,7 +475,7 @@ export default function ELVSolutions() {
             >
               <div className="relative h-[120px] md:h-[180px] bg-gray-100">
                 <Image
-                  src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=500&h=250&fit=crop&auto=format"
+                  src="/elv/five.png"
                   alt="Structured Cabling"
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -515,7 +514,7 @@ export default function ELVSolutions() {
             >
               <div className="relative h-[120px] md:h-[180px] bg-gray-100">
                 <Image
-                  src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&h=250&fit=crop&auto=format"
+                  src="/elv/six.png"
                   alt="ELV Equipment"
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -534,13 +533,14 @@ export default function ELVSolutions() {
               <div className="flex space-x-4">
                 <NextLink
                   href="/customised-solution"
-                  className="text-sm font-medium text-black hover:underline"
+                  className="text-sm font-medium text-black hover:text-blue-700 transition-colors duration-200"
                 >
                   • CUSTOMISED SOLUTIONS
                 </NextLink>
+
                 <NextLink
                   href="/contact"
-                  className="text-sm font-medium text-black hover:underline"
+                  className="text-sm font-medium text-black hover:text-blue-700 transition-colors duration-200"
                 >
                   • CONTACT US
                 </NextLink>
@@ -556,7 +556,7 @@ export default function ELVSolutions() {
             >
               <div className="relative h-[120px] md:h-[180px] bg-gray-100">
                 <Image
-                  src="https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=500&h=250&fit=crop&auto=format"
+                  src="/elv/seven.png"
                   alt="Communication System"
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"

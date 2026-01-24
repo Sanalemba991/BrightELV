@@ -503,7 +503,7 @@ export default function Audio() {
                 transition={{ ...transitionProps, delay: 0.2 }}
               >
                 <img
-                  src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=600&fit=crop"
+                  src="/audio/audio.png"
                   alt="Conference Room AV"
                   className="w-full h-full object-cover"
                 />
@@ -560,7 +560,7 @@ export default function Audio() {
               transition={{ ...transitionProps, delay: 0.2 }}
             >
               <img
-                src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=600&fit=crop"
+                src="/audio/audio.png"
                 alt="Conference Room AV"
                 className="w-full h-75 object-cover"
               />
@@ -689,7 +689,7 @@ export default function Audio() {
               transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
             >
               <img
-                src="https://images.unsplash.com/photo-1761839256840-7780a45b85dc?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw4fHx8ZW58MHx8fHx8"
+                src="/audio/audio2.png"
                 alt="Professional Sound Systems"
                 className="w-full h-80.5 object-cover"
               />

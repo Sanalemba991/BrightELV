@@ -539,7 +539,7 @@ export default function Pabx() {
               transition={{ ...transitionProps, delay: 0.2 }}
             >
               <img
-                src="/maintenance/main1.jpg"
+                src="/pabx/pabxx.png"
                 alt="High-Resolution Audio PABX"
                 className="w-full h-75 object-cover"
               />
@@ -667,7 +667,7 @@ export default function Pabx() {
               transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
             >
               <img
-                src="/maintenance/mian2.png"
+                src="/pabx/pabxxx.png"
                 alt="Scalable PABX Solutions"
                 className="w-full h-80.5 object-cover"
               />

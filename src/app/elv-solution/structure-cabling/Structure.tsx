@@ -442,7 +442,7 @@ export default function Structure() {
                 transition={{ ...transitionProps, delay: 0.2 }}
               >
                 <img
-                  src="/sdsa.jpg"
+                  src="/strucuturecabling/struc.png"
                   alt="Expertise and Experience"
                   className="w-full h-full object-cover"
                 />
@@ -498,7 +498,7 @@ export default function Structure() {
               transition={{ ...transitionProps, delay: 0.2 }}
             >
               <img
-                src="/rdg.jpg"
+                src="/strucutrurecabling/struc.png"
                 alt="Expertise and Experience"
                 className="w-full h-75 object-cover"
               />
@@ -621,7 +621,7 @@ export default function Structure() {
               transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
             >
               <img
-                src="/rwer.jpg"
+                src="/strucutrurecabling/struc2.png"
                 alt="Comprehensive Support"
                 className="w-full h-80.5 object-cover"
               />
@@ -667,7 +667,7 @@ export default function Structure() {
               whileInView="visible"
               variants={staggerContainer}
               viewport={{ once: true, amount: 0.2, margin: "-100px" }}
-              className="grid grid-cols-1 mt-12 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
+              className="grid grid-cols-1 mt-12 sm:grid-cols-2 lg:grid-cols-3 gap-6"
             >
               {features.map((feature, idx) => {
                 const isEven = idx % 2 === 0;
@@ -676,26 +676,27 @@ export default function Structure() {
                   <motion.div
                     key={idx}
                     variants={cardAnim}
-                    className={`p-5 md:p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 ${
+                    transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
+                    className={`p-6 bg-white border border-gray-200 ${
                       idx === features.length - 1 && features.length % 3 === 1
                         ? "lg:col-start-2"
                         : ""
                     }`}
                   >
-                    <div className="text-blue-900 mb-3 flex items-center justify-center w-12 h-12 md:w-auto md:h-auto md:block bg-blue-50 md:bg-transparent rounded-full md:rounded-none">
+                    <div className="text-blue-900 mb-3">
                       {React.isValidElement(feature.icon)
                         ? React.cloneElement(
                             feature.icon as React.ReactElement<any>,
                             {
-                              className: "w-6 h-6 md:w-8 md:h-8",
+                              className: "w-8 h-8",
                             },
                           )
                         : feature.icon}
                     </div>
-                    <h4 className="text-sm md:text-base font-semibold mb-2 text-black">
+                    <h4 className="text-base font-semibold mb-2 text-black">
                       {feature.title}
                     </h4>
-                    <p className="text-gray-600 text-xs md:text-sm leading-relaxed">
+                    <p className="text-gray-600 text-sm">
                       {feature.description}
                     </p>
                   </motion.div>

@@ -8,33 +8,33 @@ export default function Testimonial() {
     {
       quote:
         "The numbers speak for themselves. We're seeing a 50% resolution rate with Fin, which is pretty amazing!",
-      name: "Ben Peak",
+      name: "Daina Smith",
       position: "Director of Technical Support",
       company: "Robin",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=faces",
+      image: "/testimonal/pas1.png",
     },
     {
       quote:
         "Fin has transformed our workflow. Efficiency up by 40%! Highly recommend.",
-      name: "Alice Johnson",
+      name: "Elizabeth Brown",
       position: "CTO",
       company: "TechCorp",
-      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&crop=faces",
+      image: "/testimonal/pas2.png",
     },
     {
       quote: "Outstanding support and reliability. Our team loves using Fin.",
-      name: "John Doe",
+      name: "John Smith",
       position: "Manager",
       company: "Innovate Ltd",
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&crop=faces",
+      image: "/testimonal/pass3.png",
     },
     {
       quote:
         "Fin is a game-changer for our operations. Increased productivity significantly.",
-      name: "Sarah Lee",
+      name: "Jake Wilson",
       position: "VP of Operations",
       company: "Global Solutions",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=faces",
+      image: "/testimonal/pas4.png",
     },
   ];
 

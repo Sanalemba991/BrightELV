@@ -593,7 +593,7 @@ export default function CCTV() {
               transition={{ ...transitionProps, delay: 0.2 }}
             >
               <img
-                src="/cctv.jpg"
+                src="/cctvintallation/cctv.png"
                 alt="Modern buildings"
                 className="w-full h-75 object-cover"
               />
@@ -721,7 +721,7 @@ export default function CCTV() {
               transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
             >
               <img
-                src="/cctv2.jpg"
+                src="/cctvintallation/cctv2.png"
                 alt="CCTV Maintenance"
                 className="w-full h-80.5 object-cover"
               />
