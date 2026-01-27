@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-hot-toast';
-import { FiPlus, FiEdit2, FiTrash2, FiX, FiSave, FiBox, FiImage, FiSearch, FiEye, FiEyeOff } from 'react-icons/fi';
+import { FiPlus, FiEdit2, FiTrash2, FiX, FiSave, FiBox, FiImage, FiSearch, FiEye, FiEyeOff, FiFileText, FiDownload } from 'react-icons/fi';
 
 interface Product {
     _id: string;
@@ -14,6 +14,7 @@ interface Product {
     image2?: string;
     image3?: string;
     image4?: string;
+    pdfUrl?: string;
     category: { _id: string; name: string };
     subcategory?: { _id: string; name: string };
     createdAt: string;
@@ -43,6 +44,8 @@ export default function ProductsPage() {
     const [imagePreviews, setImagePreviews] = useState<{ [key: string]: string }>({
         image1: '', image2: '', image3: '', image4: ''
     });
+    const [pdfFile, setPdfFile] = useState<File | null>(null);
+    const [pdfPreview, setPdfPreview] = useState<string>('');
 
     const fetchProducts = async () => {
         try {
@@ -82,7 +85,6 @@ export default function ProductsPage() {
         } else {
             setFilteredSubcategories([]);
         }
-        setFormData(prev => ({ ...prev, subcategory: '' }));
     }, [formData.category, subcategories]);
 
     const handleImageChange = (field: string, e: React.ChangeEvent<HTMLInputElement>) => {
@@ -116,13 +118,20 @@ export default function ProductsPage() {
                 if (file) submitData.append(key, file);
             });
 
+            // Append PDF if present
+            if (pdfFile) {
+                submitData.append('pdf', pdfFile);
+            }
+
             const url = editingProduct ? `/api/products/${editingProduct._id}` : '/api/products';
             const method = editingProduct ? 'PUT' : 'POST';
             
             const response = await fetch(url, { method, body: submitData });
 
             if (response.ok) {
-                toast.success(editingProduct ? 'Product updated!' : 'Product created!');
+                const action = editingProduct ? 'Product updated' : 'Product created';
+                const pdfMsg = pdfFile ? ' with PDF' : '';
+                toast.success(`${action}${pdfMsg} successfully!`);
                 closeModal();
                 fetchProducts();
             } else {
@@ -150,6 +159,7 @@ export default function ProductsPage() {
             image3: product.image3 || '',
             image4: product.image4 || ''
         });
+        setPdfPreview(product.pdfUrl || '');
         setShowModal(true);
     };
 
@@ -178,6 +188,8 @@ export default function ProductsPage() {
         });
         setImages({ image1: null, image2: null, image3: null, image4: null });
         setImagePreviews({ image1: '', image2: '', image3: '', image4: '' });
+        setPdfFile(null);
+        setPdfPreview('');
     };
 
     const filteredProducts = products.filter(p => 
@@ -365,7 +377,7 @@ export default function ProductsPage() {
                                         <label className="block text-sm font-medium text-gray-300 mb-2">Category</label>
                                         <select
                                             value={formData.category}
-                                            onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                                            onChange={(e) => setFormData({ ...formData, category: e.target.value, subcategory: '' })}
                                             className="w-full px-4 py-3 rounded-xl bg-slate-700/50 border border-white/10 text-white focus:outline-none focus:border-cyan-500/50"
                                             required
                                         >
@@ -461,6 +473,59 @@ export default function ProductsPage() {
                                                 </label>
                                             </div>
                                         ))}
+                                    </div>
+                                </div>
+
+                                {/* PDF Upload (Optional) */}
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                                        Product PDF
+                                        <span className="text-gray-500 font-normal ml-2">(Optional - Brochure/Documentation)</span>
+                                    </label>
+                                    <div className="flex items-center gap-4">
+                                        <input
+                                            type="file"
+                                            accept="application/pdf"
+                                            onChange={(e) => {
+                                                const file = e.target.files?.[0];
+                                                if (file) {
+                                                    setPdfFile(file);
+                                                    setPdfPreview(file.name);
+                                                    toast.success('PDF added successfully');
+                                                }
+                                            }}
+                                            className="hidden"
+                                            id="pdfFile"
+                                        />
+                                        <label
+                                            htmlFor="pdfFile"
+                                            className="flex-1 h-16 rounded-xl border-2 border-dashed border-white/20 hover:border-cyan-500/50 cursor-pointer flex items-center justify-center gap-3 transition-colors"
+                                        >
+                                            {pdfPreview ? (
+                                                <div className="flex items-center gap-2 text-cyan-400">
+                                                    <FiFileText className="w-5 h-5" />
+                                                    <span className="text-sm truncate max-w-[200px]">{pdfPreview}</span>
+                                                </div>
+                                            ) : (
+                                                <div className="flex items-center gap-2 text-gray-500">
+                                                    <FiFileText className="w-5 h-5" />
+                                                    <span className="text-sm">Click to upload PDF</span>
+                                                </div>
+                                            )}
+                                        </label>
+                                        {pdfPreview && (
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setPdfFile(null);
+                                                    setPdfPreview('');
+                                                }}
+                                                className="p-2 rounded-lg bg-red-500/20 text-red-400 hover:bg-red-500/30 transition-colors"
+                                                title="Remove PDF"
+                                            >
+                                                <FiX className="w-4 h-4" />
+                                            </button>
+                                        )}
                                     </div>
                                 </div>
 

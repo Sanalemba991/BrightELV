@@ -17,6 +17,7 @@ import {
   Facebook,
   Instagram,
   ChevronLeft,
+  Download,
 } from "lucide-react";
 
 interface Product {
@@ -29,6 +30,7 @@ interface Product {
   image2?: string;
   image3?: string;
   image4?: string;
+  pdfUrl?: string;
   category: { _id: string; name: string; slug: string };
   subcategory?: { _id: string; name: string; slug: string };
 }
@@ -290,6 +292,22 @@ export default function ProductDetailClient({
                     </div>
                   ))}
                 </div>
+            </div>
+            )}
+
+            {/* Download PDF Button */}
+            {product.pdfUrl && (
+              <div className="mb-8">
+                <a
+                  href={product.pdfUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  download
+                  className="inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-medium text-sm rounded-lg hover:from-orange-600 hover:to-orange-700 shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 transition-all"
+                >
+                  <Download className="w-4 h-4" />
+                  Download Product PDF
+                </a>
               </div>
             )}
 

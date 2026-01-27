@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import supabase from '@/app/config/db';
-import { uploadToStorage } from '@/app/utils/storage';
+import { uploadToStorage, uploadPdfToStorage } from '@/app/utils/storage';
 import { verifyAuth } from '@/app/utils/auth';
 
 // Helper function to transform product data
@@ -15,6 +15,7 @@ function transformProduct(product: any) {
     image2: product.image2,
     image3: product.image3,
     image4: product.image4,
+    pdfUrl: product.pdf_url,
     category: product.categories ? {
       _id: product.categories.id,
       name: product.categories.name,
@@ -90,6 +91,30 @@ export async function POST(request: Request) {
       }
     }
 
+    // Handle optional PDF upload
+    let pdfUrl = '';
+    const pdfFile = formData.get('pdf') as File;
+    console.log('PDF file received:', pdfFile ? { name: pdfFile.name, size: pdfFile.size, type: pdfFile.type } : 'none');
+
+    if (pdfFile && pdfFile.size > 0) {
+      try {
+        const rawName = formData.get('name');
+        const productSlug = rawName
+          ? rawName.toString().toLowerCase().replace(/[^a-z0-9]+/g, '-')
+          : `product-${Date.now()}`;
+
+        const folderPath = `products/${productSlug}/documents`;
+        console.log('Attempting to upload PDF to:', folderPath);
+        pdfUrl = await uploadPdfToStorage(pdfFile, folderPath);
+        console.log('PDF upload successful, URL:', pdfUrl);
+      } catch (error) {
+        console.error('Error uploading PDF:', error);
+        // PDF is optional, so we just log the error and continue
+      }
+    } else {
+      console.log('No PDF file to upload');
+    }
+
     const name = formData.get('name') as string;
     const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
@@ -105,6 +130,7 @@ export async function POST(request: Request) {
       image2: imageUrls.image2 || '',
       image3: imageUrls.image3 || '',
       image4: imageUrls.image4 || '',
+      pdf_url: pdfUrl || null,
       seo_title: formData.get('seoTitle') || '',
       seo_description: formData.get('seoDescription') || '',
       seo_keywords: formData.get('seoKeywords') || ''
@@ -119,10 +145,10 @@ export async function POST(request: Request) {
     if (error) throw error;
 
     return NextResponse.json(transformProduct(product), { status: 201 });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error creating product:', error);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Failed to create product' },
+      { error: error?.message || 'Failed to create product' },
       { status: 500 }
     );
   }

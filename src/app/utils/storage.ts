@@ -35,6 +35,58 @@ export async function uploadToStorage(file: File, folder: string): Promise<strin
   }
 }
 
+// Helper to upload a PDF file to Supabase Storage
+export async function uploadPdfToStorage(file: File, folder: string): Promise<string> {
+  try {
+    console.log('uploadPdfToStorage called with:', {
+      fileName: file.name,
+      fileType: file.type,
+      fileSize: file.size,
+      folder
+    });
+
+    // Validate file type - be lenient with MIME types
+    const isPdf = file.type === 'application/pdf' ||
+      file.name.toLowerCase().endsWith('.pdf');
+
+    if (!isPdf) {
+      console.error('Invalid file type:', file.type, file.name);
+      throw new Error('Invalid file type. Only PDF files are allowed.');
+    }
+
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    // Sanitize filename and append timestamp
+    const name = file.name.replace(/[^a-zA-Z0-9.-]/g, '');
+    const path = `${folder}/${Date.now()}-${name}`;
+
+    console.log('Uploading PDF to path:', path);
+
+    const { data, error } = await supabase.storage
+      .from(BUCKET_NAME)
+      .upload(path, buffer, {
+        contentType: 'application/pdf',
+        upsert: true
+      });
+
+    if (error) {
+      console.error('Supabase PDF upload error:', error);
+      throw new Error(`PDF upload failed: ${error.message}`);
+    }
+
+    const { data: { publicUrl } } = supabase.storage
+      .from(BUCKET_NAME)
+      .getPublicUrl(path);
+
+    console.log('PDF uploaded successfully. Public URL:', publicUrl);
+    return publicUrl;
+  } catch (error) {
+    console.error('PDF upload helper error:', error);
+    throw error; // Re-throw to let caller handle it
+  }
+}
+
 // Helper to delete a file from Supabase Storage
 export async function deleteFromStorage(url: string): Promise<void> {
   if (!url) return;

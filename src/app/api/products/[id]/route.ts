@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import supabase from '@/app/config/db';
-import { deleteFromStorage, uploadToStorage } from '@/app/utils/storage';
+import { deleteFromStorage, uploadToStorage, uploadPdfToStorage } from '@/app/utils/storage';
 import { verifyAuth } from '@/app/utils/auth';
 
 // Helper function to transform product data
@@ -15,6 +15,7 @@ function transformProduct(product: any) {
     image2: product.image2,
     image3: product.image3,
     image4: product.image4,
+    pdfUrl: product.pdf_url,
     category: product.categories ? {
       _id: product.categories.id,
       name: product.categories.name,
@@ -92,6 +93,15 @@ export async function DELETE(
       }
     }
 
+    // Delete PDF from storage if exists
+    if (product.pdf_url) {
+      try {
+        await deleteFromStorage(product.pdf_url);
+      } catch (e) {
+        console.error('Failed to delete PDF:', e);
+      }
+    }
+
     const { error } = await supabase
       .from('products')
       .delete()
@@ -165,6 +175,29 @@ export async function PUT(
       }
     }
 
+    // Handle PDF update
+    const newPdf = formData.get('pdf') as File;
+    if (newPdf && newPdf.size > 0) {
+      // Delete old PDF if it exists
+      if (existingProduct.pdf_url) {
+        try {
+          await deleteFromStorage(existingProduct.pdf_url);
+        } catch (e) {
+          console.error('Failed to delete old PDF:', e);
+        }
+      }
+
+      // Upload new PDF
+      try {
+        const folderPath = `products/${productData.slug || existingProduct.slug}/documents`;
+        const pdfUrl = await uploadPdfToStorage(newPdf, folderPath);
+        productData.pdf_url = pdfUrl;
+      } catch (error) {
+        console.error('Error uploading PDF:', error);
+        // PDF is optional, so we just log the error and continue
+      }
+    }
+
     const { data: updatedProduct, error } = await supabase
       .from('products')
       .update(productData)
@@ -175,10 +208,10 @@ export async function PUT(
     if (error) throw error;
 
     return NextResponse.json(transformProduct(updatedProduct));
-  } catch (error) {
+  } catch (error: any) {
     console.error('Update error:', error);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Failed to update product' },
+      { error: error?.message || 'Failed to update product' },
       { status: 500 }
     );
   }

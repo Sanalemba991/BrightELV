@@ -13,6 +13,7 @@ interface Product {
   image2?: string;
   image3?: string;
   image4?: string;
+  pdfUrl?: string;
   category: { _id: string; name: string; slug: string };
   subcategory?: { _id: string; name: string; slug: string };
 }
@@ -27,7 +28,7 @@ async function fetchProduct(slug: string): Promise<Product | null> {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
     const response = await fetch(`${baseUrl}/api/products?slug=${slug}`, {
-      next: { revalidate: 3600 } 
+      next: { revalidate: 0 } 
     });
     
     if (response.ok) {
