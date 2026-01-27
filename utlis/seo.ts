@@ -253,7 +253,7 @@ export interface DynamicMetaData {
 }
 
 export const generateDynamicMetadata = (
-  type: "contact" | "elv-solution" | "customised-solution" | "elv-solution" | "about",
+  type: "contact" | "elv-solution" | "customised-solution"| "about",
   data: DynamicMetaData,
 ): Metadata => {
   return {
