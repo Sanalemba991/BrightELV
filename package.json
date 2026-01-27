@@ -12,6 +12,10 @@
     "@types/bcryptjs": "^2.4.6",
     "@types/jsonwebtoken": "^9.0.10",
     "bcryptjs": "^3.0.3",
+<<<<<<< HEAD
+=======
+    "cloudinary": "^2.8.0",
+>>>>>>> 8519b4eb369536447b67503c75e22989c7694fc4
     "framer-motion": "^12.23.25",
     "gsap": "^3.14.2",
     "jose": "^6.1.3",

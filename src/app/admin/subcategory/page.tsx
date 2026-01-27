@@ -162,8 +162,12 @@ export default function SubCategoriesPage() {
                 toast.success('Subcategory deleted!');
                 fetchSubcategories();
             } else {
+<<<<<<< HEAD
                 const data = await response.json();
                 toast.error(data.error || 'Failed to delete subcategory');
+=======
+                toast.error('Failed to delete subcategory');
+>>>>>>> 8519b4eb369536447b67503c75e22989c7694fc4
             }
         } catch (error) {
             toast.error('An error occurred');

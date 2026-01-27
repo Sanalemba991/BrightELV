@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server';
 import supabase from '@/app/config/db';
+<<<<<<< HEAD
 import { uploadToStorage } from '@/app/utils/storage';
+=======
+import { uploadToCloudinary } from '@/app/utils/cloudinary';
+>>>>>>> 8519b4eb369536447b67503c75e22989c7694fc4
 import { verifyAuth } from '@/app/utils/auth';
 
 export async function GET() {
@@ -39,9 +43,15 @@ export async function POST(request: Request) {
         // Verify JWT auth
         const auth = await verifyAuth();
         if (!auth.isValid) return auth.error;
+<<<<<<< HEAD
 
         const formData = await request.formData();
 
+=======
+        
+        const formData = await request.formData();
+        
+>>>>>>> 8519b4eb369536447b67503c75e22989c7694fc4
         const name = formData.get('name') as string;
         const description = formData.get('description') as string;
         const displayType = formData.get('displayType') as string || 'subcategories';
@@ -53,7 +63,11 @@ export async function POST(request: Request) {
         // Handle image upload if present
         let imageUrl = '';
         if (image && image.size > 0) {
+<<<<<<< HEAD
             imageUrl = await uploadToStorage(image, `categories/${slug}`);
+=======
+            imageUrl = await uploadToCloudinary(image, `categories/${slug}`);
+>>>>>>> 8519b4eb369536447b67503c75e22989c7694fc4
         }
 
         // Create new category

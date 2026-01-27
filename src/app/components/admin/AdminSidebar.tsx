@@ -73,12 +73,27 @@ const AdminSidebar = ({ onCollapsedChange }: AdminSidebarProps) => {
                 <div className="p-6 border-b border-orange-500/10">
                     <div className="flex items-center justify-between">
                         <motion.div 
+<<<<<<< HEAD
                             className="flex items-center gap-3 w-full"
                             animate={{ opacity: isCollapsed ? 0 : 1 }}
                         >
                             <div className="w-full flex justify-center">
                                 <img src="/adminlogo.png" alt="Bright ELV" className="w-32 h-auto object-contain" />
                             </div>
+=======
+                            className="flex items-center gap-3"
+                            animate={{ opacity: isCollapsed ? 0 : 1 }}
+                        >
+                            <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shadow-lg shadow-orange-500/30 p-1">
+                                <img src="/logo.png" alt="Bright ELV" className="w-full h-full object-contain" />
+                            </div>
+                            {!isCollapsed && (
+                                <div>
+                                    <h1 className="text-lg font-bold text-white">Bright ELV</h1>
+                                    <p className="text-xs text-gray-400">Admin Panel</p>
+                                </div>
+                            )}
+>>>>>>> 8519b4eb369536447b67503c75e22989c7694fc4
                         </motion.div>
                         <button
                             onClick={() => setIsCollapsed(!isCollapsed)}

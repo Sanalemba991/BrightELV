@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server';
 import supabase from '@/app/config/db';
+<<<<<<< HEAD
 import { uploadToStorage } from '@/app/utils/storage';
+=======
+import { uploadToCloudinary } from '@/app/utils/cloudinary';
+>>>>>>> 8519b4eb369536447b67503c75e22989c7694fc4
 import { verifyAuth } from '@/app/utils/auth';
 
 // Helper function to transform subcategory data
@@ -26,7 +30,11 @@ export async function GET(request: Request) {
     try {
         const { searchParams } = new URL(request.url);
         const category = searchParams.get('category') || searchParams.get('categoryId');
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 8519b4eb369536447b67503c75e22989c7694fc4
         let query = supabase
             .from('subcategories')
             .select('*')
@@ -41,12 +49,20 @@ export async function GET(request: Request) {
         if (error) throw error;
 
         const transformedSubcategories = subcategories?.map(transformSubcategory);
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> 8519b4eb369536447b67503c75e22989c7694fc4
         return NextResponse.json(transformedSubcategories);
     } catch (error) {
         console.error('Error fetching subcategories:', error);
         return NextResponse.json(
+<<<<<<< HEAD
             { error: 'Failed to fetch subcategories' },
+=======
+            { error: 'Failed to fetch subcategories' }, 
+>>>>>>> 8519b4eb369536447b67503c75e22989c7694fc4
             { status: 500 }
         );
     }
@@ -59,6 +75,7 @@ export async function POST(request: Request) {
         if (!auth.isValid) return auth.error;
 
         const formData = await request.formData();
+<<<<<<< HEAD
 
         // Handle image upload using Cloudinary
         const image = formData.get('image') as File;
@@ -68,6 +85,17 @@ export async function POST(request: Request) {
             try {
                 const slug = formData.get('name')?.toString().toLowerCase().replace(/[^a-z0-9]+/g, '-');
                 const uploadResult = await uploadToStorage(image, `categories/${formData.get('category')}/subcategories/${slug}`);
+=======
+        
+        // Handle image upload using Cloudinary
+        const image = formData.get('image') as File;
+        let imageUrl = '';
+        
+        if (image && image instanceof File && image.size > 0) {
+            try {
+                const slug = formData.get('name')?.toString().toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                const uploadResult = await uploadToCloudinary(image, `categories/${formData.get('category')}/subcategories/${slug}`);
+>>>>>>> 8519b4eb369536447b67503c75e22989c7694fc4
                 imageUrl = uploadResult;
             } catch (error) {
                 console.error('Error uploading image:', error);

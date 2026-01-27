@@ -214,12 +214,25 @@ export default function AdminLogin() {
                                 variants={itemVariants}
                             >
                                 <motion.div 
+<<<<<<< HEAD
                                     className="inline-flex items-center justify-center mb-6"
                                     whileHover={{ scale: 1.05 }}
                                     transition={{ type: "spring", stiffness: 400, damping: 17 }}
                                 >
                                     <img src="/adminlogo.png" alt="Bright ELV" className="w-48 h-auto object-contain" />
                                 </motion.div>
+=======
+                                    className="inline-flex items-center justify-center w-24 h-24 rounded-2xl bg-white/10 backdrop-blur-sm mb-6 shadow-lg shadow-orange-500/30 p-2"
+                                    whileHover={{ scale: 1.05, rotate: 3 }}
+                                    whileTap={{ scale: 0.98 }}
+                                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                                >
+                                    <img src="/logo.png" alt="Bright ELV" className="w-full h-full object-contain" />
+                                </motion.div>
+                                <h1 className="text-3xl font-bold text-white mb-2">
+                                    Bright <span className="text-transparent bg-clip-text bg-linear-to-r from-orange-400 to-orange-500">ELV</span>
+                                </h1>
+>>>>>>> 8519b4eb369536447b67503c75e22989c7694fc4
                                 <p className="text-gray-400 text-sm">Admin Control Panel</p>
                             </motion.div>
 

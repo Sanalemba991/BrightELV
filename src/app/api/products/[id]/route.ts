@@ -1,10 +1,15 @@
 import { NextResponse } from 'next/server';
 import supabase from '@/app/config/db';
+<<<<<<< HEAD
 import { deleteFromStorage, uploadToStorage } from '@/app/utils/storage';
+=======
+import { deleteFromCloudinary, getPublicIdFromUrl, uploadToCloudinary } from '@/app/utils/cloudinary';
+>>>>>>> 8519b4eb369536447b67503c75e22989c7694fc4
 import { verifyAuth } from '@/app/utils/auth';
 
 // Helper function to transform product data
 function transformProduct(product: any) {
+<<<<<<< HEAD
   return {
     _id: product.id,
     name: product.name,
@@ -34,6 +39,37 @@ function transformProduct(product: any) {
     faqSchema: product.faq_schema,
     createdAt: product.created_at
   };
+=======
+    return {
+        _id: product.id,
+        name: product.name,
+        slug: product.slug,
+        description: product.description,
+        keyFeatures: product.key_features || [],
+        image1: product.image1,
+        image2: product.image2,
+        image3: product.image3,
+        image4: product.image4,
+        category: product.categories ? {
+            _id: product.categories.id,
+            name: product.categories.name,
+            slug: product.categories.slug
+        } : product.category_id,
+        subcategory: product.subcategories ? {
+            _id: product.subcategories.id,
+            name: product.subcategories.name,
+            slug: product.subcategories.slug
+        } : product.subcategory_id,
+        seoTitle: product.seo_title,
+        seoDescription: product.seo_description,
+        seoKeywords: product.seo_keywords,
+        metaRobots: product.meta_robots,
+        canonicalUrl: product.canonical_url,
+        structuredData: product.structured_data,
+        faqSchema: product.faq_schema,
+        createdAt: product.created_at
+    };
+>>>>>>> 8519b4eb369536447b67503c75e22989c7694fc4
 }
 
 export async function GET(
@@ -42,7 +78,11 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 8519b4eb369536447b67503c75e22989c7694fc4
     const { data: product, error } = await supabase
       .from('products')
       .select('*, categories(id, name, slug), subcategories(id, name, slug)')
@@ -69,7 +109,11 @@ export async function DELETE(
     if (!auth.isValid) return auth.error;
 
     const { id } = await params;
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 8519b4eb369536447b67503c75e22989c7694fc4
     const { data: product, error: fetchError } = await supabase
       .from('products')
       .select('*')
@@ -85,7 +129,12 @@ export async function DELETE(
       const imageUrl = product[field];
       if (imageUrl) {
         try {
+<<<<<<< HEAD
           await deleteFromStorage(imageUrl);
+=======
+          const publicId = getPublicIdFromUrl(imageUrl);
+          await deleteFromCloudinary(publicId);
+>>>>>>> 8519b4eb369536447b67503c75e22989c7694fc4
         } catch (e) {
           console.error(`Failed to delete ${field}:`, e);
         }
@@ -152,7 +201,12 @@ export async function PUT(
         const oldImageUrl = existingProduct[imageField];
         if (oldImageUrl) {
           try {
+<<<<<<< HEAD
             await deleteFromStorage(oldImageUrl);
+=======
+            const publicId = getPublicIdFromUrl(oldImageUrl);
+            await deleteFromCloudinary(publicId);
+>>>>>>> 8519b4eb369536447b67503c75e22989c7694fc4
           } catch (e) {
             console.error(`Failed to delete old ${imageField}:`, e);
           }
@@ -160,7 +214,11 @@ export async function PUT(
 
         // Upload new image
         const folderPath = `products/${productData.slug || existingProduct.slug}`;
+<<<<<<< HEAD
         const imageUrl = await uploadToStorage(newImage, folderPath);
+=======
+        const imageUrl = await uploadToCloudinary(newImage, folderPath);
+>>>>>>> 8519b4eb369536447b67503c75e22989c7694fc4
         productData[imageField] = imageUrl;
       }
     }

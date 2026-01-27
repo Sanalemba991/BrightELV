@@ -125,8 +125,12 @@ export default function CategoriesPage() {
                 toast.success('Category deleted!');
                 fetchCategories();
             } else {
+<<<<<<< HEAD
                 const data = await response.json();
                 toast.error(data.error || 'Failed to delete category');
+=======
+                toast.error('Failed to delete category');
+>>>>>>> 8519b4eb369536447b67503c75e22989c7694fc4
             }
         } catch (error) {
             toast.error('An error occurred');
