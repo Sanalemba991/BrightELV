@@ -1,15 +1,10 @@
 import { NextResponse } from 'next/server';
 import supabase from '@/app/config/db';
-<<<<<<< HEAD
 import { uploadToStorage } from '@/app/utils/storage';
-=======
-import { uploadToCloudinary } from '@/app/utils/cloudinary';
->>>>>>> 8519b4eb369536447b67503c75e22989c7694fc4
 import { verifyAuth } from '@/app/utils/auth';
 
 // Helper function to transform product data
 function transformProduct(product: any) {
-<<<<<<< HEAD
   return {
     _id: product.id,
     name: product.name,
@@ -39,37 +34,6 @@ function transformProduct(product: any) {
     faqSchema: product.faq_schema,
     createdAt: product.created_at
   };
-=======
-    return {
-        _id: product.id,
-        name: product.name,
-        slug: product.slug,
-        description: product.description,
-        keyFeatures: product.key_features || [],
-        image1: product.image1,
-        image2: product.image2,
-        image3: product.image3,
-        image4: product.image4,
-        category: product.categories ? {
-            _id: product.categories.id,
-            name: product.categories.name,
-            slug: product.categories.slug
-        } : product.category_id,
-        subcategory: product.subcategories ? {
-            _id: product.subcategories.id,
-            name: product.subcategories.name,
-            slug: product.subcategories.slug
-        } : product.subcategory_id,
-        seoTitle: product.seo_title,
-        seoDescription: product.seo_description,
-        seoKeywords: product.seo_keywords,
-        metaRobots: product.meta_robots,
-        canonicalUrl: product.canonical_url,
-        structuredData: product.structured_data,
-        faqSchema: product.faq_schema,
-        createdAt: product.created_at
-    };
->>>>>>> 8519b4eb369536447b67503c75e22989c7694fc4
 }
 
 export async function GET(request: Request) {
@@ -107,28 +71,17 @@ export async function POST(request: Request) {
     if (!auth.isValid) return auth.error;
 
     const formData = await request.formData();
-<<<<<<< HEAD
 
     // Handle image uploads
     const imageUrls: { [key: string]: string } = {};
 
-=======
-    
-    // Handle image uploads
-    const imageUrls: { [key: string]: string } = {};
-    
->>>>>>> 8519b4eb369536447b67503c75e22989c7694fc4
     for (const imageField of ['image1', 'image2', 'image3', 'image4']) {
       const imageFile = formData.get(imageField) as File;
       if (imageFile && imageFile.size > 0) {
         try {
           const productSlug = formData.get('name')?.toString().toLowerCase().replace(/[^a-z0-9]+/g, '-');
           const folderPath = `products/${productSlug}`;
-<<<<<<< HEAD
           const uploadResult = await uploadToStorage(imageFile, folderPath);
-=======
-          const uploadResult = await uploadToCloudinary(imageFile, folderPath);
->>>>>>> 8519b4eb369536447b67503c75e22989c7694fc4
           imageUrls[imageField] = uploadResult;
         } catch (error) {
           console.error(`Error uploading ${imageField}:`, error);
