@@ -19,6 +19,7 @@ import {
   ChevronLeft,
   Download,
 } from "lucide-react";
+import { FiHome } from "react-icons/fi";
 
 interface Product {
   _id: string;
@@ -167,35 +168,53 @@ export default function ProductDetailClient({
       </section>
 
       {/* Breadcrumb */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 mt-8">
-        <nav className="flex items-center gap-2 text-sm text-gray-600">
+      <div className="max-w-6xl mx-auto px-3 sm:px-6 lg:px-8 mb-4 sm:mb-6 mt-6 sm:mt-8">
+        <nav
+          className="
+      flex flex-wrap items-center
+      gap-x-1 gap-y-1 sm:gap-x-2
+      text-[11px] sm:text-sm
+      text-gray-600
+      leading-snug
+    "
+        >
+          <FiHome className="w-4 h-4" />
           <Link href="/" className="hover:text-gray-900">
             Home
           </Link>
-          <ChevronRight className="w-3.5 h-3.5" />
+
+          <ChevronRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+
           <Link href="/products" className="hover:text-gray-900">
             Products
           </Link>
-          <ChevronRight className="w-3.5 h-3.5" />
+
+          <ChevronRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+
           <Link
             href={`/products/${product.category.slug}`}
-            className="hover:text-gray-900"
+            className="hover:text-gray-900 break-words"
           >
             {product.category.name}
           </Link>
+
           {product.subcategory && (
             <>
-              <ChevronRight className="w-3.5 h-3.5" />
+              <ChevronRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
               <Link
                 href={`/products/${product.category.slug}/${product.subcategory.slug}`}
-                className="hover:text-gray-900"
+                className="hover:text-gray-900 break-words"
               >
                 {product.subcategory.name}
               </Link>
             </>
           )}
-          <ChevronRight className="w-3.5 h-3.5" />
-          <span className="text-gray-900 font-medium">{product.name}</span>
+
+          <ChevronRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+
+          <span className="text-gray-900 font-medium break-words">
+            {product.name}
+          </span>
         </nav>
       </div>
 
@@ -292,66 +311,54 @@ export default function ProductDetailClient({
                     </div>
                   ))}
                 </div>
-            </div>
+              </div>
             )}
 
             {/* Download PDF Button */}
             {product.pdfUrl && (
-              <div className="mb-8">
+              <div className="mb-6 flex justify-center">
                 <a
                   href={product.pdfUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   download
-                  className="inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-medium text-sm rounded-lg hover:from-orange-600 hover:to-orange-700 shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 transition-all"
+                  className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-sm bg-gradient-to-b from-orange-400 to-orange-600 px-4 py-2 text-xs font-semibold text-white  ring-1 ring-orange-300/25 transition-all duration-200 hover:shadow-[0_18px_38px_-18px_rgba(249,115,22,1)] hover:ring-orange-200/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-400/70 active:scale-[0.99] sm:px-5 sm:py-2.5 sm:text-sm"
                 >
-                  <Download className="w-4 h-4" />
-                  Download Product PDF
+                  <span className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.35),transparent_55%)] opacity-80 transition-opacity duration-200 group-hover:opacity-100" />
+                  <Download
+                    className="relative w-4 h-4 transition-transform duration-200 group-hover:-translate-y-[1px] sm:w-[18px] sm:h-[18px]"
+                  />
+                  <span className="relative">Download PDF</span>
                 </a>
               </div>
             )}
 
-            {/* CTA Buttons */}
             {/* For mobile only */}
             <div className="sm:hidden">
               <div className="flex flex-col gap-0.5 mt-1 max-w-[200px] mx-auto">
+                {/*
+                  CTA button styles:
+                  - Consistent sizing + alignment
+                  - Softer gradients + glow
+                  - Better focus states (accessibility)
+                  - Slight press animation
+                */}
                 <button
                   onClick={() => setShowContactModal(true)}
-                  className="px-1.5 py-0.5 bg-blue-600 text-white cursor-pointer font-medium text-[10px] rounded-md hover:bg-blue-700 shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-0.5"
+                  className="group relative w-full overflow-hidden rounded-sm bg-gradient-to-b from-blue-900 to-blue-900 px-2 py-1 text-[10px] font-semibold text-white  ring-1 ring-blue-300/25 transition-all duration-200 hover:shadow-[0_14px_28px_-16px_rgba(59,130,246,0.9)] hover:ring-blue-200/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/70 active:scale-[0.99] flex items-center justify-center gap-1"
                 >
+                  <span className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.35),transparent_55%)] opacity-80 transition-opacity duration-200 group-hover:opacity-100" />
                   <Mail className="w-2.5 h-2.5" />
-                  Enquire Now
+                  <span className="relative">Enquire Now</span>
                 </button>
 
                 <a
                   href="https://wa.me/971508813601"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{
-                    padding: "0.125rem 0.375rem",
-                    backgroundColor: "#10b981",
-                    color: "white",
-                    fontWeight: "500",
-                    fontSize: "10px",
-                    borderRadius: "0.375rem",
-                    boxShadow: "0 1px 1px 0 rgba(0, 0, 0, 0.05)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "0.125rem",
-                    transition: "all 0.2s ease-in-out",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = "#059669";
-                    e.currentTarget.style.boxShadow =
-                      "0 2px 4px -1px rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.06)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = "#10b981";
-                    e.currentTarget.style.boxShadow =
-                      "0 1px 1px 0 rgba(0, 0, 0, 0.05)";
-                  }}
+                  className="group relative w-full overflow-hidden rounded-sm bg-gradient-to-b from-emerald-700 to-emerald-700 px-2 py-1 text-[10px] font-semibold text-white shadow-[0_10px_22px_-14px_rgba(16,185,129,0.75)] ring-1 ring-emerald-300/25 transition-all duration-200 hover:shadow-[0_14px_28px_-16px_rgba(16,185,129,0.95)] hover:ring-emerald-200/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/70 active:scale-[0.99] flex items-center justify-center gap-1"
                 >
+                  <span className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.35),transparent_55%)] opacity-80 transition-opacity duration-200 group-hover:opacity-100" />
                   <svg
                     width="10"
                     height="10"
@@ -360,15 +367,15 @@ export default function ProductDetailClient({
                   >
                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.149-.67.149-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.123-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
                   </svg>
-                  WhatsApp
+                  <span className="relative">WhatsApp</span>
                 </a>
 
                 <a
                   href="tel:+971565022960"
-                  className="px-1.5 py-0.5 border border-blue-600 text-blue-600 font-medium text-[10px] rounded-md hover:bg-blue-50 hover:border-blue-700 transition-all flex items-center justify-center gap-0.5"
+                  className="group relative w-full overflow-hidden rounded-sm bg-white px-2 py-1 text-[10px] font-semibold text-blue-900 shadow-[0_10px_22px_-16px_rgba(37,99,235,0.25)] ring-1 ring-blue-200/70 transition-all duration-200 hover:bg-blue-50 hover:shadow-[0_14px_28px_-18px_rgba(37,99,235,0.35)] hover:ring-blue-300/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60 active:scale-[0.99] flex items-center justify-center gap-1"
                 >
                   <Phone className="w-2.5 h-2.5" />
-                  Call
+                  <span className="relative">Call</span>
                 </a>
               </div>
             </div>
@@ -377,42 +384,20 @@ export default function ProductDetailClient({
             <div className="hidden sm:flex flex-col sm:flex-row gap-1 mt-2 max-w-sm">
               <button
                 onClick={() => setShowContactModal(true)}
-                className="flex-1 px-3 py-1 bg-blue-600 text-white cursor-pointer font-medium text-xs rounded-lg hover:bg-blue-700 shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-1"
+                className="group relative flex-1 overflow-hidden rounded-sm bg-gradient-to-b from-blue-900 to-blue-900 px-3 py-2 text-xs font-semibold text-white  ring-1 ring-blue-300/25 transition-all duration-200 hover:shadow-[0_18px_38px_-18px_rgba(59,130,246,0.95)] hover:ring-blue-200/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/70 active:scale-[0.99] flex items-center justify-center gap-2"
               >
+                <span className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.35),transparent_55%)] opacity-80 transition-opacity duration-200 group-hover:opacity-100" />
                 <Mail className="w-3 h-3" />
-                Enquire Now
+                <span className="relative">Enquire Now</span>
               </button>
 
               <a
                 href="https://wa.me/971508813601"
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{
-                  display: "flex",
-                  flex: "1",
-                  padding: "0.25rem 0.75rem",
-                  backgroundColor: "#10b981",
-                  color: "white",
-                  fontWeight: "500",
-                  fontSize: "0.75rem",
-                  borderRadius: "0.5rem",
-                  boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "0.25rem",
-                  transition: "all 0.2s ease-in-out",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = "#059669";
-                  e.currentTarget.style.boxShadow =
-                    "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "#10b981";
-                  e.currentTarget.style.boxShadow =
-                    "0 1px 2px 0 rgba(0, 0, 0, 0.05)";
-                }}
+                className="group relative flex-1 overflow-hidden rounded-sm bg-gradient-to-b from-emerald-700 to-emerald-700 px-3 py-2 text-xs font-semibold text-white  ring-1 ring-emerald-300/25 transition-all duration-200 hover:shadow-[0_18px_38px_-18px_rgba(16,185,129,1)] hover:ring-emerald-200/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/70 active:scale-[0.99] flex items-center justify-center gap-2"
               >
+                <span className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.35),transparent_55%)] opacity-80 transition-opacity duration-200 group-hover:opacity-100" />
                 <svg
                   width="12"
                   height="12"
@@ -421,15 +406,15 @@ export default function ProductDetailClient({
                 >
                   <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.149-.67.149-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.123-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
                 </svg>
-                WhatsApp
+                <span className="relative">WhatsApp</span>
               </a>
 
               <a
                 href="tel:+971565022960"
-                className="flex-1 px-3 py-1 border-2 border-blue-600 text-blue-600 font-medium text-xs rounded-lg hover:bg-blue-50 hover:border-blue-700 transition-all flex items-center justify-center gap-1"
+                className="group relative flex-1 overflow-hidden rounded-sm bg-white px-3 py-2 text-xs font-semibold text-blue-900  ring-1 ring-blue-200/70 transition-all duration-200 hover:bg-blue-50 hover:shadow-[0_18px_38px_-22px_rgba(37,99,235,0.38)] hover:ring-blue-300/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60 active:scale-[0.99] flex items-center justify-center gap-2"
               >
                 <Phone className="w-3 h-3" />
-                Call
+                <span className="relative">Call</span>
               </a>
             </div>
 
