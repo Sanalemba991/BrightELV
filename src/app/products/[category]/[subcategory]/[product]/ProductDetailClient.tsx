@@ -384,7 +384,7 @@ export default function ProductDetailClient({
             <div className="hidden sm:flex flex-col sm:flex-row gap-1 mt-2 max-w-sm">
               <button
                 onClick={() => setShowContactModal(true)}
-                className="group relative flex-1 overflow-hidden rounded-sm bg-gradient-to-b from-blue-900 to-blue-900 px-3 py-2 text-xs font-semibold text-white  ring-1 ring-blue-300/25 transition-all duration-200 hover:shadow-[0_18px_38px_-18px_rgba(59,130,246,0.95)] hover:ring-blue-200/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/70 active:scale-[0.99] flex items-center justify-center gap-2"
+                className="group cursor-pointer  relative flex-1 overflow-hidden rounded-sm bg-gradient-to-b from-blue-900 to-blue-900 px-3 py-2 text-xs font-semibold text-white  ring-1 ring-blue-300/25 transition-all duration-200 hover:shadow-[0_18px_38px_-18px_rgba(59,130,246,0.95)] hover:ring-blue-200/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/70 active:scale-[0.99] flex items-center justify-center gap-2"
               >
                 <span className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.35),transparent_55%)] opacity-80 transition-opacity duration-200 group-hover:opacity-100" />
                 <Mail className="w-3 h-3" />
