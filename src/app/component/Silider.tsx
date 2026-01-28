@@ -115,7 +115,7 @@ export default function Slider() {
       subtitle:
         "Professional CCTV system installation for residential and commercial properties with high-definition cameras and advanced monitoring.",
       tag: "SECURITY",
-      imageUrl: "/sa.jpeg",
+      imageUrl: "/slide/slide (3).png",
       link: "/elv-solution/cctv-installation",
       large: true,
     },
@@ -126,7 +126,7 @@ export default function Slider() {
       subtitle:
         "Regular maintenance and support services to keep your CCTV systems running at peak performance with timely inspections and repairs.",
       tag: "MAINTENANCE",
-      imageUrl: "/sa3.jpeg",
+      imageUrl: "/slide/slide (1).png",
       link: "/elv-solution/cctv-maintenance",
       large: false,
     },
@@ -137,7 +137,7 @@ export default function Slider() {
       subtitle:
         "High-quality structured cabling solutions for modern network infrastructure, including Cat6, Cat6A, and fiber optic installations.",
       tag: "NETWORK",
-      imageUrl: "/sa4.jpeg",
+      imageUrl: "/slide/slide (2).png",
       link: "/elv-solution/structure-cabling",
       large: false,
     },
@@ -148,7 +148,7 @@ export default function Slider() {
       subtitle:
         "Professional Private Automatic Branch Exchange systems for efficient and scalable business communications with advanced features.",
       tag: "COMMUNICATION",
-      imageUrl: "/sa1.jpeg",
+      imageUrl: "/slide/slide (4).png",
       link: "/elv-solution/pabx",
       large: true,
     },
