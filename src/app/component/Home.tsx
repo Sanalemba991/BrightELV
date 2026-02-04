@@ -2,20 +2,19 @@ import Image from "next/image";
 import Banner from "./Banner";
 import Link from "./Link";
 import Slider from "./Silider";
-import LinkSec from "./LinkSec"; 
+import LinkSec from "./LinkSec";
 import OurCompanies from "./OurCompanies";
-import Client from "./Client";
 import Testimonial from "./Testimonal";
+import CompanyOverview from "./CompanyOverview";
+import Client from "./Client";
 export default function Home() {
   return (
     <>
       <Banner />
       <Link />
-      <Slider />
-      <LinkSec />
       <OurCompanies />
+      <CompanyOverview />
       <Client />
-      <Testimonial />
     </>
   );
 }

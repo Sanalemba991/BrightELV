@@ -1,7 +1,53 @@
 "use client";
-import { useState, useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
+
+// A small set of featured slides for the left-hand carousel
+const featured = [
+  {
+    id: "aloft",
+    title: "ALOFT HOTELS",
+    category: "hospitality",
+    image:
+      "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+    text: "I'm impressed by the quality of products and the professionalism BrightElv maintains. It's truly a game-changer for my business!",
+  },
+  {
+    id: "manipal",
+    title: "MANIPAL",
+    category: "education",
+    image:
+      "https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+    text: "A trusted partner for our educational campus solutions.",
+  },
+  {
+    id: "nasa",
+    title: "NASA",
+    category: "government",
+    image:
+      "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+    text: "Trusted technology partner for mission-critical government operations.",
+  },
+  {
+    id: "bluecross",
+    title: "BLUE CROSS",
+    category: "healthcare",
+    image:
+      "https://images.unsplash.com/photo-1516549655669-df6654e435de?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+    text: "Delivering excellence in healthcare facility solutions.",
+  },
+  {
+    id: "spinoso",
+    title: "SPINOSO REAL ESTATE",
+    category: "realstate",
+    image:
+      "https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+    text: "Premium solutions for luxury real estate developments.",
+  },
+];
+
+// Full dataset for logos (taken from Client.tsx)
 const logos = [
   {
     name: "Chick-fil-A",
@@ -98,11 +144,7 @@ const logos = [
     category: "education",
     image: "/university/university (9).jpg",
   },
-  {
-    name: "EVO",
-    category: "realstate",
-    image: "/realstate/realstate (2).jpg",
-  },
+  { name: "EVO", category: "realstate", image: "/realstate/realstate (2).jpg" },
   {
     name: "Healthcare Example 6",
     category: "healthcare",
@@ -150,132 +192,328 @@ const logos = [
   },
 ];
 
-const industries = [
-  { id: "all", label: "All Industries" },
-  { id: "education", label: "Education" },
-  { id: "government", label: "Government" },
-  { id: "hospitality", label: "Hospitality" },
-  { id: "healthcare", label: "Healthcare" },
-  { id: "realstate", label: "Real Estate" },
-];
+// Helper to convert category id into a display label
+function getCategoryLabel(cat: string) {
+  const map: Record<string, string> = {
+    education: "Education",
+    government: "Government",
+    hospitality: "Hospitality",
+    healthcare: "Healthcare",
+    realstate: "Real Estate",
+  };
+  return map[cat] ?? cat;
+}
 
 export default function Client() {
-  const [activeFilter, setActiveFilter] = useState("all");
-  const [selectedLogo, setSelectedLogo] = useState<(typeof logos)[0] | null>(
-    null
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeFilter, setActiveFilter] = useState<string>(
+    featured[0].category,
   );
-  const headerRef = useRef(null);
-  const isHeaderInView = useInView(headerRef, { once: true, amount: 0.5 });
+  const [manualFilter, setManualFilter] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [selectedLogo, setSelectedLogo] = useState<(typeof logos)[0] | null>(
+    null,
+  );
+  const timerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (!manualFilter) {
+      setActiveFilter(featured[activeIndex].category);
+    }
+  }, [activeIndex, manualFilter]);
+
+  useEffect(() => {
+    timerRef.current = window.setInterval(() => {
+      setManualFilter(false);
+      setActiveIndex((i) => (i + 1) % featured.length);
+    }, 6000);
+    return () => {
+      if (timerRef.current) window.clearInterval(timerRef.current);
+    };
+  }, []);
 
   const filteredLogos =
+    activeFilter === "all"
+      ? logos
+      : logos.filter((l) => l.category === activeFilter);
+
+  const handlePrev = () => {
+    setManualFilter(false);
+    setActiveIndex((i) => (i === 0 ? featured.length - 1 : i - 1));
+  };
+
+  const handleNext = () => {
+    setManualFilter(false);
+    setActiveIndex((i) => (i + 1) % featured.length);
+  };
+
+  const filteredLogosForModal =
     activeFilter === "all"
       ? logos
       : logos.filter((logo) => logo.category === activeFilter);
 
   const currentIndex = selectedLogo
-    ? filteredLogos.findIndex((logo) => logo.name === selectedLogo.name)
+    ? filteredLogosForModal.findIndex((logo) => logo.name === selectedLogo.name)
     : -1;
 
-  const handleNext = () => {
-    const nextIndex = (currentIndex + 1) % filteredLogos.length;
-    setSelectedLogo(filteredLogos[nextIndex]);
+  const handleModalNext = () => {
+    const nextIndex = (currentIndex + 1) % filteredLogosForModal.length;
+    setSelectedLogo(filteredLogosForModal[nextIndex]);
   };
 
-  const handlePrev = () => {
+  const handleModalPrev = () => {
     const prevIndex =
-      currentIndex === 0 ? filteredLogos.length - 1 : currentIndex - 1;
-    setSelectedLogo(filteredLogos[prevIndex]);
+      currentIndex === 0 ? filteredLogosForModal.length - 1 : currentIndex - 1;
+    setSelectedLogo(filteredLogosForModal[prevIndex]);
   };
 
   return (
-    <div className="min-h-screen bg-white py-16 px-4">
-      <div className="max-w-7xl mx-auto">
-        <div
-          ref={headerRef}
-          className="flex-shrink-0 flex flex-col items-center text-center mx-auto"
-          style={{ maxWidth: "280px" }}
-        >
-          <div className="inline-block overflow-hidden mb-2">
-            <motion.h1
-              initial={{ y: 60 }}
-              animate={isHeaderInView ? { y: 0 } : { y: 60 }}
-              transition={{
-                duration: 0.9,
-                ease: [0.19, 1, 0.22, 1],
-                delay: 0.2,
-              }}
-              className="tsm:text-3xl  md:text-5xl lg:text-3xl font-bold tracking-tight text-gray-900"
-            >
-              OUR CLIENTS
-            </motion.h1>
-          </div>
-          <p className="text-gray-600 text-sm leading-relaxed mb-4">
-            Trusted by Those Who Expect Excellence
+    <div className="py-12 bg-white">
+      <div className="max-w-7xl mx-auto px-4">
+        {/* Header Section */}
+        <div className="mb-12">
+          <p className="text-xl font-semibold text-gray-800 tracking-wide mb-2">
+            OUR CLIENTS
           </p>
-          <motion.div
-            initial={{ width: 0 }}
-            animate={isHeaderInView ? { width: "140px" } : { width: 0 }}
-            transition={{ duration: 0.8, delay: 0.5, ease: "easeInOut" }}
-            className="h-1 bg-gradient-to-r from-blue-800 to-blue-900 mb-4"
-          />
+          <h2 className="text-xl md:text-2xl font-semibold text-blue-600 pb-2 border-b border-blue-600 inline-block">
+            PLEASURE TO WORK WITH
+          </h2>
         </div>
 
-        {/* Filter Tabs */}
-        <div className="flex flex-wrap justify-center hover:cursor-pointer gap-2 mb-16 border-b border-gray-200">
-          {industries.map((industry) => (
-            <button
-              key={industry.id}
-              onClick={() => setActiveFilter(industry.id)}
-              className={`px-6 py-3 text-sm hover:cursor-pointer font-medium transition-all relative ${
-                activeFilter === industry.id
-                  ? "text-blue-900"
-                  : "text-gray-600 hover:text-gray-900"
-              }`}
+        <div className="flex items-start gap-8 flex-col lg:flex-row">
+          {/* Left: Large featured card */}
+          <div className="w-full lg:w-1/2">
+            <div
+              className="relative rounded-lg overflow-hidden"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
             >
-              {industry.label}
-              {activeFilter === industry.id && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-900" />
-              )}
-            </button>
-          ))}
-        </div>
-
-        {/* Logo Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-          {logos.map((logo, index) => {
-            const isFiltered =
-              activeFilter === "all" || logo.category === activeFilter;
-            const isImagePath = logo.image.startsWith("/");
-
-            return (
-              <div
-                key={index}
-                className={`flex items-center justify-center p-2 transition-all duration-300 cursor-pointer hover:scale-110 ${
-                  isFiltered ? "opacity-100" : "opacity-30 grayscale"
-                }`}
-                onClick={() => isFiltered && setSelectedLogo(logo)}
-              >
-                <div className="text-center">
-                  {isImagePath ? (
+              {/* Image container */}
+              <div className="relative w-full h-64 md:h-80 lg:h-96 rounded-md overflow-hidden">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeIndex}
+                    initial={{ opacity: 0, scale: 1.05 }}
+                    animate={{ 
+                      opacity: 1, 
+                      scale: 1,
+                      transition: {
+                        duration: 0.8,
+                        ease: [0.16, 1, 0.3, 1] // Smooth easing
+                      }
+                    }}
+                    exit={{ 
+                      opacity: 0, 
+                      scale: 0.95,
+                      transition: {
+                        duration: 0.5,
+                        ease: "easeInOut"
+                      }
+                    }}
+                    className="absolute inset-0"
+                  >
                     <Image
-                      src={logo.image}
-                      alt={logo.name}
-                      width={60}
-                      height={60}
-                      className="mx-auto mb-2 object-cover rounded"
+                      src={featured[activeIndex].image}
+                      alt={featured[activeIndex].title}
+                      width={900}
+                      height={500}
+                      className="w-full h-full object-cover"
+                      priority
                     />
-                  ) : (
-                    <div className="text-4xl mb-2">{logo.image}</div>
-                  )}
-                  <div
-                    className={`text-xs font-medium ${
-                      isFiltered ? "text-gray-700" : "text-gray-400"
-                    }`}
-                  ></div>
-                </div>
+                  </motion.div>
+                </AnimatePresence>
               </div>
-            );
-          })}
+
+              {/* Content overlay */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeIndex}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ 
+                    opacity: 1, 
+                    y: 0,
+                    transition: {
+                      duration: 0.6,
+                      delay: 0.2,
+                      ease: [0.16, 1, 0.3, 1]
+                    }
+                  }}
+                  exit={{ 
+                    opacity: 0, 
+                    y: -10,
+                    transition: {
+                      duration: 0.3
+                    }
+                  }}
+                  className="absolute left-6 top-6 text-white max-w-sm p-5"
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="w-14 h-14 rounded-lg overflow-hidden flex items-center justify-center p-1 shrink-0 bg-white/10 backdrop-blur-sm">
+                      {featured[activeIndex].image ? (
+                        <Image
+                          src={featured[activeIndex].image}
+                          alt={`${featured[activeIndex].title} logo`}
+                          width={48}
+                          height={48}
+                          className="object-cover rounded"
+                        />
+                      ) : (
+                        <div className="font-bold text-xs text-white">
+                          {featured[activeIndex].title
+                            .split(" ")
+                            .slice(0, 2)
+                            .map((s) => s[0])
+                            .join("")}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="flex-1">
+                      <h3 className="text-base md:text-lg font-bold uppercase leading-tight">
+                        {featured[activeIndex].title}
+                      </h3>
+                      <p className="text-xs md:text-sm mt-2 opacity-95 leading-relaxed">
+                        {featured[activeIndex].text}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Controls - only visible on hover */}
+              <motion.button
+                onClick={handlePrev}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ 
+                  opacity: isHovered ? 1 : 0, 
+                  x: isHovered ? 0 : -10 
+                }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="absolute left-4 top-1/2 -translate-y-1/2 p-4     text-gray-700 hover:text-gray-900 transition-all duration-300 w-14 h-14 flex items-center justify-center group"
+                aria-label="Previous"
+              >
+                <svg
+                  className="w-6 h-6 group-hover:scale-125 transition-transform duration-300"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2.5}
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+              </motion.button>
+
+              <motion.button
+                onClick={handleNext}
+                initial={{ opacity: 0, x: 10 }}
+                animate={{ 
+                  opacity: isHovered ? 1 : 0, 
+                  x: isHovered ? 0 : 10 
+                }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="absolute right-4 top-1/2 -translate-y-1/2 p-4    text-gray-700 hover:text-gray-900 transition-all duration-300 w-14 h-14 flex items-center justify-center group"
+                aria-label="Next"
+              >
+                <svg
+                  className="w-6 h-6 group-hover:scale-125 transition-transform duration-300"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2.5}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </motion.button>
+            </div>
+          </div>
+
+          {/* Right: Title + Logo grid */}
+          <div className="w-full lg:w-1/2">
+            {/* Centered title */}
+            <div className="w-full text-center mb-8">
+              <motion.h2
+                key={activeFilter}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                className="text-xl md:text-2xl font-bold text-blue-900 tracking-wide"
+              >
+                {getCategoryLabel(activeFilter)}
+              </motion.h2>
+            </div>
+
+            {/* Logo grid */}
+            <motion.div
+              key={activeFilter}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-10 justify-items-center items-center"
+            >
+              {filteredLogos.map((l, i) => (
+                <motion.button
+                  key={`${l.name}-${activeFilter}`}
+                  onClick={() => {
+                    setSelectedLogo(l);
+                    const idx = featured.findIndex(
+                      (f) => f.category === l.category,
+                    );
+                    if (idx !== -1) {
+                      setManualFilter(false);
+                      setActiveIndex(idx);
+                    } else {
+                      setManualFilter(true);
+                      setActiveFilter(l.category);
+                    }
+                  }}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{
+                    delay: i * 0.05,
+                    duration: 0.4,
+                    ease: "easeOut",
+                  }}
+                  whileHover={{ 
+                    scale: 1.12, 
+                    transition: { 
+                      duration: 0.3,
+                      ease: "easeOut" 
+                    } 
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full max-w-xs flex items-center justify-center p-2 rounded-md transform transition-shadow duration-300"
+                >
+                  <div className="w-full h-28 flex items-center justify-center">
+                    {l.image ? (
+                      <Image
+                        src={l.image}
+                        alt={l.name}
+                        width={220}
+                        height={120}
+                        className="w-full h-full object-contain"
+                      />
+                    ) : (
+                      <div className="text-lg font-semibold">
+                        {l.name
+                          .split(" ")
+                          .slice(0, 2)
+                          .map((s) => s[0])
+                          .join("")}
+                      </div>
+                    )}
+                  </div>
+                </motion.button>
+              ))}
+            </motion.div>
+          </div>
         </div>
       </div>
 
@@ -288,17 +526,20 @@ export default function Client() {
           onClick={() => setSelectedLogo(null)}
           className="fixed inset-0 flex items-center justify-center p-4 z-50"
           style={{
-            background: "rgba(0, 0, 0, 0.3)",
-            backdropFilter: "blur(2px)",
+            background: "rgba(0, 0, 0, 0.5)",
+            backdropFilter: "blur(4px)",
           }}
         >
           {/* Left Arrow */}
-          <button
+          <motion.button
             onClick={(e) => {
               e.stopPropagation();
-              handlePrev();
+              handleModalPrev();
             }}
-            className="absolute hover:cursor-pointer left-4 md:left-20 text-white hover:text-gray-300 transition-colors z-50"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.1 }}
+            className="absolute hover:cursor-pointer left-4 md:left-20 text-white hover:text-gray-200 transition-colors z-50"
           >
             <svg
               className="w-12 h-12 md:w-16 md:h-16"
@@ -313,44 +554,67 @@ export default function Client() {
                 d="M15 19l-7-7 7-7"
               />
             </svg>
-          </button>
+          </motion.button>
 
           <motion.div
-            initial={{ scale: 0.8 }}
-            animate={{ scale: 1 }}
-            exit={{ scale: 0.8 }}
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
             onClick={(e) => e.stopPropagation()}
-            className="bg-white rounded-lg p-8 max-w-2xl w-full relative"
+            className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl relative overflow-hidden"
           >
+            {/* Close Button */}
             <button
               onClick={() => setSelectedLogo(null)}
-              className="absolute top-4 right-4  hover:cursor-pointer text-gray-500 hover:text-gray-700 text-2xl font-bold"
+              className="absolute top-6 right-6 hover:cursor-pointer text-gray-400 hover:text-gray-700 transition-colors z-50 w-10 h-10 flex items-center justify-center"
             >
-              ✕
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
             </button>
 
-            <div className="flex flex-col items-center justify-center">
-              {selectedLogo.image.startsWith("/") ? (
-                <Image
-                  src={selectedLogo.image}
-                  alt={selectedLogo.name}
-                  width={300}
-                  height={300}
-                  className="object-contain rounded mb-4"
-                />
-              ) : (
-                <div className="text-8xl mb-4">{selectedLogo.image}</div>
-              )}
+            {/* Content Container */}
+            <div className="flex flex-col items-center justify-center py-16 px-8 md:px-16">
+              {/* Logo Display */}
+              <div className="w-full flex items-center justify-center">
+                <div className="w-full max-w-2xl h-80 flex items-center justify-center">
+                  {selectedLogo.image.startsWith("/") ? (
+                    <Image
+                      src={selectedLogo.image}
+                      alt={selectedLogo.name}
+                      width={600}
+                      height={400}
+                      className="object-contain w-full h-full"
+                    />
+                  ) : (
+                    <div className="text-8xl">{selectedLogo.image}</div>
+                  )}
+                </div>
+              </div>
             </div>
           </motion.div>
 
           {/* Right Arrow */}
-          <button
+          <motion.button
             onClick={(e) => {
               e.stopPropagation();
-              handleNext();
+              handleModalNext();
             }}
-            className="absolute right-4 hover:cursor-pointer md:right-20 text-white hover:text-gray-300 transition-colors z-50"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.1 }}
+            className="absolute right-4 hover:cursor-pointer md:right-20 text-white hover:text-gray-200 transition-colors z-50"
           >
             <svg
               className="w-12 h-12 md:w-16 md:h-16"
@@ -365,7 +629,7 @@ export default function Client() {
                 d="M9 5l7 7-7 7"
               />
             </svg>
-          </button>
+          </motion.button>
         </motion.div>
       )}
     </div>

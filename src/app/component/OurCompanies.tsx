@@ -82,7 +82,7 @@ export default function Link() {
 
   return (
     <div
-      className="w-full py-16 px-6 md:px-12 lg:px-16 relative overflow-hidden"
+      className="w-full bg-blue-950 py-16 px-6 md:px-12 lg:px-16 relative overflow-hidden"
       style={{
         backgroundImage: "url('/sadd11.png')",
         backgroundSize: "object-contain",
@@ -91,7 +91,6 @@ export default function Link() {
       }}
     >
       {/* Optional overlay for better text readability */}
-   
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Two Column Layout */}
@@ -121,9 +120,9 @@ export default function Link() {
                     ease: [0.19, 1, 0.22, 1],
                     delay: 0.2,
                   }}
-                  className="sm:text-3xl  md:text-5xl lg:text-3xl font-bold tracking-tight text-gray-900"
+                  className="sm:text-3xl uppercase  md:text-5xl lg:text-3xl font-bold tracking-tight text-white"
                 >
-                  WE ARE...
+                  We operate in middle east and beyond
                 </motion.h2>
               </div>
               <motion.div
@@ -135,18 +134,19 @@ export default function Link() {
             </motion.div>
 
             {/* Main Description */}
-            <div className="space-y-4 text-gray-600 text-sm leading-relaxed">
+            <div className="space-y-4 text-white text-sm leading-relaxed">
               <motion.p
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
                 viewport={{ once: true }}
-                className="text-sm sm:text-base leading-relaxed"
+                className="text-sm font-medium leading-relaxed"
               >
-                the Global Supplier for cutting-edge ELV products. Empowering
-                businesses with innovative technology, seamless integration, and
-                superior performance. Trust our experienced 42+ team Employees
-                to deliver high-quality solutions tailored to your unique needs.
+                With a strong foothold in the Middle East, Bright Elv Technology
+                LLC extends its operations beyond, reaching out to international
+                markets. Our innovation-driven ELV solutions echo across the
+                globe, delivering top-tier technology services to a diverse and
+                expanding clientele.
               </motion.p>
 
               <motion.p
@@ -154,66 +154,26 @@ export default function Link() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.4 }}
                 viewport={{ once: true }}
-                className="text-sm sm:text-base leading-relaxed"
+                className="text-sm font-medium leading-relaxed"
               >
-                Together, let’s surpass your competition and achieve customer
-                satisfaction with more than 128 projects completed. Choose
-                BrightElv Technology LLC for excellence in Surveillance,
-                Audio-Visual, Home Automation, and Building Management solutions
-                with our 1000+ product lines.
+                As we continue to grow, our commitment to creating pioneering
+                and reliable solutions remains steadfast. Each stride taken in
+                the UAE arena is a testament to our vision of making a global
+                impact with our state-of-the-art technology services.
               </motion.p>
             </div>
-
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+              transition={{ duration: 0.6, delay: 0.7 }}
               viewport={{ once: true }}
-              className="mt-4"
             >
-              <h3 className="text-sm sm:text-base leading-relaxed text-gray-600">
-                We operate around global
-              </h3>
+              <NextLink href="/contact">
+                <motion.button className="mt-6 px-6 py-2 border border-white/30 bg-indigo-900 text-white hover:bg-[#3a2b6b] font-semibold transition-colors duration-300 text-sm sm:text-base cursor-pointer shadow-lg rounded-xl">
+                  About Us
+                </motion.button>
+              </NextLink>
             </motion.div>
-
-            {/* COUNTER SECTION - Fixed display */}
-            <div ref={statsRef} className="mt-2 grid grid-cols-3 gap-x-1">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4, delay: 0.3 }}
-                viewport={{ once: true }}
-              >
-                <div className="text-blue-900 text-lg font-bold">
-                  +{count.employees}
-                </div>
-                <div className="text-gray-600 text-xs">Employees</div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4, delay: 0.4 }}
-                viewport={{ once: true }}
-              >
-                <div className="text-blue-900 text-lg font-bold">
-                  +{count.projects}
-                </div>
-                <div className="text-gray-600 text-xs">Projects</div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4, delay: 0.5 }}
-                viewport={{ once: true }}
-              >
-                <div className="text-blue-900 text-lg font-bold">
-                  +{count.products}
-                </div>
-                <div className="text-gray-600 text-xs">Product Lines</div>
-              </motion.div>
-            </div>
           </motion.div>
         </div>
       </div>
