@@ -52,7 +52,7 @@ export default function Link() {
     <div className="w-full bg-white">
       <div className="px-4 sm:px-6 md:px-8 lg:px-0">
         {/* Two Column Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[40%_60%] gap-0 items-stretch min-h-[400px] sm:min-h-[520px] md:min-h-[620px] lg:min-h-[820px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[40%_60%] gap-0  ">
           {/* Left Side - Image Cards with Hover Effects */}
           <motion.div
             initial={{ opacity: 0, x: -100 }}
@@ -63,7 +63,7 @@ export default function Link() {
               delay: 0.2,
             }}
             viewport={{ once: true, margin: "-50px" }}
-            className="flex  flex-col bg-blue-900 justify-between space-y-4 h-full"
+            className="flex  flex-col bg-blue-900 h-full"
           >
             {imageCards.map((card, index) => (
               <div key={card.id} className="space-y-0">
@@ -75,7 +75,7 @@ export default function Link() {
                     delay: 0.2 + index * 0.15,
                   }}
                   viewport={{ once: true }}
-                  className="relative group overflow-hidden shadow-sm h-40 sm:h-48 md:h-56 lg:h-[38vh] cursor-pointer rounded-lg"
+                  className="relative group overflow-hidden shadow-sm h-40 sm:h-48 md:h-56 lg:h-[38vh] cursor-pointer "
                 >
                   {/* Background Image */}
                   <div className="relative w-full h-full">
@@ -126,13 +126,13 @@ export default function Link() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="relative flex flex-col justify-center mr-5 py-4 sm:py-6 md:py-8 lg:py-10 xl:py-12 h-full px-2 sm:px-4 md:px-6 lg:px-8 xl:px-12"
+            className="relative flex flex-col justify-center mr-5 py-4 md:py-5 lg:py-10 xl:py-12 h-full px-2 md:px-4 lg:px-8 xl:px-12"
           >
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
-              className="space-y-4 sm:space-y-5 md:space-y-6 w-full"
+              className="space-y-4 md:space-y-4 lg:space-y-6 w-full"
             >
               {/* Logo Section */}
               <motion.div
@@ -140,20 +140,20 @@ export default function Link() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
                 viewport={{ once: true }}
-                className="space-y-2 sm:space-y-3"
+                className="space-y-2 md:space-y-2 lg:space-y-3"
               >
-                <p className="text-xs sm:text-sm md:text-base text-blue-900 font-semibold tracking-widest">
+                <p className="text-xs md:text-xs lg:text-base text-blue-900 font-semibold tracking-widest">
                   WELCOME TO
                 </p>
                 {/* Logo Image */}
-                <div className="mb-2 sm:mb-3 md:mb-4">
+                <div className="mb-2 md:mb-2 lg:mb-4">
                   <Image
                     src="/logo2.png"
                     alt="I-Link Logo"
                     width={160}
                     height={80}
-                    className="object-contain h-10 sm:h-12 md:h-14 lg:h-16 w-auto"
-                    sizes="(max-width: 640px) 120px, (max-width: 768px) 140px, 160px"
+                    className="object-contain h-10 md:h-10 lg:h-16 w-auto"
+                    sizes="(max-width: 768px) 100px, (max-width: 1024px) 120px, 160px"
                   />
                 </div>
                 {/* Underline Divider */}
@@ -162,16 +162,16 @@ export default function Link() {
                   whileInView={{ width: 60 }}
                   transition={{ duration: 0.8, delay: 0.4 }}
                   viewport={{ once: true }}
-                  className="h-0.5 sm:h-1 bg-blue-900 rounded-full"
+                  className="h-0.5 md:h-0.5 lg:h-1 bg-blue-900 rounded-full"
                 />
                 {/* Tagline with dots */}
-                <p className="text-xs sm:text-sm text-blue-500 font-medium tracking-wider pt-1 sm:pt-2">
+                <p className="text-xs md:text-xs lg:text-sm text-blue-500 font-medium tracking-wider pt-1 md:pt-1 lg:pt-2">
                   PROFESSION . TRUST . SAFETY . INNOVATIVE
                 </p>
               </motion.div>
 
               {/* Main Description */}
-              <div className="space-y-3 sm:space-y-4 text-[#2b1b4a] text-xs sm:text-sm md:text-base leading-5 sm:leading-6 md:leading-7 text-left pr-0 sm:pr-2 md:pr-4 font-medium">
+              <div className="space-y-3 md:space-y-3 lg:space-y-4 text-[#2b1b4a] text-xs md:text-xs lg:text-base leading-5 md:leading-5 lg:leading-7 text-left pr-0 md:pr-2 lg:pr-4 font-medium">
                 <motion.p
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -230,21 +230,16 @@ export default function Link() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.7 }}
                 viewport={{ once: true }}
-                className="pt-2 sm:pt-4"
+                className="pt-2 md:pt-2 lg:pt-4"
               >
                 <NextLink href="/contact">
                   <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="w-full sm:w-auto px-5 sm:px-6 md:px-8 py-2.5 sm:py-3 bg-[#2b1b4a] text-white hover:bg-[#3a2b6b] font-semibold transition-all duration-300 text-sm sm:text-base md:text-lg cursor-pointer shadow-lg hover:shadow-xl rounded-lg sm:rounded-xl"
+                    className="w-full md:w-auto px-1 md:px-2 lg:px-4 py-1.5 md:py-1.5 lg:py-2 bg-[#2b1b4a] text-white hover:bg-[#3a2b6b] font-semibold transition-all duration-300 text-sm md:text-sm lg:text-lg cursor-pointer shadow-lg hover:shadow-xl rounded-lg md:rounded-lg lg:rounded-xl"
                   >
                     Know More
                   </motion.button>
                 </NextLink>
               </motion.div>
-
-             
-              
             </motion.div>
           </motion.div>
         </div>

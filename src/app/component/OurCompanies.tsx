@@ -82,7 +82,7 @@ export default function Link() {
 
   return (
     <div
-      className="w-full bg-blue-950 py-16 px-6 md:px-12 lg:px-16 relative overflow-hidden"
+      className="w-full bg-[#020035] py-16 px-6 md:px-12 lg:px-16 relative overflow-hidden"
       style={{
         backgroundImage: "url('/sadd11.png')",
         backgroundSize: "object-contain",

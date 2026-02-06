@@ -54,13 +54,13 @@ export default function AboutUs() {
     };
 
     return (
-        <div className='bg-blue-950 py-8 sm:py-12 px-4 sm:px-6 lg:px-10'>
+        <div className='bg-[#020035] py-8 sm:py-12 px-4 sm:px-6 lg:px-10'>
             <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
                 viewport={{ once: true, amount: 0.3 }}
-                className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold uppercase text-center text-white mb-8 sm:mb-12 lg:mb-20"
+                className="text-xl mt-8 sm:text-2xl md:text-3xl lg:text-4xl font-bold uppercase text-center text-white mb-8 sm:mb-12 lg:mb-20"
             >
                 Best ELV Company In Dubai
             </motion.h1>

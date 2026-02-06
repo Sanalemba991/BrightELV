@@ -208,7 +208,7 @@ export default function Contact() {
   };
 
   return (
-    <div ref={containerRef} className="bg-[#060042] py-8 px-4 sm:px-6 lg:px-8">
+    <div ref={containerRef} className="bg-[#020035] py-8 px-4 sm:px-6 lg:px-8">
       <motion.div
         initial="hidden"
         animate={controls}
@@ -378,12 +378,12 @@ export default function Contact() {
                   <button
                     onClick={handleSubmit}
                     disabled={isSubmitting}
-                    className="px-4 sm:px-6 py-1.5 bg-blue-900 text-white 
+                    className="px-1 sm:px-3 py-1.5 bg-blue-900 text-white 
                       hover:bg-[#3a2b6b] font-semibold transition-all 
                       duration-300 text-sm sm:text-base cursor-pointer 
                       shadow-md hover:shadow-lg rounded-md sm:rounded-lg 
                       flex items-center justify-center gap-2 w-full sm:w-auto
-                      transform hover:-translate-y-0.5 active:translate-y-0
+                      transform  active:translate-y-0
                       disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isSubmitting ? (
