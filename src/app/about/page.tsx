@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import Image from "next/image";
 import AboutUs from "../component/AboutUs";
-
 export const metadata: Metadata = {
   title: "About Bright ELV Technology | Leading ELV Company in Dubai UAE",
   description:
@@ -38,7 +37,8 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      <AboutUs />
+ 
+<AboutUs />
     </>
   );
 }
