@@ -99,7 +99,7 @@ export default function CategoriesGrid({
             }
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-4xl font-light text-gray-900 mb-2">
+            <h2 className="text-4xl font-light text-gray-900 mb-2  py-10 mt-9 px-4 sm:px-6 lg:px-8">
               Our Products
             </h2>
             <motion.div

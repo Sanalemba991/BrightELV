@@ -498,7 +498,7 @@ export default function SubCategoryClient({
   return (
     <>
       {/* New Features Section - Between Banner and Products */}
-      <section className="bg-white py-16" ref={featuresRef}>
+      <section className="bg-white py-16 text-4xl font-light text-gray-900 mb-2  py-10 mt-20 px-4 sm:px-6 lg:px-8" ref={featuresRef}>
         <div className="max-w-7xl mx-auto">
           <motion.div
             className="text-center mb-12"

@@ -1,243 +1,138 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronDown, Phone, MessageCircle, Mail } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-
-interface SubCategory {
-  _id: string;
-  name: string;
-  slug: string;
-  category: string;
-}
+import { useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { usePathname } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Phone, MessageCircle, Mail, Menu, X, ChevronDown } from 'lucide-react';
 
 interface Category {
   _id: string;
   name: string;
   slug: string;
-  displayType: string;
-  subcategories: SubCategory[];
   image?: string;
 }
 
-interface NavLink {
-  name: string;
-  href: string;
-  hasDropdown?: boolean;
-  dropdown?: string;
-}
-
-const NAV_LINKS: NavLink[] = [
-  { name: "Home", href: "/" },
-  { name: "About Us", href: "/about" },
-  {
-    name: "Products",
-    href: "/products",
-    hasDropdown: true,
-    dropdown: "products",
-  },
-  {
-    name: "Customized Solution",
-    href: "/customised-solution",
-    hasDropdown: true,
-    dropdown: "custom",
-  },
-  {
-    name: "ELV Solution",
-    href: "/elv-solution",
-    hasDropdown: true,
-    dropdown: "elv",
-  },
+// Hardcoded ELV Solution items
+const elvSolutionItems = [
+  { name: 'CCTV INSTALLATION', href: '/elv-solution/cctv-installation', image: '/cctvintallation/cctv.png' },
+  { name: 'CCTV MAINTENANCE', href: '/elv-solution/cctv-maintenance', image: '/cctvmaintenance/main.png' },
+  { name: 'STRUCTURE CABLING', href: '/elv-solution/structure-cabling', image: '/strucutrurecabling/struc.png' },
+  { name: 'PABX', href: '/elv-solution/pabx', image: '/pabx/pabx.png' },
+  { name: 'AUDIO VISUAL SOLUTION', href: '/elv-solution/audio-visual-solution', image: '/images/audio/audio.jpg' },
 ];
 
-const CUSTOM_SOLUTIONS = [
-  { name: "AV Racks", href: "/customised-solution/av-racks" },
-  { name: "CCTV", href: "/customised-solution/cctv" },
-  {
-    name: "Custom Face Plates",
-    href: "/customised-solution/custom-face-plates",
+// Hardcoded Customized Solution items with images
+const customizedSolutionItems = [
+  { 
+    name: 'CCTV POLES /LIGHT POLES/ SOLAR POLES', 
+    href: '/customised-solution/cctv',
+    image: '/customised/customised.png'
   },
-  {
-    name: "Flight Wooden Podium",
-    href: "/customised-solution/custom-flight-wooden-podium",
+  { 
+    name: 'CUSTOM KIOSK & PODIUM', 
+    href: '/customised-solution/kiosk-stand-maker',
+    image: '/customised/customised2.png'
   },
-  { name: "Pop-up Box", href: "/customised-solution/custom-pop-up-box" },
-  {
-    name: "Projector Stand",
-    href: "/customised-solution/custom-projector-stand",
+  { 
+    name: 'CUSTOM OBVAN/ BROAD CAST BOX/ BACK BOX/ FRONT PLATE/FLOOR BOX/ IP RATED BOX', 
+    href: '/customised-solution/av-racks',
+    image: '/customised/customised3.png'
   },
-  { name: "Kiosk Stand", href: "/customised-solution/kiosk-stand-maker" },
-  {
-    name: "View All Customized Solutions",
-    href: "/customised-solution",
-    isViewAll: true,
+  { 
+    name: 'CUSTOM CCTV CONSOLES.', 
+    href: '/customised-solution/cctv',
+    image: '/customised/customised4.png'
   },
-];
-
-const ELV_SOLUTIONS = [
-  {
-    name: "Audio Visual Solution",
-    href: "/elv-solution/audio-visual-solution",
+  { 
+    name: 'CUSTOM POPUP BOX/ CABLE CUBBY', 
+    href: '/customised-solution/custom-pop-up-box',
+    image: '/popup/pop.jpg'
   },
-  { name: "CCTV Installation", href: "/elv-solution/cctv-installation" },
-  { name: "CCTV Maintenance", href: "/elv-solution/cctv-maintenance" },
-  { name: "PABX", href: "/elv-solution/pabx" },
-  { name: "Structure Cabling", href: "/elv-solution/structure-cabling" },
-  { name: "View All ELV Solutions", href: "/elv-solution", isViewAll: true },
-];
-
-const CONTACT_INFO = [
-  {
-    icon: Phone,
-    href: "tel:+971565022960",
-    text: "+971 565022960",
-    color: "text-blue-900",
+  { 
+    name: 'CUSTOM FACE PLATES', 
+    href: '/customised-solution/custom-face-plates',
+    image: '/customised/customised.png'
   },
-  {
-    icon: MessageCircle,
-    href: "https://wa.me/971508813601",
-    text: "+971 50 881 3601",
-    color: "text-green-600",
+  { 
+    name: 'CUSTOM PORTABLE MIXER RACKS/ AV RACKS', 
+    href: '/customised-solution/av-racks',
+    image: '/customised/customised2.png'
   },
-  {
-    icon: Mail,
-    href: "mailto:sales@brightelv.com",
-    text: "sales@brightelv.com",
-    color: "text-blue-900",
+  { 
+    name: 'CUSTOM FLIGHT CASE/ WOODEN PODIUM', 
+    href: '/customised-solution/custom-flight-wooden-podium',
+    image: '/popup/pop3.jpg'
+  },
+  { 
+    name: 'CUSTOM PROJECTOR STAND/ CEILING MOUNT', 
+    href: '/customised-solution/custom-projector-stand',
+    image: '/customised/customised4.png'
   },
 ];
-
-interface DropdownProps {
-  items: { name: string; href: string; isViewAll?: boolean }[];
-  isOpen: boolean;
-  closeMenu?: () => void;
-}
-
-const DropdownMenu = ({ items, isOpen, closeMenu }: DropdownProps) => {
-  if (!isOpen) return null;
-  return (
-    <motion.div
-      initial={{ opacity: 0, height: 0 }}
-      animate={{ opacity: 1, height: "auto" }}
-      exit={{ opacity: 0, height: 0 }}
-      transition={{ duration: 0.3, ease: "easeInOut" }}
-      className="ml-4 mt-1 border-l-2 border-blue-100 pl-4 space-y-1 overflow-hidden"
-    >
-      {items.map((item) => (
-        <Link
-          key={item.name}
-          href={item.href}
-          className="block py-2 text-gray-600 hover:text-blue-900 text-sm transition-colors duration-200"
-          onClick={closeMenu}
-        >
-          {item.name}
-        </Link>
-      ))}
-    </motion.div>
-  );
-};
 
 export default function Navbar() {
-  const pathname = usePathname();
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const [openMobileSubmenu, setOpenMobileSubmenu] = useState<string | null>(
-    null,
-  );
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
+  const [hoveredCustomItem, setHoveredCustomItem] = useState<number>(0);
+  const navRef = useRef<HTMLElement | null>(null);
+  const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const pathname = usePathname();
 
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const [catRes, subRes] = await Promise.all([
-          fetch("/api/categories"),
-          fetch("/api/subcategories"),
-        ]);
-
-        if (catRes.ok && subRes.ok) {
-          const cats = await catRes.json();
-          const subs = await subRes.json();
-
-          setCategories(
-            cats.map((cat: Category) => ({
-              ...cat,
-              subcategories: subs.filter(
-                (sub: SubCategory) => sub.category === cat._id,
-              ),
-            })),
-          );
-        }
-      } catch (error) {
-        console.error("Failed to fetch categories:", error);
-      }
-    };
-
-    fetchCategories();
-  }, []);
-
-  // Close dropdowns when pathname changes
-  useEffect(() => {
-    setOpenDropdown(null);
-    setOpenMobileSubmenu(null);
-    setIsMobileMenuOpen(false);
-  }, [pathname]);
-
+  // Function to check if a link is active
   const isActive = (href: string) => {
-    if (href === "/") return pathname === href;
+    if (href === '/') {
+      return pathname === '/';
+    }
     return pathname.startsWith(href);
   };
 
-  const isDropdownActive = (dropdownType: string) => {
-    if (dropdownType === "products") return pathname.startsWith("/products");
-    if (dropdownType === "custom")
-      return pathname.startsWith("/customised-solution");
-    if (dropdownType === "elv") return pathname.startsWith("/elv-solution");
-    return false;
+  // Fetch categories from backend
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch('/api/categories');
+        if (response.ok) {
+          const data = await response.json();
+          setCategories(data);
+        }
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+    fetchCategories();
+  }, []);
+
+  const handleMouseEnter = (dropdown: string) => {
+    if (dropdownTimeoutRef.current) {
+      clearTimeout(dropdownTimeoutRef.current);
+    }
+    setActiveDropdown(dropdown);
+    // Reset to first item when entering customized dropdown
+    if (dropdown === 'customized') {
+      setHoveredCustomItem(0);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    dropdownTimeoutRef.current = setTimeout(() => {
+      setActiveDropdown(null);
+    }, 150);
+  };
+
+  const toggleMobileDropdown = (dropdown: string) => {
+    setMobileDropdown(mobileDropdown === dropdown ? null : dropdown);
   };
 
   return (
-    <>
-      {/* Top Bar */}
-      <div className="hidden lg:block bg-blue-900 text-white py-2">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between text-xs">
-            <div className="flex items-center gap-6">
-              {CONTACT_INFO.map(({ icon: Icon, href, text }) => (
-                <a
-                  key={href}
-                  href={href}
-                  className="flex items-center gap-2 hover:text-blue-200 transition-colors"
-                >
-                  <Icon className="w-3 h-3" />
-                  <span>{text}</span>
-                </a>
-              ))}
-            </div>
-            <div className="text-blue-200">
-              Leading ELV Solutions Provider in UAE
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Navbar */}
-      <nav
-        className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-white shadow-lg py-1.5 text-black" : "bg-white py-2 text-black"}`}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
-            {/* Logo with 3D Flip Animation */}
-            <Link href="/" className="relative block w-[140px] h-[60px]">
+    <nav ref={navRef} className="fixed top-0 left-0 right-0 z-50 mx-auto mt-2 max-w-[97%] lg:max-w-8xl rounded-xl bg-[#020035] backdrop-blur-md border border-blue-900/30 shadow-xl shadow-blue-900/20">
+      <div className="px-3 sm:px-4 lg:px-6">
+        <div className="flex items-center justify-between h-16 lg:h-22">
+          {/* Logo */}
+         <Link href="/" className="relative block w-[100px] h-[45px] lg:w-[120px] lg:h-[50px]">
               <motion.div
                 className="relative w-full h-full"
                 style={{
@@ -253,7 +148,7 @@ export default function Navbar() {
               >
                 {/* Front Logo */}
                 <div
-                  className="absolute inset-0 flex items-center justify-center" // Add centering
+                  className="absolute inset-0 flex items-center justify-center"
                   style={{
                     backfaceVisibility: "hidden",
                     WebkitBackfaceVisibility: "hidden",
@@ -262,14 +157,14 @@ export default function Navbar() {
                   <Image
                     src="/logo.png"
                     alt="Bright ELV Logo"
-                    width={100} // Set specific width
-                    height={100} // Set specific height
+                    width={80}
+                    height={80}
                     className="object-contain"
                     priority
                   />
                 </div>
 
-                {/* Back Logo - You can use a different logo or same with different styling */}
+                {/* Back Logo */}
                 <div
                   className="absolute inset-0 rounded-lg flex items-center justify-center"
                   style={{
@@ -281,8 +176,8 @@ export default function Navbar() {
                   <Image
                     src="/logo2.png"
                     alt="Bright ELV Logo Back"
-                    width={100} // Set specific width
-                    height={100} // Set specific height
+                    width={80}
+                    height={80}
                     className="object-contain"
                     priority
                   />
@@ -290,352 +185,527 @@ export default function Navbar() {
               </motion.div>
             </Link>
 
-            {/* Desktop Menu */}
-            <div className="hidden lg:flex items-center">
-              {NAV_LINKS.map((link) => (
-                <DesktopNavItem
-                  key={link.name}
-                  link={link}
-                  openDropdown={openDropdown}
-                  setOpenDropdown={setOpenDropdown}
-                  categories={categories}
-                  isScrolled={isScrolled}
-                  isActive={isActive(link.href)}
-                  isDropdownActive={
-                    link.dropdown ? isDropdownActive(link.dropdown) : false
-                  }
-                />
-              ))}
-            </div>
 
-            {/* CTA Button */}
-            <div className="hidden lg:flex items-center gap-4">
-              <Link
-                href="/contact"
-                className="px-5 py-2 bg-blue-900 text-white text-xs rounded-full hover:bg-blue-700 transition-all shadow-lg shadow-blue-900/25 hover:shadow-blue-900/40"
-              >
-                Get Quote
-              </Link>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              className="lg:hidden text-gray-700 p-2 rounded-lg hover:bg-gray-100"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex items-center space-x-6 xl:space-x-8">
+            <Link
+              href="/"
+              className={`text-sm font-medium transition-colors ${
+                isActive('/')
+                  ? 'text-blue-400'
+                  : 'text-white hover:text-blue-300'
+              }`}
             >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+              Home
+            </Link>
+
+            <Link
+              href="/about"
+              className={`text-sm font-medium transition-colors ${
+                isActive('/about')
+                  ? 'text-blue-400'
+                  : 'text-white hover:text-blue-300'
+              }`}
+            >
+              About Us
+            </Link>
+
+            {/* Products Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => handleMouseEnter('products')}
+              onMouseLeave={handleMouseLeave}
+            >
+              <button className={`flex items-center space-x-1 text-sm font-medium transition-colors ${
+                isActive('/products')
+                  ? 'text-blue-400'
+                  : 'text-white hover:text-blue-300'
+              }`}>
+                <span>Products</span>
+                <ChevronDown className={`w-4 h-4 transition-transform ${activeDropdown === 'products' ? 'rotate-180' : ''}`} />
+              </button>
+            </div>
+
+            {/* Customized Solution Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => handleMouseEnter('customized')}
+              onMouseLeave={handleMouseLeave}
+            >
+              <button className={`flex items-center space-x-1 text-sm font-medium transition-colors ${
+                isActive('/customised-solution')
+                  ? 'text-blue-400'
+                  : 'text-white hover:text-blue-300'
+              }`}>
+                <span>Customized Solution</span>
+                <ChevronDown className={`w-4 h-4 transition-transform ${activeDropdown === 'customized' ? 'rotate-180' : ''}`} />
+              </button>
+            </div>
+
+            {/* ELV Solution Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => handleMouseEnter('elv')}
+              onMouseLeave={handleMouseLeave}
+            >
+              <button className={`flex items-center space-x-1 text-sm font-medium transition-colors ${
+                isActive('/elv-solution')
+                  ? 'text-blue-400'
+                  : 'text-white hover:text-blue-300'
+              }`}>
+                <span>ELV Solution</span>
+                <ChevronDown className={`w-4 h-4 transition-transform ${activeDropdown === 'elv' ? 'rotate-180' : ''}`} />
+              </button>
+            </div>
+
+            <Link
+              href="/contact"
+              className={`text-sm font-medium transition-colors ${
+                isActive('/contact')
+                  ? 'text-blue-400'
+                  : 'text-white hover:text-blue-300'
+              }`}
+            >
+              Contact Us
+            </Link>
           </div>
+
+          {/* Contact Info (stacked on desktop) */}
+          <div className="hidden lg:flex flex-col items-end space-y-1">
+            <a
+              href="tel:+971565022960"
+              className="flex items-center space-x-2 text-white hover:text-blue-300 transition-colors"
+            >
+              <Phone className="w-3 h-3" />
+              <span className="text-xs font-medium">+971 565022960</span>
+            </a>
+
+            <a
+              href="https://wa.me/971508813601"
+              className="flex items-center space-x-2 text-white hover:text-blue-300 transition-colors"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <MessageCircle className="w-3 h-3" />
+              <span className="text-xs font-medium">+971 508813601</span>
+            </a>
+
+            <a
+              href="mailto:sales@brightelv.com"
+              className="flex items-center space-x-2 text-white hover:text-blue-300 transition-colors"
+            >
+              <Mail className="w-3 h-3" />
+              <span className="text-xs font-medium">sales@brightelv.com</span>
+            </a>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="lg:hidden text-white hover:text-blue-300 transition-colors"
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </div>
+
+        {/* Full-width Products Dropdown */}
+        <AnimatePresence>
+          {activeDropdown === 'products' && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="hidden lg:block w-full overflow-hidden mt-4"
+              onMouseEnter={() => handleMouseEnter('products')}
+              onMouseLeave={handleMouseLeave}
+            >
+              <div className="relative pt-6 pb-8 px-4">
+                <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-[#0a1628] to-transparent" />
+                <div className="flex justify-center items-start gap-6 lg:gap-10 flex-wrap">
+                  {categories.map((category) => (
+                    <Link
+                      key={category._id}
+                      href={`/products/${category.slug}`}
+                      className="flex flex-col items-center group"
+                      onClick={() => setActiveDropdown(null)}
+                    >
+                      <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-2xl overflow-hidden bg-white/10 mb-3 group-hover:scale-105 transition-transform shadow-lg">
+                        {category.image ? (
+                          <Image
+                            src={category.image}
+                            alt={category.name}
+                            width={96}
+                            height={96}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-white/50 bg-blue-900/30">
+                            <span className="text-2xl">📦</span>
+                          </div>
+                        )}
+                      </div>
+                      <span className="text-white text-xs lg:text-sm text-center font-semibold uppercase tracking-wide group-hover:text-blue-300 transition-colors max-w-[100px]">
+                        {category.name}
+                      </span>
+                      <span className="text-blue-400 text-[10px] mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        Learn More →
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+                <div className="flex justify-center mt-6 pt-4 border-t border-blue-900/30">
+                  <Link
+                    href="/products"
+                    className="text-sm font-semibold text-blue-400 hover:text-blue-300 transition-colors uppercase tracking-wider flex items-center gap-2 group"
+                    onClick={() => setActiveDropdown(null)}
+                  >
+                    View All Products
+                    <span className="group-hover:translate-x-1 transition-transform">→</span>
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Full-width Customized Solution Dropdown */}
+        <AnimatePresence>
+          {activeDropdown === 'customized' && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="hidden lg:block w-full overflow-hidden mt-4"
+              onMouseEnter={() => handleMouseEnter('customized')}
+              onMouseLeave={handleMouseLeave}
+            >
+              <div className="relative pt-6 pb-10 px-8 bg-[#0f1f35]/60">
+                <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-[#0a1628] to-transparent" />
+                
+                {/* Flex container for menu items and images */}
+                <div className="flex items-center justify-between gap-12 max-w-7xl mx-auto">
+                  {/* Left side - Menu items in 2 columns */}
+                  <div className="flex-1 grid grid-cols-2 gap-x-16 gap-y-4">
+                    {customizedSolutionItems.map((item, index) => (
+                      <Link
+                        key={index}
+                        href={item.href}
+                        onMouseEnter={() => setHoveredCustomItem(index)}
+                        className="text-white hover:text-blue-400 transition-all duration-200 text-sm font-medium uppercase tracking-wide py-2.5"
+                        onClick={() => setActiveDropdown(null)}
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
+                  
+                  {/* Vertical separator */}
+                  <div className="w-px h-56 bg-gradient-to-b from-transparent via-blue-400/40 to-transparent shrink-0" />
+                  
+                  {/* Right side - Single Product image with transition */}
+                  <div className="flex items-center shrink-0">
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={hoveredCustomItem}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.9 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <div className="w-56 h-48 rounded-lg overflow-hidden shadow-xl bg-white/5 hover:scale-105 transition-transform">
+                          <Image
+                            src={customizedSolutionItems[hoveredCustomItem].image}
+                            alt={customizedSolutionItems[hoveredCustomItem].name}
+                            width={224}
+                            height={192}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      </motion.div>
+                    </AnimatePresence>
+                  </div>
+                </div>
+                <div className="flex justify-center mt-6 pt-4 border-t border-blue-900/30">
+                  <Link
+                    href="/customised-solution"
+                    className="text-sm font-semibold text-blue-400 hover:text-blue-300 transition-colors uppercase tracking-wider flex items-center gap-2 group"
+                    onClick={() => setActiveDropdown(null)}
+                  >
+                    View All Customised Solutions
+                    <span className="group-hover:translate-x-1 transition-transform">→</span>
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Full-width ELV Solution Dropdown */}
+        <AnimatePresence>
+          {activeDropdown === 'elv' && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="hidden lg:block w-full overflow-hidden mt-4"
+              onMouseEnter={() => handleMouseEnter('elv')}
+              onMouseLeave={handleMouseLeave}
+            >
+              {/* Curved top section */}
+              <div className="relative pt-6 pb-8 px-4">
+                {/* Wave/curved design at top */}
+                <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-[#0a1628] to-transparent" />
+                
+                {/* Items container */}
+                <div className="flex justify-center items-start gap-6 lg:gap-10">
+                  {elvSolutionItems.map((item, index) => (
+                    <Link
+                      key={index}
+                      href={item.href}
+                      className="flex flex-col items-center group"
+                      onClick={() => setActiveDropdown(null)}
+                    >
+                      <div className="w-32 h-28 lg:w-40 lg:h-32 rounded-2xl overflow-hidden bg-white/10 mb-3 group-hover:scale-105 transition-transform shadow-lg">
+                        <Image
+                          src={item.image}
+                          alt={item.name}
+                          width={160}
+                          height={128}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <span className="text-white text-xs lg:text-sm text-center font-semibold uppercase tracking-wide group-hover:text-blue-300 transition-colors max-w-[140px]">
+                        {item.name}
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+                <div className="flex justify-center mt-6 pt-4 border-t border-blue-900/30">
+                  <Link
+                    href="/elv-solution"
+                    className="text-sm font-semibold text-blue-400 hover:text-blue-300 transition-colors uppercase tracking-wider flex items-center gap-2 group"
+                    onClick={() => setActiveDropdown(null)}
+                  >
+                    View All ELV Solutions
+                    <span className="group-hover:translate-x-1 transition-transform">→</span>
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Mobile Menu */}
         <AnimatePresence>
-          {isMobileMenuOpen && (
-            <MobileMenu
-              navLinks={NAV_LINKS}
-              categories={categories}
-              openMobileSubmenu={openMobileSubmenu}
-              setOpenMobileSubmenu={setOpenMobileSubmenu}
-              setIsMobileMenuOpen={setIsMobileMenuOpen}
-              pathname={pathname}
-              isActive={isActive}
-              isDropdownActive={isDropdownActive}
-            />
-          )}
-        </AnimatePresence>
-      </nav>
-    </>
-  );
-}
-
-interface DesktopNavItemProps {
-  link: NavLink;
-  openDropdown: string | null;
-  setOpenDropdown: (dropdown: string | null) => void;
-  categories: Category[];
-  isScrolled: boolean;
-  isActive: boolean;
-  isDropdownActive: boolean;
-}
-
-const DesktopNavItem = ({
-  link,
-  openDropdown,
-  setOpenDropdown,
-  categories,
-  isScrolled,
-  isActive,
-  isDropdownActive,
-}: DesktopNavItemProps) => {
-  const dropdownConfig: Record<string, { component: any; props: any }> = {
-    products: { component: ProductsTextDropdown, props: { categories } },
-    custom: {
-      component: SimpleTextDropdown,
-      props: { items: CUSTOM_SOLUTIONS },
-    },
-    elv: { component: SimpleTextDropdown, props: { items: ELV_SOLUTIONS } },
-  };
-
-  const isOpen = link.dropdown && openDropdown === link.dropdown;
-  const Dropdown =
-    isOpen && link.dropdown ? dropdownConfig[link.dropdown]?.component : null;
-  const isCurrentlyActive = link.dropdown ? isDropdownActive : isActive;
-
-  return (
-    <div
-      className="static"
-      onMouseEnter={() =>
-        link.hasDropdown && setOpenDropdown(link.dropdown || null)
-      }
-      onMouseLeave={() => setOpenDropdown(null)}
-    >
-      <Link
-        href={link.href}
-        className={`px-3 py-2 font-medium transition-all duration-200 flex items-center gap-2 text-xs relative group ${
-          isCurrentlyActive ? "text-blue-900" : "text-black hover:text-blue-900"
-        }`}
-      >
-        {link.name}
-        {link.hasDropdown && (
-          <ChevronDown
-            className={`w-3 h-3 transition-transform duration-200 ${openDropdown === link.dropdown ? "rotate-180" : ""}`}
-          />
-        )}
-        <span
-          className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 h-px bg-blue-900 transition-all duration-300 ${isCurrentlyActive ? "w-1/2" : "w-0 group-hover:w-1/2"}`}
-        ></span>
-      </Link>
-      <AnimatePresence>
-        {Dropdown && isOpen && (
-          <Dropdown {...dropdownConfig[link.dropdown!].props} />
-        )}
-      </AnimatePresence>
-    </div>
-  );
-};
-
-const ProductsTextDropdown = ({ categories }: { categories: Category[] }) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      transition={{ duration: 0.2, ease: "easeOut" }}
-      className="absolute left-1/2 transform -translate-x-1/2 top-full mt-0 bg-white shadow-2xl border-t-2 border-blue-900 z-50 max-w-5xl"
-    >
-      <div className="px-8 py-6 h-[200px] overflow-y-auto">
-        {categories.length === 0 ? (
-          <div className="flex gap-4">
-            {[...Array(8)].map((_, index) => (
-              <div
-                key={index}
-                className="h-6 w-24 bg-gray-100 rounded animate-pulse"
-              ></div>
-            ))}
-          </div>
-        ) : (
-          <div className="flex flex-col">
-            <div className="flex flex-wrap gap-x-6 gap-y-3 mb-4">
-              {categories.map((category) => (
-                <Link
-                  key={category._id}
-                  href={`/products/${category.slug}`}
-                  className="py-2 px-3 text-gray-700 hover:text-blue-900 hover:bg-blue-50 text-sm transition-all duration-200 rounded-md whitespace-nowrap"
-                >
-                  {category.name}
-                </Link>
-              ))}
-            </div>
-            <div className="border-t pt-3">
-              <Link
-                href="/products"
-                className="text-blue-900 font-semibold text-sm hover:text-blue-700 transition-all inline-flex items-center gap-1 group"
-              >
-                All Products{" "}
-                <span className="transition-transform group-hover:translate-x-1">
-                  →
-                </span>
-              </Link>
-            </div>
-          </div>
-        )}
-      </div>
-    </motion.div>
-  );
-};
-
-const SimpleTextDropdown = ({
-  items,
-}: {
-  items: { name: string; href: string; isViewAll?: boolean }[];
-}) => {
-  const regularItems = items.filter((item) => !item.isViewAll);
-  const viewAllItem = items.find((item) => item.isViewAll);
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      transition={{ duration: 0.2, ease: "easeOut" }}
-      className="absolute left-1/2 transform -translate-x-1/2 top-full mt-0 bg-white shadow-2xl border-t-2 border-blue-900 z-50 max-w-5xl"
-    >
-      <div className="px-8 py-6 h-[200px] overflow-y-auto">
-        <div className="flex flex-col">
-          <div className="flex flex-wrap gap-x-6 gap-y-3 mb-4">
-            {regularItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="py-2 px-3 text-gray-700 hover:text-blue-900 hover:bg-blue-50 text-sm transition-all duration-200 rounded-md whitespace-nowrap"
-              >
-                {item.name}
-              </Link>
-            ))}
-          </div>
-          {viewAllItem && (
-            <div className="border-t pt-3">
-              <Link
-                href={viewAllItem.href}
-                className="text-blue-900 font-semibold text-sm hover:text-blue-700 transition-all inline-flex items-center gap-1 group"
-              >
-                {viewAllItem.name.replace("View All ", "All ")}{" "}
-                <span className="transition-transform group-hover:translate-x-1">
-                  →
-                </span>
-              </Link>
-            </div>
-          )}
-        </div>
-      </div>
-    </motion.div>
-  );
-};
-
-interface MobileMenuProps {
-  navLinks: NavLink[];
-  categories: Category[];
-  openMobileSubmenu: string | null;
-  setOpenMobileSubmenu: (dropdown: string | null) => void;
-  setIsMobileMenuOpen: (open: boolean) => void;
-  pathname: string;
-  isActive: (href: string) => boolean;
-  isDropdownActive: (dropdownType: string) => boolean;
-}
-
-const MobileMenu = ({
-  navLinks,
-  categories,
-  openMobileSubmenu,
-  setOpenMobileSubmenu,
-  setIsMobileMenuOpen,
-  pathname,
-  isActive,
-  isDropdownActive,
-}: MobileMenuProps) => (
-  <motion.div
-    initial={{ opacity: 0, height: 0 }}
-    animate={{ opacity: 1, height: "auto" }}
-    exit={{ opacity: 0, height: 0 }}
-    transition={{ duration: 0.3, ease: "easeInOut" }}
-    className="lg:hidden bg-white border-t border-gray-100 overflow-hidden"
-  >
-    <div className="py-4 px-4 space-y-1">
-      {navLinks.map((link) => {
-        const isCurrentlyActive = link.dropdown
-          ? isDropdownActive(link.dropdown!)
-          : isActive(link.href);
-
-        return (
-          <div key={link.name}>
-            <div className="flex items-center justify-between">
-              <Link
-                href={link.href}
-                className={`flex-1 px-4 py-3 font-medium rounded-lg text-sm relative transition-all duration-200 ${
-                  isCurrentlyActive
-                    ? "text-blue-900 bg-blue-50"
-                    : "text-gray-700 hover:bg-blue-50"
-                }`}
-                onClick={() => !link.hasDropdown && setIsMobileMenuOpen(false)}
-              >
-                {link.name}
-                <span
-                  className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 h-px bg-blue-900 transition-all duration-300 ${isCurrentlyActive ? "w-1/2" : "w-0"}`}
-                ></span>
-              </Link>
-              {link.hasDropdown && (
-                <button
-                  onClick={() =>
-                    setOpenMobileSubmenu(
-                      openMobileSubmenu === link.dropdown
-                        ? null
-                        : link.dropdown || null,
-                    )
-                  }
-                  className="p-3 text-gray-500"
-                >
-                  <ChevronDown
-                    className={`w-5 h-5 transition-transform duration-200 ${openMobileSubmenu === link.dropdown ? "rotate-180" : ""}`}
-                  />
-                </button>
-              )}
-            </div>
-
-            <AnimatePresence>
-              {link.dropdown === "products" &&
-                openMobileSubmenu === "products" && (
-                  <DropdownMenu
-                    items={categories.map((c) => ({
-                      name: c.name,
-                      href: `/products/${c.slug}`,
-                    }))}
-                    isOpen
-                    closeMenu={() => setIsMobileMenuOpen(false)}
-                  />
-                )}
-              {link.dropdown === "custom" && openMobileSubmenu === "custom" && (
-                <DropdownMenu
-                  items={CUSTOM_SOLUTIONS}
-                  isOpen
-                  closeMenu={() => setIsMobileMenuOpen(false)}
-                />
-              )}
-              {link.dropdown === "elv" && openMobileSubmenu === "elv" && (
-                <DropdownMenu
-                  items={ELV_SOLUTIONS}
-                  isOpen
-                  closeMenu={() => setIsMobileMenuOpen(false)}
-                />
-              )}
-            </AnimatePresence>
-          </div>
-        );
-      })}
-
-      {/* Mobile Contact Info */}
-      <div className="border-t border-gray-100 pt-4 mt-4 space-y-3">
-        {CONTACT_INFO.map(({ icon: Icon, href, text, color }) => (
-          <a
-            key={href}
-            href={href}
-            className="flex items-center gap-3 px-4 py-2 text-gray-600 hover:text-blue-900 text-sm transition-colors duration-200"
+        {mobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="lg:hidden py-3 border-t border-blue-900/20"
           >
-            <Icon className={`w-5 h-5 ${color}`} />
-            <span>{text}</span>
-          </a>
-        ))}
-        <Link
-          href="/contact"
-          className={`block mx-4 mt-4 px-6 py-3 font-medium rounded-full text-center text-sm transition-all duration-200 ${
-            pathname === "/contact"
-              ? "bg-blue-900 text-white"
-              : "bg-blue-900 text-white hover:bg-blue-700"
-          }`}
-          onClick={() => setIsMobileMenuOpen(false)}
-        >
-          Get Quote
-        </Link>
+            <div className="flex flex-col space-y-2">
+            <Link
+              href="/"
+              className={`block transition-colors text-sm font-medium py-2 px-2 rounded-lg hover:bg-white/5 ${
+                isActive('/')
+                  ? 'text-cyan-400 bg-cyan-400/10'
+                  : 'text-blue-400 hover:text-blue-300'
+              }`}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Home
+            </Link>
+
+            <Link
+              href="/about"
+              className={`block transition-colors text-sm font-medium py-2 px-2 rounded-lg hover:bg-white/5 ${
+                isActive('/about')
+                  ? 'text-cyan-400 bg-cyan-400/10'
+                  : 'text-white hover:text-blue-300'
+              }`}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              About Us
+            </Link>
+
+            {/* Mobile Products Dropdown */}
+            <div>
+              <button
+                onClick={() => toggleMobileDropdown('products')}
+                className={`flex items-center justify-between w-full transition-colors text-sm font-medium py-2 px-2 rounded-lg hover:bg-white/5 ${
+                  isActive('/products')
+                    ? 'text-cyan-400 bg-cyan-400/10'
+                    : 'text-white hover:text-blue-300'
+                }`}
+              >
+                <span>Products</span>
+                <ChevronDown className={`w-4 h-4 transition-transform ${mobileDropdown === 'products' ? 'rotate-180' : ''}`} />
+              </button>
+              <AnimatePresence>
+                {mobileDropdown === 'products' && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="pl-4 mt-1 space-y-1"
+                  >
+                    {categories.map((category) => (
+                      <Link
+                        key={category._id}
+                        href={`/products/${category.slug}`}
+                        className="block text-white/80 hover:text-blue-300 transition-colors text-sm py-1.5 px-2 rounded-lg hover:bg-white/5"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        {category.name}
+                      </Link>
+                    ))}
+                    <Link
+                      href="/products"
+                      className="block text-cyan-400 hover:text-cyan-300 transition-colors text-sm py-1.5 px-2 rounded-lg hover:bg-white/5 font-semibold mt-2 border-t border-blue-900/20 pt-2"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      View All Products →
+                    </Link>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Mobile Customized Solution Dropdown */}
+            <div>
+              <button
+                onClick={() => toggleMobileDropdown('customized')}
+                className={`flex items-center justify-between w-full transition-colors text-sm font-medium py-2 px-2 rounded-lg hover:bg-white/5 ${
+                  isActive('/customised-solution')
+                    ? 'text-cyan-400 bg-cyan-400/10'
+                    : 'text-white hover:text-blue-300'
+                }`}
+              >
+                <span>Customized Solution</span>
+                <ChevronDown className={`w-4 h-4 transition-transform ${mobileDropdown === 'customized' ? 'rotate-180' : ''}`} />
+              </button>
+              <AnimatePresence>
+                {mobileDropdown === 'customized' && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="pl-4 mt-1 space-y-1"
+                  >
+                    {customizedSolutionItems.map((item, index) => (
+                      <Link
+                        key={index}
+                        href={item.href}
+                        className="block text-white/80 hover:text-blue-300 transition-colors text-sm py-1.5 px-2 rounded-lg hover:bg-white/5"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                    <Link
+                      href="/customised-solution"
+                      className="block text-cyan-400 hover:text-cyan-300 transition-colors text-sm py-1.5 px-2 rounded-lg hover:bg-white/5 font-semibold mt-2 border-t border-blue-900/20 pt-2"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      View All Customised Solutions →
+                    </Link>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Mobile ELV Solution Dropdown */}
+            <div>
+              <button
+                onClick={() => toggleMobileDropdown('elv')}
+                className={`flex items-center justify-between w-full transition-colors text-sm font-medium py-2 px-2 rounded-lg hover:bg-white/5 ${
+                  isActive('/elv-solution')
+                    ? 'text-cyan-400 bg-cyan-400/10'
+                    : 'text-white hover:text-blue-300'
+                }`}
+              >
+                <span>ELV Solution</span>
+                <ChevronDown className={`w-4 h-4 transition-transform ${mobileDropdown === 'elv' ? 'rotate-180' : ''}`} />
+              </button>
+              <AnimatePresence>
+                {mobileDropdown === 'elv' && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="pl-4 mt-1 space-y-1"
+                  >
+                    {elvSolutionItems.map((item, index) => (
+                      <Link
+                        key={index}
+                        href={item.href}
+                        className="block text-white/80 hover:text-blue-300 transition-colors text-sm py-1.5 px-2 rounded-lg hover:bg-white/5"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                    <Link
+                      href="/elv-solution"
+                      className="block text-cyan-400 hover:text-cyan-300 transition-colors text-sm py-1.5 px-2 rounded-lg hover:bg-white/5 font-semibold mt-2 border-t border-blue-900/20 pt-2"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      View All ELV Solutions →
+                    </Link>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            <Link
+              href="/contact"
+              className={`block transition-colors text-sm font-medium py-2 px-2 rounded-lg hover:bg-white/5 ${
+                isActive('/contact')
+                  ? 'text-cyan-400 bg-cyan-400/10'
+                  : 'text-white hover:text-blue-300'
+              }`}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Contact Us
+            </Link>
+
+            {/* Mobile Contact Info */}
+            <div className="space-y-3 pt-3 border-t border-blue-900/20 px-2">
+              <a 
+                href="tel:+971565022960" 
+                className="flex items-center space-x-2 text-white hover:text-blue-300 transition-colors"
+              >
+                <Phone className="w-4 h-4" />
+                <span className="text-sm">+971 565022960</span>
+              </a>
+              
+              <a 
+                href="https://wa.me/971508813601" 
+                className="flex items-center space-x-2 text-white hover:text-blue-300 transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <MessageCircle className="w-4 h-4" />
+                <span className="text-sm">+971 508813601</span>
+              </a>
+              
+              <a 
+                href="mailto:sales@brightelv.com" 
+                className="flex items-center space-x-2 text-white hover:text-blue-300 transition-colors"
+              >
+                <Mail className="w-4 h-4" />
+                <span className="text-sm">sales@brightelv.com</span>
+              </a>
+            </div>
+            </div>
+          </motion.div>
+        )}
+        </AnimatePresence>
       </div>
-    </div>
-  </motion.div>
-);
+    </nav>
+  );
+}

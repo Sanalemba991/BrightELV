@@ -1,20 +1,142 @@
-import React from "react";
+"use client";
+import React, { useEffect, useRef, useState } from "react";
 
 export default function CompanyOverview() {
+  const [isVisible, setIsVisible] = useState({
+    title: false,
+    stats: false,
+    description: false,
+  });
+  
+  const titleRef = useRef<HTMLDivElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
+  const descriptionRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+    
+    const createObserver = (ref: React.RefObject<HTMLElement | null>, key: string) => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setIsVisible(prev => ({ ...prev, [key]: true }));
+            observer.unobserve(entry.target);
+          }
+        },
+        { threshold: 0.1 }
+      );
+      
+      if (ref.current) {
+        observer.observe(ref.current);
+        observers.push(observer);
+      }
+      
+      return observer;
+    };
+    
+    const titleObserver = createObserver(titleRef, 'title');
+    const statsObserver = createObserver(statsRef, 'stats');
+    const descriptionObserver = createObserver(descriptionRef, 'description');
+    
+    return () => {
+      observers.forEach(observer => observer.disconnect());
+    };
+  }, []);
+  
   return (
     <div className="hidden sm:block w-full bg-white py-8 md:py-12 lg:py-16 px-4 sm:px-6 lg:px-8">
+      <style jsx>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        @keyframes fadeInLeft {
+          from {
+            opacity: 0;
+            transform: translateX(-30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        
+        @keyframes fadeInRight {
+          from {
+            opacity: 0;
+            transform: translateX(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        
+        @keyframes countUp {
+          from {
+            opacity: 0;
+            transform: scale(0.8);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+        
+        .animate-fadeInUp {
+          animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .animate-fadeInLeft {
+          animation: fadeInLeft 0.8s ease-out forwards;
+        }
+        
+        .animate-fadeInRight {
+          animation: fadeInRight 0.8s ease-out forwards;
+        }
+        
+        .animate-countUp {
+          animation: countUp 0.6s ease-out forwards;
+        }
+        
+        .divider {
+          transition: all 0.8s ease-out;
+          transform-origin: left center;
+          transform: scaleX(0);
+        }
+        
+        .divider-animate {
+          transform: scaleX(1);
+        }
+      `}</style>
+      
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-0">
           {/* Left Section - Stats Grid */}
           <div>
-            <div className="text-center mb-6 md:mb-8">
+            <div 
+              ref={titleRef}
+              className={`text-center mb-6 md:mb-8 ${isVisible.title ? 'animate-fadeInUp' : 'opacity-0'}`}
+            >
               <h2 className="text-2xl sm:text-3xl font-bold text-blue-700 uppercase text-center tracking-wide">
                 Company Overview
               </h2>
-              <div className="mx-auto mt-2 sm:mt-3 h-[1px] w-16 sm:w-24 md:w-32 lg:w-40 bg-blue-700"></div>
+              <div 
+                className={`divider mx-auto mt-2 sm:mt-3 h-[1px] w-16 sm:w-24 md:w-32 lg:w-40 bg-blue-700 ${isVisible.title ? 'divider-animate' : ''}`}
+              ></div>
             </div>
 
-            <div className="py-6 md:py-8 mt-4 md:mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 bg-indigo-950 px-4 sm:px-6 md:px-8 rounded-2xl lg:rounded-l-3xl lg:rounded-r-none">
+            <div 
+              ref={statsRef}
+              className={`py-6 md:py-8 mt-4 md:mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 bg-indigo-950 px-4 sm:px-6 md:px-8 rounded-2xl lg:rounded-l-3xl lg:rounded-r-none ${isVisible.stats ? 'animate-fadeInLeft' : 'opacity-0'}`}
+            >
               {/* Stat Card 1 - Globe */}
               <div className="bg-[#1e1f42] rounded-xl md:rounded-2xl p-4 md:p-6 border border-[#4a4b7f] text-white">
                 <div className="flex items-center gap-3 md:gap-4">
@@ -38,7 +160,7 @@ export default function CompanyOverview() {
                 </div>
               </div>
 
-              {/* Stat Card 2 - Employees - FIXED ALIGNMENT */}
+              {/* Stat Card 2 - Employees */}
               <div className="bg-[#1e1f42] rounded-xl md:rounded-2xl p-4 md:p-6 border border-[#4a4b7f] text-white">
                 <div className="flex items-center gap-3 md:gap-4">
                   <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center flex-shrink-0">
@@ -51,7 +173,7 @@ export default function CompanyOverview() {
                     </svg>
                   </div>
                   <div>
-                    <div className="text-2xl sm:text-3xl md:text-4xl font-bold">
+                    <div className={`text-2xl sm:text-3xl md:text-4xl font-bold ${isVisible.stats ? 'animate-countUp' : 'opacity-0'}`}>
                       +42
                     </div>
                     <div className="text-sm md:text-lg">Employees</div>
@@ -70,7 +192,7 @@ export default function CompanyOverview() {
                     <path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z" />
                   </svg>
                   <div>
-                    <div className="text-2xl sm:text-3xl md:text-4xl font-bold">
+                    <div className={`text-2xl sm:text-3xl md:text-4xl font-bold ${isVisible.stats ? 'animate-countUp' : 'opacity-0'}`}>
                       +128
                     </div>
                     <div className="text-sm md:text-lg">Projects Complete</div>
@@ -90,7 +212,7 @@ export default function CompanyOverview() {
                     <path d="M4 10h3v2H4v5h3v2H2V9h2zm12 0h3v9h-2v-7h-1z" />
                   </svg>
                   <div>
-                    <div className="text-2xl sm:text-3xl md:text-4xl font-bold">
+                    <div className={`text-2xl sm:text-3xl md:text-4xl font-bold ${isVisible.stats ? 'animate-countUp' : 'opacity-0'}`}>
                       +1,000
                     </div>
                     <div className="text-sm md:text-lg">Product Lines</div>
@@ -102,8 +224,8 @@ export default function CompanyOverview() {
 
           {/* Right Section - Company Description */}
           <div
-            className="bg-indigo-950 rounded-2xl md:rounded-3xl lg:rounded-4xl rounded-bl-2xl md:rounded-bl-3xl lg:rounded-bl-none p-6 md:p-8 lg:p-12 text-white
-"
+            ref={descriptionRef}
+            className={`bg-indigo-950 rounded-2xl md:rounded-3xl lg:rounded-4xl rounded-bl-2xl md:rounded-bl-3xl lg:rounded-bl-none p-6 md:p-8 lg:p-12 text-white ${isVisible.description ? 'animate-fadeInRight' : 'opacity-0'}`}
           >
             <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4 md:mb-6">
               WE ARE ...
@@ -117,7 +239,7 @@ export default function CompanyOverview() {
             </p>
 
             <p className="text-sm sm:text-base leading-relaxed">
-             Together, let’s surpass your competition and achieve customer satisfaction with more than 128 completed projects. Choose BrightElv Technology LLC for excellence in surveillance, audio-visual, home automation, and building management solutions—backed by 1000+ product lines.
+             Together, let's surpass your competition and achieve customer satisfaction with more than 128 completed projects. Choose BrightElv Technology LLC for excellence in surveillance, audio-visual, home automation, and building management solutions—backed by 1000+ product lines.
             </p>
           </div>
         </div>
