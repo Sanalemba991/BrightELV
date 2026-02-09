@@ -479,7 +479,7 @@ const Kiosk = () => {
             >
               <Image
                 src="/banner/stand/stand (1).png"
-                alt="Portrait photography"
+                alt="Portrait photographey"
                 fill
                 className="object-cover "
               />
