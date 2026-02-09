@@ -516,15 +516,13 @@ export default function Pabx() {
                     className="text-gray-800 text-xs lg:text-sm leading-relaxed"
                     variants={fadeInUp}
                   >
-                    Experience crystal-clear communication with our
-                    High-Resolution Audio PABX systems.
+                   Experience crystal-clear audio PABX systems.
                   </motion.p>
                   <motion.p
                     className="text-gray-800 text-xs lg:text-sm leading-relaxed"
                     variants={fadeInUp}
                   >
                     Designed for clarity and reliability, ensuring seamless
-                    voice quality and enhanced collaboration.
                   </motion.p>
                 </motion.div>
               </motion.div>

@@ -175,6 +175,32 @@ export default function Link() {
               </NextLink>
             </motion.div>
           </motion.div>
+
+          {/* Right Side - Image */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            viewport={{ once: true }}
+            className="flex items-center justify-center"
+          >
+            {/* Single Large Image */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              viewport={{ once: true }}
+              className="relative w-full h-80 md:h-96 lg:h-99 overflow-hidden rounded-lg shadow-lg"
+            >
+              <Image
+                src="/map.png"
+                alt="Operating Globally"
+                fill
+                priority
+                className="object-contain  transition-transform duration-500"
+              />
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </div>

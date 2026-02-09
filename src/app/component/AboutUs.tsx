@@ -17,54 +17,197 @@ export default function AboutUs() {
     };
 
     // Completely new animation variants with better easing
-    const slideInLeft:Variants = {
+    const slideInLeft: Variants = {
         hidden: { opacity: 0, x: -30 },
         visible: {
             opacity: 1,
             x: 0,
-            transition: { 
+            transition: {
                 duration: 0.5,
                 ease: [0.25, 0.1, 0.25, 1],
             },
         },
     };
 
-    const slideInRight:Variants = {
+    const slideInRight: Variants = {
         hidden: { opacity: 0, x: 30 },
         visible: {
             opacity: 1,
             x: 0,
-            transition: { 
+            transition: {
                 duration: 0.5,
                 ease: [0.25, 0.1, 0.25, 1],
             },
         },
     };
 
-    const fadeInUp:Variants = {
+    const fadeInUp: Variants = {
         hidden: { opacity: 0, y: 20 },
         visible: {
             opacity: 1,
             y: 0,
-            transition: { 
+            transition: {
                 duration: 0.5,
                 ease: [0.25, 0.1, 0.25, 1],
             },
         },
     };
+    const bannerBackground = "/banner/flightcase.png";
+
+    // Banner animation variants
+    const bannerContainerVariants: Variants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                when: "beforeChildren",
+                staggerChildren: 0.2,
+                duration: 0.8,
+            },
+        },
+    };
+
+    const bannerTitleVariants: Variants = {
+        hidden: { y: 50, opacity: 0 },
+        visible: {
+            y: 0,
+            opacity: 1,
+            transition: {
+                duration: 1.2,
+                ease: [0.25, 0.1, 0.25, 1],
+            },
+        },
+    };
+
+    const bannerFadeInUpVariants: Variants = {
+        hidden: { y: 30, opacity: 0 },
+        visible: {
+            y: 0,
+            opacity: 1,
+            transition: {
+                duration: 0.8,
+                ease: [0.25, 0.1, 0.25, 1],
+            },
+        },
+    };
+
+    const bannerSlideInRightVariants: Variants = {
+        hidden: { x: 50, opacity: 0 },
+        visible: {
+            x: 0,
+            opacity: 1,
+            transition: {
+                duration: 0.8,
+                delay: 0.5,
+                ease: [0.25, 0.1, 0.25, 1],
+            },
+        },
+    };
+
 
     return (
-        <div className='bg-[#020035]  py-8 px-4 sm:px-6 lg:px-8'>
-            <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-                viewport={{ once: true, amount: 0.3 }}
-                className="text-xl mt-40 sm:text-2xl md:text-3xl lg:text-4xl font-bold uppercase text-center text-white mb-8 sm:mb-12 lg:mb-20"
-            >
-                Best ELV Company In Dubai
-            </motion.h1>
-            <div className="bg-white rounded-3xl sm:rounded-[50px] lg:rounded-[75px] overflow-hidden">
+        <div className='bg-[#020035]  '>
+            <div className="relative mb-8 w-full h-96 md:h-screen bg-[#020035]  overflow-hidden">
+                {/* Background Image with Fixed Positioning */}
+                <motion.div
+                    className="absolute inset-0 w-full h-full"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.8 }}
+                >
+                    <div
+                        className="absolute inset-0 bg-cover bg-center bg-fixed"
+                        style={{
+                            backgroundImage: `url('${bannerBackground}')`,
+                            filter: "brightness(0.9)",
+                        }}
+                    />
+                    {/* Dark overlay for better text visibility */}
+                </motion.div>
+
+                {/* Content Container */}
+                <motion.div
+                    className="relative z-10 h-full flex flex-col"
+                    variants={bannerContainerVariants}
+                    initial="hidden"
+                    animate="visible"
+                >
+                    {/* Main Title - Centered with responsive sizing */}
+                    <div className="flex-1 flex flex-col items-center justify-center">
+                        <motion.h1
+                            className="text-white text-5xl md:text-9xl font-light tracking-tight text-center px-6 md:px-0 leading-tight md:leading-normal"
+                            variants={bannerTitleVariants}
+                        >
+                            <motion.span
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 1, delay: 0.8 }}
+                            >
+                                About
+                            </motion.span>
+                            <motion.span
+                                className="ml-4 md:ml-8 inline-block"
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 1, delay: 1.2 }}
+                            >
+                                Us
+                            </motion.span>
+                        </motion.h1>
+
+                        {/* Mobile-only description */}
+                        <motion.div
+                            className="md:hidden mt-8 px-6 flex flex-col items-center gap-3 w-full"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 1.8 }}
+                        >
+                            <motion.p className="text-white/70 text-sm text-center leading-relaxed max-w-xs">
+                                Bright ELV is a trusted leader in CCTV brackets and poles in Dubai, delivering durable, IP-rated solutions built for the UAE climate, backed by reliable support, maintenance, and warranty.
+                            </motion.p>
+                            <motion.div
+                                className="h-0.5 bg-white/30"
+                                initial={{ width: 0 }}
+                                animate={{ width: "8rem" }}
+                                transition={{ duration: 0.8, delay: 2 }}
+                            />
+                        </motion.div>
+                    </div>
+
+                    {/* Bottom Section - Hidden on mobile, shown on desktop */}
+                    <div className="pb-12 px-6 md:px-12 hidden md:flex flex-col items-start md:items-end md:flex-row md:justify-between gap-4 md:gap-0">
+                        <motion.div
+                            className="flex gap-2"
+                            variants={bannerFadeInUpVariants}
+                        ></motion.div>
+
+                        <motion.div
+                            className="flex flex-col items-start md:items-end gap-2 w-full md:w-auto"
+                            variants={bannerSlideInRightVariants}
+                        >
+                            <motion.p
+                                className="text-white/70 text-sm max-w-md text-left md:text-right"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 1, delay: 1.5 }}
+                            >
+                                Bright ELV is a trusted leader in CCTV brackets and poles in Dubai, delivering durable, IP-rated solutions built for the UAE climate, backed by reliable support, maintenance, and warranty.
+                            </motion.p>
+
+                            <motion.div
+                                className="h-0.5 w-32 bg-white/30"
+                                initial={{ width: 0 }}
+                                animate={{ width: "8rem" }}
+                                transition={{ duration: 1, delay: 1.8 }}
+                            />
+
+
+                        </motion.div>
+                    </div>
+                </motion.div>
+            </div>
+            
+            <div className="bg-white rounded-3xl mt-9 sm:rounded-[50px] lg:rounded-[75px] overflow-hidden -mt-12 mx-4 sm:mx-6 lg:mx-8 relative z-10">
                 {/* Hero Section */}
                 <motion.section
                     initial={{ opacity: 0 }}
@@ -85,7 +228,7 @@ export default function AboutUs() {
                                 WE ARE
                             </h1>
                             <p className="text-[#2b1b4a] text-xs sm:text-sm md:text-base leading-5 sm:leading-6 md:leading-7 text-justify lg:text-left font-medium">
-                                A Leading Authority In CCTV Services And Proven In The Middle 
+                                A Leading Authority In CCTV Services And Proven In The Middle
                                 East Particularly In Dubai, Known For Two Ideals, Durability And
                                 Reliability In All Our Services. Specializing In Customizing
                                 Security System Blueprints, Upholding Customer Satisfaction, And
