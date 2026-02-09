@@ -48,9 +48,9 @@ export default function AIChatbot() {
       return "BrightELV's core offerings emphasise surveillance, AV and cabling solutions (CCTV brackets, poles, racks, cabinets, AV racks and network accessories). For specialised test instruments, contact sales and they can advise on compatible products and suppliers.";
     }
 
-    if (message.includes('contact') || message.includes('phone') || message.includes('email')) {
-      return "Contact BrightELV:\n• Email: sales@brightelv.com\n• Phone: +971 4 665 2233\n• WhatsApp: +971 56 5022960 or +971 50 8813601\n• PO Box: 381108, Dubai, UAE\nYou can also visit their Contact page at https://brightelv.com/contact-us/";
-    }
+if (message.includes('contact') || message.includes('phone') || message.includes('email')) {
+  return "Contact BrightELV:\n• Email: sales@brightelv.com\n• Phone: +971 4 665 2233\n• WhatsApp: +971 56 5022960 or +971 50 8813601\n• PB NO:381108, Showroom No:4, Mustafa Building, Satellite Market, Naif, Deira, Dubai, UAE\nYou can also visit their Contact page at https://brightelv.com/contact-us/";
+}
 
     if (message.includes('warranty') || message.includes('guarantee')) {
       return "For warranty, service and support details please contact BrightELV sales at sales@brightelv.com — they can provide product-specific warranty and after-sales information.";

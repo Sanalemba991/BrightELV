@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { Mail, Phone, Smartphone, MessageSquare, Facebook, Instagram, Linkedin } from "lucide-react";
 
 // Custom WhatsApp Icon Component
@@ -76,6 +77,7 @@ const Footer = () => {
 
   // Customized Solution links
   const customizedSolutionLinks = [
+
     { 
       name: 'CUSTOM KIOSK & PODIUM', 
       href: '/customised-solution/kiosk-stand-maker'
@@ -118,16 +120,39 @@ const Footer = () => {
           {/* Brand/Logo Area */}
           <div className="lg:col-span-1">
             <div className="mb-6">
-              <div className="border-2 border-blue-400 p-2 inline-block">
-                <Link href="/">
-                  <img
-                    src="/logo.png"
-                    alt="Bright ELV Technology Logo"
-                    className="h-12 w-auto"
-                  />
-                </Link>
+                <div className=" p-2 inline-block">
+                  <Link href="/" className="block">
+                    <motion.div
+                      className="relative w-[80px] h-12"
+                      style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
+                      animate={{ rotateY: [0, 180, 0] }}
+                      transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+                    >
+                      <div
+                        className="absolute inset-0 flex items-center justify-center"
+                        style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
+                      >
+                        <img
+                          src="/logo.png"
+                          alt="Bright ELV Technology Logo"
+                          className="h-full w-full object-contain"
+                        />
+                      </div>
+
+                      <div
+                        className="absolute inset-0 flex items-center justify-center"
+                        style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+                      >
+                        <img
+                          src="/logo2.png"
+                          alt="Bright ELV Technology Logo Back"
+                          className="h-full w-full object-contain"
+                        />
+                      </div>
+                    </motion.div>
+                  </Link>
+                </div>
               </div>
-            </div>
             <p className="text-[13px] leading-relaxed text-gray-300 pr-4">
               BrightElv Leads In Providing Innovative, Durable CCTV Brackets And Poles In Dubai And Middle East, Designed For Harsh Climates. We Assure Enhanced Security And Peace Of Mind.
             </p>
