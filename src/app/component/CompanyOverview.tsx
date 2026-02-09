@@ -7,14 +7,14 @@ export default function CompanyOverview() {
     stats: false,
     description: false,
   });
-  
+
   const titleRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
   const descriptionRef = useRef<HTMLDivElement>(null);
-  
+
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
-    
+
     const createObserver = (ref: React.RefObject<HTMLElement | null>, key: string) => {
       const observer = new IntersectionObserver(
         ([entry]) => {
@@ -25,24 +25,24 @@ export default function CompanyOverview() {
         },
         { threshold: 0.1 }
       );
-      
+
       if (ref.current) {
         observer.observe(ref.current);
         observers.push(observer);
       }
-      
+
       return observer;
     };
-    
+
     const titleObserver = createObserver(titleRef, 'title');
     const statsObserver = createObserver(statsRef, 'stats');
     const descriptionObserver = createObserver(descriptionRef, 'description');
-    
+
     return () => {
       observers.forEach(observer => observer.disconnect());
     };
   }, []);
-  
+
   return (
     <div className="hidden sm:block w-full bg-white py-8 md:py-12 lg:py-16 px-4 sm:px-6 lg:px-8">
       <style jsx>{`
@@ -116,24 +116,24 @@ export default function CompanyOverview() {
           transform: scaleX(1);
         }
       `}</style>
-      
+
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-0">
           {/* Left Section - Stats Grid */}
           <div>
-            <div 
+            <div
               ref={titleRef}
               className={`text-center mb-6 md:mb-8 ${isVisible.title ? 'animate-fadeInUp' : 'opacity-0'}`}
             >
               <h2 className="text-2xl sm:text-3xl font-bold text-blue-700 uppercase text-center tracking-wide">
                 Company Overview
               </h2>
-              <div 
+              <div
                 className={`divider mx-auto mt-2 sm:mt-3 h-[1px] w-16 sm:w-24 md:w-32 lg:w-40 bg-blue-700 ${isVisible.title ? 'divider-animate' : ''}`}
               ></div>
             </div>
 
-            <div 
+            <div
               ref={statsRef}
               className={`py-6 md:py-8 mt-4 md:mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 bg-indigo-950 px-4 sm:px-6 md:px-8 rounded-2xl lg:rounded-l-3xl lg:rounded-r-none ${isVisible.stats ? 'animate-fadeInLeft' : 'opacity-0'}`}
             >
@@ -141,13 +141,13 @@ export default function CompanyOverview() {
               <div className="bg-[#1e1f42] rounded-xl md:rounded-2xl p-4 md:p-6 border border-[#4a4b7f] text-white">
                 <div className="flex items-center gap-3 md:gap-4">
                   <div className="w-10 h-10 md:w-12 md:h-12 bg-white rounded-full flex items-center justify-center flex-shrink-0">
-                    <svg
-                      className="w-5 h-5 md:w-7 md:h-7 text-[#1e1f42]"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 md:w-7 md:h-7 text-[#1e1f42]"
+                      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10" />
+                      <line x1="2" y1="12" x2="22" y2="12" />
+                      <ellipse cx="12" cy="12" rx="4" ry="10" />
                     </svg>
+
                   </div>
                   <div>
                     <div className="text-base md:text-xl font-bold">
@@ -203,14 +203,26 @@ export default function CompanyOverview() {
               {/* Stat Card 4 - Product Lines */}
               <div className="bg-[#1e1f42] rounded-xl md:rounded-2xl p-4 md:p-6 border border-[#4a4b7f] text-white">
                 <div className="flex items-center gap-3 md:gap-4">
-                  <svg
-                    className="w-10 h-10 md:w-14 md:h-14 flex-shrink-0"
-                    fill="white"
+                  <svg className="w-10 h-10 md:w-14 md:h-14 flex-shrink-0"
+
+                    width="24"
+                    height="24"
                     viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    <path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
-                    <path d="M4 10h3v2H4v5h3v2H2V9h2zm12 0h3v9h-2v-7h-1z" />
+                    <path
+                      d="M12 3L7 8H10V21H14V8H17L12 3Z"
+                      fill="currentColor"
+                    />
+
+                    <rect x="18" y="6" width="4" height="2" rx="1" fill="currentColor" />
+                    <rect x="18" y="11" width="4" height="2" rx="1" fill="currentColor" />
+                    <rect x="18" y="16" width="4" height="2" rx="1" fill="currentColor" />
                   </svg>
+
+
+
                   <div>
                     <div className={`text-2xl sm:text-3xl md:text-4xl font-bold ${isVisible.stats ? 'animate-countUp' : 'opacity-0'}`}>
                       +1,000
@@ -239,7 +251,7 @@ export default function CompanyOverview() {
             </p>
 
             <p className="text-sm sm:text-base leading-relaxed">
-             Together, let's surpass your competition and achieve customer satisfaction with more than 128 completed projects. Choose BrightElv Technology LLC for excellence in surveillance, audio-visual, home automation, and building management solutions—backed by 1000+ product lines.
+              Together, let's surpass your competition and achieve customer satisfaction with more than 128 completed projects. Choose BrightElv Technology LLC for excellence in surveillance, audio-visual, home automation, and building management solutions—backed by 1000+ product lines.
             </p>
           </div>
         </div>

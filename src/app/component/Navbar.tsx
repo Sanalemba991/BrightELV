@@ -25,20 +25,11 @@ const elvSolutionItems = [
 
 // Hardcoded Customized Solution items with images
 const customizedSolutionItems = [
-  { 
-    name: 'CCTV POLES /LIGHT POLES/ SOLAR POLES', 
-    href: '/customised-solution/cctv',
-    image: '/customised/customised.png'
-  },
+ 
   { 
     name: 'CUSTOM KIOSK & PODIUM', 
     href: '/customised-solution/kiosk-stand-maker',
     image: '/customised/customised2.png'
-  },
-  { 
-    name: 'CUSTOM OBVAN/ BROAD CAST BOX/ BACK BOX/ FRONT PLATE/FLOOR BOX/ IP RATED BOX', 
-    href: '/customised-solution/av-racks',
-    image: '/customised/customised3.png'
   },
   { 
     name: 'CUSTOM CCTV CONSOLES.', 

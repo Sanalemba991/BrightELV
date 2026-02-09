@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import NextLink from "next/link";
 
@@ -18,39 +18,53 @@ export default function Link() {
   const imageCards: ImageCard[] = [
     {
       id: 1,
-      src: "/images/custom-fabrication.jpg",
-      alt: "Custom Fabrication Solution",
-      title: "CUSTOM FABRICATION SOLUTION",
+      src: "/customised/customised.png",
+      alt: "Customized Solutions",
+      title: "CUSTOMIZED SOLUTIONS",
       description:
-        "Innovative custom solutions tailored to your specific needs with precision engineering and quality craftsmanship.",
-      link: "/services/fabrication",
+        "Tailored custom solutions including CCTV poles, kiosks, AV racks, and more for your specific needs.",
+      link: "/customised-solution",
       linkText: "Learn More",
     },
     {
       id: 2,
-      src: "/images/surveillance.jpg",
-      alt: "Surveillance Solution",
-      title: "SURVEILLANCE SOLUTION",
+      src: "/cctvintallation/cctv.png",
+      alt: "CCTV Installation",
+      title: "CCTV INSTALLATION",
       description:
-        "Advanced CCTV and security systems to protect your business and property with cutting-edge technology.",
-      link: "/services/surveillance",
+        "Professional CCTV installation services to ensure comprehensive surveillance and security.",
+      link: "/elv-solution/cctv-installation",
       linkText: "Learn More",
     },
     {
       id: 3,
-      src: "/images/network.jpg",
-      alt: "Network Solution",
-      title: "NETWORK SOLUTION",
+      src: "/strucutrurecabling/struc.png",
+      alt: "Structure Cabling",
+      title: "STRUCTURE CABLING",
       description:
-        "Comprehensive networking infrastructure and connectivity solutions for seamless business operations.",
-      link: "/services/network",
+        "Reliable network infrastructure and structured cabling solutions for seamless connectivity.",
+      link: "/elv-solution/structure-cabling",
       linkText: "Learn More",
     },
   ];
 
+  const [activeId, setActiveId] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  useEffect(() => {
+    if (!isMobile) setActiveId(null);
+  }, [isMobile]);
+
   return (
     <div className="w-full bg-white">
-      <div className="px-4 sm:px-6 md:px-8 lg:px-0">
+      <div className="px-0 sm:px-6 md:px-8 lg:px-0">
         {/* Two Column Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[40%_60%] gap-0  ">
           {/* Left Side - Image Cards with Hover Effects */}
@@ -76,6 +90,11 @@ export default function Link() {
                   }}
                   viewport={{ once: true }}
                   className="relative group overflow-hidden shadow-sm h-40 sm:h-48 md:h-56 lg:h-[38vh] cursor-pointer "
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => {
+                    if (isMobile) setActiveId((prev) => (prev === card.id ? null : card.id));
+                  }}
                 >
                   {/* Background Image */}
                   <div className="relative w-full h-full">
@@ -90,28 +109,45 @@ export default function Link() {
                   </div>
 
                   {/* Default State - Title */}
-                  <div className="absolute inset-0 flex items-center justify-center transition-opacity duration-500 group-hover:opacity-0">
-                    <h3 className="text-white text-base sm:text-lg md:text-xl lg:text-2xl font-extrabold text-center px-3 sm:px-4 tracking-wider drop-shadow-md">
-                      {card.title}
-                    </h3>
-                  </div>
+                  {(() => {
+                    const isActive = isMobile && activeId === card.id;
+                    const titleClass = isActive
+                      ? 'absolute inset-0 flex items-center justify-center opacity-0 z-0 transition-opacity duration-300'
+                      : 'absolute inset-0 flex items-center justify-center transition-opacity duration-500 group-hover:opacity-0';
+                    return (
+                      <div className={titleClass}>
+                        <h3 className="text-white text-base sm:text-lg md:text-xl lg:text-2xl font-extrabold text-center px-3 sm:px-4 tracking-wider drop-shadow-md">
+                          {card.title}
+                        </h3>
+                      </div>
+                    );
+                  })()}
 
                   {/* Hover State - Description and Button */}
-                  <div className="absolute inset-0 flex items-center justify-center p-0 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
-                    <div className="w-full h-full bg-[#2b2f6b] text-white flex flex-col items-center justify-center px-4 sm:px-6 py-6 sm:py-10 text-center transform transition-transform duration-300">
-                      <p className="text-white text-sm sm:text-base md:text-lg font-medium mb-4 sm:mb-6 leading-relaxed max-w-[900px]">
-                        {card.description}
-                      </p>
-                      <NextLink href={card.link}>
-                        <motion.button
-                          whileHover={{ scale: 1 }}
-                          className="px-4 sm:px-6 py-2 border-2 border-white text-white rounded-md hover:bg-white hover:text-[#2b2f6b] font-semibold transition-colors duration-300 text-xs sm:text-sm"
-                        >
-                          More Details
-                        </motion.button>
-                      </NextLink>
-                    </div>
-                  </div>
+                  {(() => {
+                    const isActive = isMobile && activeId === card.id;
+                    const overlayClass = isActive
+                      ? 'absolute inset-0 flex items-center justify-center p-0 opacity-100 translate-y-0 z-20 transition-all duration-300'
+                      : 'absolute inset-0 flex items-center justify-center p-0 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0';
+                    return (
+                      <div className={overlayClass}>
+                        <div className="w-full h-full bg-[#2b2f6b] text-white flex flex-col items-center justify-center px-4 sm:px-6 py-6 sm:py-10 text-center transform transition-transform duration-300">
+                          <p className="text-white text-sm sm:text-base md:text-lg font-medium mb-4 sm:mb-6 leading-relaxed max-w-[900px]">
+                            {card.description}
+                          </p>
+                          <NextLink href={card.link}>
+                            <motion.button
+                              whileHover={{ scale: 1 }}
+                              onClick={(e) => e.stopPropagation()}
+                              className="px-4 sm:px-6 py-2 border-2 border-white text-white rounded-md hover:bg-white hover:text-[#2b2f6b] font-semibold transition-colors duration-300 text-xs sm:text-sm"
+                            >
+                              {card.linkText}
+                            </motion.button>
+                          </NextLink>
+                        </div>
+                      </div>
+                    );
+                  })()}
                 </motion.div>
                 {index < imageCards.length - 1 && (
                   <div className="h-6 bg-[#35215b]"></div>

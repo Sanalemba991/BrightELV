@@ -33,7 +33,7 @@ export default function Banner() {
       title: "LEADING ELV SOLUTIONS IN DUBAI",
       description: (
 
-        "BrightELV Specializes In Providing Cutting-Edge ELV Solutions To Enhance CCTV Installation And Maintenance, Structure Cabling, And Audio Solution</span>. Discover Our Comprehensive Range Of Services Designed To Meet The Unique Needs Of Businesses And Residences Across Dubai."
+        "BrightELV Specializes In Providing Cutting-Edge ELV Solutions To Enhance CCTV Installation And Maintenance, Structure Cabling, And Audio Solutio. Discover Our Comprehensive Range Of Services Designed To Meet The Unique Needs Of Businesses And Residences Across Dubai."
 
       ),
       image: "/banner/1.png",

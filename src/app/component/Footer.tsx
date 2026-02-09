@@ -67,22 +67,43 @@ const Footer = () => {
 
   // ELV Solution links
   const elvSolutionLinks = [
-    { name: "Audio Visual Solution", href: "/solution/audio-visual-solution" },
-    { name: "CCTV Installation", href: "/solution/cctv-installation" },
-    { name: "CCTV Maintenance", href: "/solution/cctv-maintenance" },
-    { name: "PABX", href: "/solution/pabx" },
-    { name: "Structure Cabling", href: "/solution/structure-cabling" },
+    { name: 'CCTV INSTALLATION', href: '/elv-solution/cctv-installation' },
+    { name: 'CCTV MAINTENANCE', href: '/elv-solution/cctv-maintenance' },
+    { name: 'STRUCTURE CABLING', href: '/elv-solution/structure-cabling' },
+    { name: 'PABX', href: '/elv-solution/pabx' },
+    { name: 'AUDIO VISUAL SOLUTION', href: '/elv-solution/audio-visual-solution' },
   ];
 
   // Customized Solution links
   const customizedSolutionLinks = [
-    { name: "AV Racks", href: "/solution/av-racks" },
-    { name: "CCTV", href: "/solution/cctv-customized" },
-    { name: "Custom Face Plates", href: "/solution/custom-face-plates" },
-    { name: "Flight Wooden Podium", href: "/solution/flight-wooden-podium" },
-    { name: "Pop-up Box", href: "/solution/pop-up-box" },
-    { name: "Projector Stand", href: "/solution/projector-stand" },
-    { name: "Kiosk Stand", href: "/solution/kiosk-stand" },
+    { 
+      name: 'CUSTOM KIOSK & PODIUM', 
+      href: '/customised-solution/kiosk-stand-maker'
+    },
+    { 
+      name: 'CUSTOM CCTV CONSOLES.', 
+      href: '/customised-solution/cctv'
+    },
+    { 
+      name: 'CUSTOM POPUP BOX/ CABLE CUBBY', 
+      href: '/customised-solution/custom-pop-up-box'
+    },
+    { 
+      name: 'CUSTOM FACE PLATES', 
+      href: '/customised-solution/custom-face-plates'
+    },
+    { 
+      name: 'CUSTOM PORTABLE MIXER RACKS/ AV RACKS', 
+      href: '/customised-solution/av-racks'
+    },
+    { 
+      name: 'CUSTOM FLIGHT CASE/ WOODEN PODIUM', 
+      href: '/customised-solution/custom-flight-wooden-podium'
+    },
+    { 
+      name: 'CUSTOM PROJECTOR STAND/ CEILING MOUNT', 
+      href: '/customised-solution/custom-projector-stand'
+    },
   ];
 
   // Group categories into two columns
