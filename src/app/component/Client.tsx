@@ -10,40 +10,40 @@ const featured = [
     title: "ALOFT HOTELS",
     category: "hospitality",
     image:
-      "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-    text: "I'm impressed by the quality of products and the professionalism BrightElv maintains. It's truly a game-changer for my business!",
+      "/clients/hospitality.png",
+    text: "I’m truly impressed by the product quality and the professionalism BrightELV maintains. Their service feels meticulously crafted to perfection—an absolute game-changer for my business.",
   },
   {
     id: "manipal",
-    title: "MANIPAL",
+    title: "FOUR SEASONS",
     category: "education",
     image:
-      "https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-    text: "A trusted partner for our educational campus solutions.",
+      "/clients/education.png",
+    text: "There’s no comparison when it comes to product quality and diversity. Since partnering with this company, my retail business has expanded significantly. Each product is exceptional and consistently flies off the shelves.",
   },
   {
     id: "nasa",
-    title: "NASA",
+    title: "ANANTARA",
     category: "government",
     image:
-      "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-    text: "Trusted technology partner for mission-critical government operations.",
+      "/clients/government.png",
+    text: "I’m a proud client of this wholesaler. Their outstanding customer service, combined with fast and reliable delivery, has made them an invaluable partner for my business. My customers have never been happier.",
   },
   {
     id: "bluecross",
-    title: "BLUE CROSS",
+    title: "SAADIYAT ROTANA",
     category: "healthcare",
     image:
-      "https://images.unsplash.com/photo-1516549655669-df6654e435de?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-    text: "Delivering excellence in healthcare facility solutions.",
+      "/clients/healthcare.png",
+    text: "Sourcing products from this company feels like striking gold. Their extensive product range meets all my business needs and has helped streamline operations, making everything smoother and more profitable.",
   },
   {
     id: "spinoso",
-    title: "SPINOSO REAL ESTATE",
+    title: "SOFITEL",
     category: "realstate",
     image:
-      "https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-    text: "Premium solutions for luxury real estate developments.",
+      "/clients/realstate.png",
+    text: "There’s simply no match for this company’s product quality and variety. Since I began sourcing from them, my retail business has grown tremendously. Every item is top-notch and sells out quickly from our shelves.",
   },
 ];
 
@@ -317,7 +317,7 @@ export default function Client() {
                       alt={featured[activeIndex].title}
                       width={900}
                       height={500}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover filter brightness-75"
                       priority
                     />
                   </motion.div>
@@ -348,28 +348,10 @@ export default function Client() {
                   className="absolute left-6 top-6 text-white max-w-sm p-5"
                 >
                   <div className="flex items-start gap-3">
-                    <div className="w-14 h-14 rounded-lg overflow-hidden flex items-center justify-center p-1 shrink-0 bg-white/10 backdrop-blur-sm">
-                      {featured[activeIndex].image ? (
-                        <Image
-                          src={featured[activeIndex].image}
-                          alt={`${featured[activeIndex].title} logo`}
-                          width={48}
-                          height={48}
-                          className="object-cover rounded"
-                        />
-                      ) : (
-                        <div className="font-bold text-xs text-white">
-                          {featured[activeIndex].title
-                            .split(" ")
-                            .slice(0, 2)
-                            .map((s) => s[0])
-                            .join("")}
-                        </div>
-                      )}
-                    </div>
+                    
 
                     <div className="flex-1">
-                      <h3 className="text-base md:text-lg font-bold uppercase leading-tight">
+                      <h3 className="text-base md:text-lg text-gray- font-bold uppercase leading-tight">
                         {featured[activeIndex].title}
                       </h3>
                       <p className="text-xs md:text-sm mt-2 opacity-95 leading-relaxed">
@@ -498,7 +480,7 @@ export default function Client() {
                         alt={l.name}
                         width={220}
                         height={120}
-                        className="w-full h-full object-contain"
+                        className="w-full h-full object-contain filter brightness-90"
                       />
                     ) : (
                       <div className="text-lg font-semibold">
@@ -595,7 +577,7 @@ export default function Client() {
                       alt={selectedLogo.name}
                       width={600}
                       height={400}
-                      className="object-contain w-full h-full"
+                      className="object-contain w-full h-full filter brightness-95"
                     />
                   ) : (
                     <div className="text-8xl">{selectedLogo.image}</div>

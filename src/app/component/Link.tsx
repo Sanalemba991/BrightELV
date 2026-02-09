@@ -18,7 +18,7 @@ export default function Link() {
   const imageCards: ImageCard[] = [
     {
       id: 1,
-      src: "/customised/customised.png",
+      src: "/link/link1.png",
       alt: "Customized Solutions",
       title: "CUSTOMIZED SOLUTIONS",
       description:
@@ -28,7 +28,7 @@ export default function Link() {
     },
     {
       id: 2,
-      src: "/cctvintallation/cctv.png",
+      src: "/link/link2.png",
       alt: "CCTV Installation",
       title: "CCTV INSTALLATION",
       description:
@@ -38,7 +38,7 @@ export default function Link() {
     },
     {
       id: 3,
-      src: "/strucutrurecabling/struc.png",
+      src: "/link/link3.png",
       alt: "Structure Cabling",
       title: "STRUCTURE CABLING",
       description:
@@ -105,8 +105,7 @@ export default function Link() {
                       className="object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                     {/* Dark Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/70 group-hover:from-[#2b2f6b]/75 group-hover:to-[#2b2f6b]/90 transition-all duration-500"></div>
-                  </div>
+                     </div>
 
                   {/* Default State - Title */}
                   {(() => {

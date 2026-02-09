@@ -2,7 +2,7 @@
 import { usePathname } from "next/navigation";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import Whatsapp from "./Whatsapp";
+import AIChatbot from "./AIChatbot";
 export default function ConditionalLayout({
   children,
 }: {
@@ -25,7 +25,7 @@ export default function ConditionalLayout({
   return (
     <>
       <Navbar />
-      <Whatsapp />
+      <AIChatbot />
       {children}
       <Footer />
     </>
