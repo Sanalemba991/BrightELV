@@ -193,7 +193,7 @@ export default function Link() {
               className="relative w-full h-80 md:h-96 lg:h-99 overflow-hidden rounded-lg shadow-lg"
             >
               <Image
-                src="/map.png"
+                src="/sad.png"
                 alt="Operating Globally"
                 fill
                 priority
